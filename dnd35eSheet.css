@@ -1,0 +1,168 @@
+/* ************ DND35E ********** */
+
+/* Tabbing */
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #cacaca;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 8px;
+    transition: 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'OptimusPrinceps', sans-serif;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ffffff;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+/*--------*/
+
+
+body {
+  /*  background-color: var(--ts-background-primary);
+    color: var(--ts-color-primary);*/
+    background-color: black;
+    color: white;
+    font-family: 'OptimusPrinceps', sans-serif;
+    max-width: 1000px;
+    margin: 0 auto 0 auto;
+    padding: 10px;
+}
+
+input{
+    text-align: center;
+}
+
+.main-data-container{
+    display: flex;
+    justify-content:left;
+    align-items:center;  
+    gap:20px;   
+}
+
+.div-charinfo-blocks{
+    font-size: 12px;
+}
+
+.text_border{
+    border: none;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+#dnd35logo{
+    flex-shrink: 0;
+    text-align: center;
+    background: url("35elogo.png");
+    background-size: contain;
+    background-color: transparent;  
+    background-repeat: no-repeat; 
+    width: 171px;
+    height:49px;
+}
+
+.ability-scores, .saving-scores, .pginivel, .CA, .bab, .touch-atacks {
+text-align: center;
+border: 2px solid white;
+
+}
+
+.ability-name, .saving-name{
+    font-weight: bold;
+    text-align:left;
+}
+
+input[type='number']{
+    width: 40px;
+} 
+
+.MODSTR, .MODDEX, .MODCON, .MODINT, .MODWIS, .MODCHA {
+
+  font-size: 18px; 
+  /*border: 1px solid white;*/
+
+}
+
+.warningbox{
+text-align: center;
+border: 2px solid white;
+align-items: center;
+}
+
+select {
+  overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------COLLAPSABLE----------------------------------------------------------------*/
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 4px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0 2px;
+  display: none;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+#inventory-table{
+  border: 1px solid white;
+
+}
+
+#inventory-table-title th{
+font-size: 10px;
+border: 1px solid white;
+}
+
+.spell-list table{
+  border: 1px solid white;
+}
+
+.spell-list button{
+  font-weight: bold;
+  text-transform: uppercase;
+}
+/* ----------------------------------------------------------------------------------------------------------------------------------------------*/

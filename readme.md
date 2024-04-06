@@ -1,0 +1,6 @@
+The generic character sheet base code is made to be fairly customizable, making it easy to adapt minor things in the sheet. Adding extra fields can be done by simply copying existing ones and renaming them. All input fields need to have a unique ID to be stored and conversely, as soon as they have an ID (and are either an HTML <input>, <button> or <textarea>), they will be stored and reloaded. You can make the field-title label clickable for rolling by adding the HTML attribute data-dice-type and adding the dice that should be rolled. By default, clicking will add the accompanying input elements' value as an additive modifier (ie: If the input field has a value set of 3 and the dice type is 1d20, it will create a 1d20+3 roll). If no modifier is desired, add the attribute data-modifier="no-mod", if you want to have a different input field as the modifier, like for an attack roll button that depends on eg: the Strength value set elsewhere, set the data-modifier value to the id of the input field you want to get the value from, eg: data-modifier="str".
+
+The description (field-desc) label is simply for readability/understandability and can be omitted if deemed unnecessary.
+
+
+ADDED A CUSTOM LAYOUT FOR DND 3.5e with most common options, One of the tabs contains the same code for the generic sheet.
