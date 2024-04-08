@@ -70,7 +70,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnSTR" onclick="rollAbility('STR')">Fuerza (STR) </button>
                         </td>
-                        <td><input oninput="updateModifier('STR')" type="number" id="charSTRbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('STR')" type="number" id="charSTRbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTSTR" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODSTR" class="MODSTR">0</td>
                         <td><input oninput="updateModifier('STR')" type="number" id="charSTRmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -81,7 +81,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnDEX" onclick="rollAbility('DEX')">Destreza (DEX)
                             </button></td>
-                        <td><input oninput="updateModifier('DEX')" type="number" id="charDEXbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('DEX')" type="number" id="charDEXbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTDEX" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODDEX" class="MODDEX">0</td>
                         <td><input oninput="updateModifier('DEX')" type="number" id="charDEXmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -92,7 +92,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnCON" onclick="rollAbility('CON')">Constitucion (CON)
                             </button></td>
-                        <td><input oninput="updateModifier('CON')" type="number" id="charCONbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('CON')" type="number" id="charCONbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTCON" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODCON" class="MODCON">0</td>
                         <td><input oninput="updateModifier('CON')" type="number" id="charCONmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -103,7 +103,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnINT" onclick="rollAbility('INT')">Inteligencia (INT)
                             </button></td>
-                        <td><input oninput="updateModifier('INT')" type="number" id="charINTbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('INT')" type="number" id="charINTbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTINT" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODINT" class="MODINT">0</td>
                         <td><input oninput="updateModifier('INT')" type="number" id="charINTmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -114,7 +114,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnWIS" onclick="rollAbility('WIS')">Sabiduria (WIS)
                             </button></td>
-                        <td><input oninput="updateModifier('WIS')" type="number" id="charWISbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('WIS')" type="number" id="charWISbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTWIS" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODWIS" class="MODWIS">0</td>
                         <td><input oninput="updateModifier('WIS')" type="number" id="charWISmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -125,7 +125,7 @@
                     <tr>
                         <td class="ability-name"><button id="btnCHA" onclick="rollAbility('CHA')">Carisma (CHA)
                             </button></td>
-                        <td><input oninput="updateModifier('CHA')" type="number" id="charCHAbase" class="ability-base" required min="0" max="99" size="2"></td>
+                        <td><input oninput="updateModifier('CHA')" type="number" id="charCHAbase" class="ability-base"  style="font-weight: bold; font-size:16px;width: 50px;"required min="0" max="99" size="2"></td>
                         <td id="TOTCHA" style="font-size: 18px; border: 1px solid white">0</td>
                         <td id="MODCHA" class="MODCHA">0</td>
                         <td><input oninput="updateModifier('CHA')" type="number" id="charCHAmodrac" class="number-input" required min="-9" max="99" size="2"></td>
@@ -140,12 +140,18 @@
                     <table class="pginivel">
 
                         <tr>
-                            <th>PG</th>
+                                <th>PG Total</th>
                         </tr>
                         <tr>
                             <td><input id="charpg" type="number" class="number-input" required min="0" max="999"
                                     size="2"></td>
                         </tr>
+                        <th>PG Actual</th>
+                </tr>
+                <tr>
+                    <td><input id="charpgactual" type="number" class="number-input" required min="0" max="999"
+                            size="2"></td>
+                </tr>
                         <tr>
                             <th>PG Temporales</th>
                         </tr>
@@ -160,18 +166,22 @@
                             <td><input id="charnoletal" type="number" class="number-input" required min="0" max="999"
                                     size="2"></td>
                         </tr>
-                        <tr>
-                            <th>Velocidad</th>
-                        </tr>
-                        <tr>
-                            <td><input id="charspeed" type="number" class="number-input" required min="0" max="999"
-                                    size="2"></td>
-                        </tr>
+                       
                     </table>
                     <table class="pginivel">
                         <tr>
                             <td style="height: 30px;"></td>
                         </tr>
+                        <tr>
+                                <th>Velocidad</th>
+                            </tr>
+                            <tr>
+                                <td><input id="charspeed" type="number" class="number-input" required min="0" max="999"
+                                        size="2"></td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
                         <tr>
                             <th><button id="btnFor" style="font-size:16px;"
                                     onclick="rollIniciative()">Iniciativa</button></th>
@@ -1168,7 +1178,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_0_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_0_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_0_btnatk"  onclick="rollatk('0')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_0_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1180,7 +1190,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_0_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_0_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_0_btndanho"  onclick="rolldanho('0')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr1" style="font-size: 10px; text-align: center;">
@@ -1194,7 +1204,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_1_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_1_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_1_btnatk"  onclick="rollatk('1')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_1_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1206,7 +1216,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_1_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_1_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_1_btndanho"  onclick="rolldanho('1')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr2" style="font-size: 10px; text-align: center;">
@@ -1220,7 +1230,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_2_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_2_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_2_btnatk"  onclick="rollatk('2')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_2_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1232,7 +1242,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_2_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_2_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_2_btndanho"  onclick="rolldanho('2')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr3" style="font-size: 10px; text-align: center;">
@@ -1246,7 +1256,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_3_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_3_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_3_btnatk"  onclick="rollatk('3')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_3_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1258,7 +1268,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_3_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_3_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_3_btndanho"  onclick="rolldanho('3')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr4" style="font-size: 10px; text-align: center;">
@@ -1272,7 +1282,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_4_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_4_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_4_btnatk"  onclick="rollatk('4')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_4_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1284,7 +1294,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_4_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_4_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_4_btndanho"  onclick="rolldanho('4')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr5" style="font-size: 10px; text-align: center;">
@@ -1298,7 +1308,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_5_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_5_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_5_btnatk"  onclick="rollatk('5')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_5_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1310,7 +1320,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_5_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_5_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_5_btndanho"  onclick="rolldanho('5')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr6" style="font-size: 10px; text-align: center;">
@@ -1324,7 +1334,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_6_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_6_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_6_btnatk"  onclick="rollatk('6')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_6_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1336,7 +1346,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_6_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_6_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_6_btndanho"  onclick="rolldanho('6')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr7" style="font-size: 10px; text-align: center;">
@@ -1350,7 +1360,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_7_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_7_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_7_btnatk"  onclick="rollatk('7')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_7_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1362,7 +1372,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_7_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_7_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_7_btndanho"  onclick="rolldanho('7')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr8" style="font-size: 10px; text-align: center;">
@@ -1376,7 +1386,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_8_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_8_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_8_btnatk"  onclick="rollatk('8')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_8_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1388,7 +1398,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_8_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_8_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_8_btndanho"  onclick="rolldanho('8')"  style="width: 35px; height: 20px;">Roll</button></td>
                             </tr>
                             <tr id="tr9" style="font-size: 10px; text-align: center;">
@@ -1402,7 +1412,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_9_modtatk" type="number"  maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_9_modtatk" class="number-input" type="number"  maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_9_btnatk"  onclick="rollatk('9')"style="width: 35px; height: 20px;">Roll</button></td>
                                 <td style="width: 35px;"></td>
                                 <td><input id="skill_9_dicedanho" maxlength="4" style="width: 40px;"></td>
@@ -1414,7 +1424,7 @@
                                         <option value="WIS">WIS</option>
                                         <option value="CHA">CHA</option>
                                     </select></td>
-                                <td style="width: 30px;"><input id="skill_9_modtdanho" type="number" maxlength="3" style="width: 30px;"></td>
+                                <td style="width: 30px;"><input id="skill_9_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
                                 <td><button id="skill_9_btndanho"  onclick="rolldanho('9')"  style="width: 35px; height: 20px;">Roll</button></td> 
                             </tr>
                 </table>

@@ -1,6 +1,14 @@
-The generic character sheet base code is made to be fairly customizable, making it easy to adapt minor things in the sheet. Adding extra fields can be done by simply copying existing ones and renaming them. All input fields need to have a unique ID to be stored and conversely, as soon as they have an ID (and are either an HTML <input>, <button> or <textarea>), they will be stored and reloaded. You can make the field-title label clickable for rolling by adding the HTML attribute data-dice-type and adding the dice that should be rolled. By default, clicking will add the accompanying input elements' value as an additive modifier (ie: If the input field has a value set of 3 and the dice type is 1d20, it will create a 1d20+3 roll). If no modifier is desired, add the attribute data-modifier="no-mod", if you want to have a different input field as the modifier, like for an attack roll button that depends on eg: the Strength value set elsewhere, set the data-modifier value to the id of the input field you want to get the value from, eg: data-modifier="str".
+# dnd35esheet-talespire
+A dnd 35e sheet symbiote for talespire.
 
-The description (field-desc) label is simply for readability/understandability and can be omitted if deemed unnecessary.
+As my group and me play in spanish, most parts of the UI are in that language. 
 
+![c7f0f045-0004-45b5-9aa4-47e7bc45d90e](https://github.com/Yosoy-Ed/dnd35esheet-talespire/assets/19942461/508ab14a-8518-47fc-9bbb-8d08502b2bea)
 
-ADDED A CUSTOM LAYOUT FOR DND 3.5e with most common options, One of the tabs contains the same code for the generic sheet.
+![4dedd46b-598c-43a7-b2ce-532dc5020b0a](https://github.com/Yosoy-Ed/dnd35esheet-talespire/assets/19942461/a2267dd1-468e-4185-8d19-293f600afd6e)
+
+![image](https://github.com/Yosoy-Ed/dnd35esheet-talespire/assets/19942461/a6fd8899-9bdc-4d51-b820-1b9edb28d691)
+
+![image](https://github.com/Yosoy-Ed/dnd35esheet-talespire/assets/19942461/5ff5a849-baf4-4dfa-bbe6-178d438681f7)
+
+![image](https://github.com/Yosoy-Ed/dnd35esheet-talespire/assets/19942461/d22f73ba-7bd7-4bd6-98b6-0b1d07b65ee3)

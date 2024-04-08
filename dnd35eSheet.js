@@ -454,7 +454,12 @@ function rollAbility(ability) {
     if (ability === 'CHA') { txtcheck = 'Carisma' }
     let name = txtcheck;  // Capitalize first letter
     let dice = "1d20";
-    dice = dice + "+" + String(document.getElementById(`MOD${ability}`).innerHTML);
+
+    let typeStr = parseInt(document.getElementById(`MOD${ability}`).innerHTML) < 0 ? "-" : "+";
+
+    let modifier = Math.abs(parseInt(document.getElementById(`MOD${ability}`).innerHTML));
+    
+    dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
@@ -464,7 +469,12 @@ function rollIniciative() {
     let name = 'Iniciativa';
     let dice = "1d20";
     let modifier = parseInt(document.getElementById(`modinit`).value) + parseInt(document.getElementById(`MODDEX`).innerHTML);
-    dice = dice + "+" + modifier;
+
+    let typeStr = modifier < 0 ? "-" : "+";
+
+    modifier = Math.abs(modifier);
+
+    dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
@@ -477,7 +487,14 @@ function rollSaving(saving) {
     if (saving === 'WIL') { txtcheck = 'Voluntad' }
     let name = txtcheck;  // Capitalize first letter
     let dice = "1d20";
-    dice = dice + "+" + String(document.getElementById(`SAV${saving}`).innerHTML);
+
+    let modifier = parseInt(document.getElementById(`SAV${saving}`));
+
+    let typeStr = modifier < 0 ? "-" : "+";
+
+    modifier = Math.abs(modifier);
+
+    dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
@@ -496,7 +513,12 @@ function rollTouch(touch) {
     }
     let name = txtcheck;
     let dice = "1d20";
-    dice = dice + "+" + modifier;
+
+    let typeStr = modifier < 0 ? "-" : "+";
+    
+    modifier = Math.abs(modifier);
+
+    dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
@@ -513,7 +535,12 @@ function rollSkill(skill) {
     let modifier = charmod + ranks + modextra1 + modextra2 + modextra3;
 
     let dice = "1d20";
-    dice = dice + "+" + modifier;
+
+    let typeStr = modifier < 0 ? "-" : "+";
+    
+    modifier = Math.abs(modifier);
+    
+    dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: skill, roll: dice }], false);
 
@@ -531,7 +558,12 @@ function rollatk(weaponNumber) {
     let modifier = modtatk + caratkval + bab1;
 
     let dice = "1d20";
-    dice = dice + "+" + modifier;
+
+    let typeStr = modifier < 0 ? "-" : "+";
+
+    modifier = Math.abs(modifier);
+
+    dice = dice + typeStr + modifier;    
 
     name = name + " Attack";
 
@@ -550,7 +582,12 @@ function rolldanho(weaponNumber) {
 
     let modifier = caratkval + modtd;
 
-    let dice = dices + "+" + modifier;
+    let typeStr = modifier < 0 ? "-" : "+";
+
+    modifier = Math.abs(modifier);
+
+    let dice = dices + typeStr + modifier;
+    
 
     name = name + " Damage";
 
