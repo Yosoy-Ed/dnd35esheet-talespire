@@ -49,7 +49,7 @@ var skill_array = [
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var clearStorageButton = undefined;
 function initSheet() {
-    let inputs = document.querySelectorAll("input,button,textarea");
+    let inputs = document.querySelectorAll("input,button,textarea, select"); //------------- Agregado select a la lista de cosas que se guardan
     for (let input of inputs) {
         if (input.id != undefined && input.id != "clear-storage") {
             input.addEventListener("change", function () {
@@ -345,20 +345,9 @@ function recalculate() {
     updateModifier('WIS');
     updateModifier('CHA');
 
-    /*    updatecharCA();
-       updateSaving('FOR');
-       updateSaving('REF');
-       updateSaving('WIL');
-   
-      //updateskills  
-       for (let skill of skill_array) {
-           updateSkill(skill);
-       }
-       reloadSpellist();
-       */
 }
 
-//////////////////////////////////////////// input updates /////////////////////// 
+//////////////////////////////////////////// input updates ////////////////////// 
 
 //Actualizacion de abilty scores
 function updateModifier(ability) {
@@ -458,7 +447,7 @@ function rollAbility(ability) {
     let typeStr = parseInt(document.getElementById(`MOD${ability}`).innerHTML) < 0 ? "-" : "+";
 
     let modifier = Math.abs(parseInt(document.getElementById(`MOD${ability}`).innerHTML));
-    
+
     dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
@@ -515,7 +504,7 @@ function rollTouch(touch) {
     let dice = "1d20";
 
     let typeStr = modifier < 0 ? "-" : "+";
-    
+
     modifier = Math.abs(modifier);
 
     dice = dice + typeStr + modifier;
@@ -537,9 +526,9 @@ function rollSkill(skill) {
     let dice = "1d20";
 
     let typeStr = modifier < 0 ? "-" : "+";
-    
+
     modifier = Math.abs(modifier);
-    
+
     dice = dice + typeStr + modifier;
 
     TS.dice.putDiceInTray([{ name: skill, roll: dice }], false);
@@ -563,15 +552,16 @@ function rollatk(weaponNumber) {
 
     modifier = Math.abs(modifier);
 
-    dice = dice + typeStr + modifier;    
+    dice = dice + typeStr + modifier;
 
     name = name + " Attack";
 
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
 }
-
-function rolldanho(weaponNumber) {
+// ROLL DAMAGE
+let trackedIds = {};
+function rolldanho(isCritic, weaponNumber) {
 
     let name = document.getElementById(`skill_${weaponNumber}_name`).value;
     let dices = document.getElementById(`skill_${weaponNumber}_dicedanho`).value;
@@ -587,13 +577,54 @@ function rolldanho(weaponNumber) {
     modifier = Math.abs(modifier);
 
     let dice = dices + typeStr + modifier;
-    
 
     name = name + " Damage";
 
-    TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+    if (isCritic === '1') {
 
+        rollcritic(name, dice, weaponNumber);
+
+    } else {
+
+        TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+    }
 }
+
+function rollcritic(name, roll, weaponIndex) {
+
+    TS.dice.putDiceInTray([{ name: name, roll: roll }], false).then((diceSetResponse) => {
+        trackedIds[diceSetResponse] = weaponIndex; // Save the id of the rolls
+    });
+}
+
+async function handleRollResult(rollEvent) {   
+    
+    let roll = rollEvent.payload;
+
+    if (trackedIds[roll.rollId] == undefined) {
+        //if we haven't tracked that roll, ignore it because it's not from us
+        return;
+    }
+    if (rollEvent.kind == "rollResults") {        //user rolled the dice we tracked and there's a new result for us to look at
+
+        const weaponIndex = trackedIds[roll.rollId];         
+        const multiplier = parseInt(document.getElementById('crt-multiplier'+ weaponIndex).value);
+
+        let promises = [];
+        for (let group of roll.resultsGroups) {
+            TS.dice.evaluateDiceResultsGroup(group).then((value) => {
+            const critdmg = value*multiplier;     
+            
+            const msg = '<size=20><color="red"> Critical Damage: ' + '<color="green">' + critdmg + '</size>';
+
+            TS.chat.send(msg, 'campaign' );  
+
+            });
+        }
+    }
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////  WEAPONS 
 
@@ -688,11 +719,11 @@ function addSpell(type, lvl) {
     let car_mod = parseInt(document.getElementById('MOD' + car).innerHTML);
     let cdvalue = 10 + parseInt(lvl) + 0 + car_mod;
 
-    let spellDetails = { nombre: 'Nuevo conjuro', usados: '0', preparados: '0', cd: cdvalue, modcd: '0', descrp: 'Descripcion conjuro / CD = 10 + nivel conjuro + caracteristica + modificador extra' };
+    let spellDetails = { nombre: 'Nuevo conjuro', usados: '0', preparados: '0', cd: cdvalue, modcd: '0', descrp: 'Descripcion conjuro / CD = 10 + nivel conjuro + caracteristica + modificador extra', macro: 'Ataque con fuerza:1d20_STR, Danho:1d20_STR+5' };
     let rndid = generateRandomID();
 
     let row = `<tr>
-    <td style="width: 120px;"><input onchange="updateSpellstorage('${rndid}')" style="width: 120px;" value="${spellDetails.nombre}"></td>
+    <td style="width: 120px;"><input onchange="updateSpellstorage('${rndid}')" style="width: 120px;" value="${spellDetails.nombre}"></td> 
     <td style="width: 30px;"><input onchange="updateSpellstorage('${rndid}')" type="number" style="width: 30px;" value="${spellDetails.usados}"></td>
     <td style="width: 30px;"><input onchange="updateSpellstorage('${rndid}')" type="number" style="width: 30px;" value="${spellDetails.preparados}"></td>
     <td style="text-align: center; width: 30px;"><span style="width: 30px;">${spellDetails.cd}</span></td>
@@ -701,11 +732,22 @@ function addSpell(type, lvl) {
     <td><button onclick="deletethisrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
   </tr>`;
 
-    // ADD ROW TO TABLE
+    let rowMacro = `<tr>
+    <td colspan="6"><textarea id='${rndid}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${rndid}')">${spellDetails.macro}</textarea></td>  
+    <td><button onclick="runMacro('${rndid}-macro-textarea')">Run</button></td>      
+    </tr>`;
+
+    // ADD ROW TO TABLE 
     let newRow = document.createElement('tr');
     newRow.id = rndid;
     newRow.innerHTML = row;
+
+    let newRowmacro = document.createElement('tr');
+    newRowmacro.id = rndid + '-macro';
+    newRowmacro.innerHTML = rowMacro;
+
     document.getElementById(`${type}_lvl_${lvl}`).appendChild(newRow);
+    document.getElementById(`${type}_lvl_${lvl}`).appendChild(newRowmacro);
 
     // SAVE TO LOCALSTORAGE 
     let lvlindex = 'lvl' + lvl;
@@ -759,22 +801,32 @@ function reloadSpellist() {
                         let row = `<tr>
           <td style="width: 120px;"><input onchange="updateSpellstorage('${spell}')" style="width: 120px;" value="${spellDetails.nombre}"></td>
           <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.usados}"></td>
-          <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.preparados}"></td>
+          <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.preparados}"></td> 
           <td style="text-align: center; width: 30px;"><span style="width: 30px;">${spellDetails.cd}</span></td>
           <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.modcd}"></td>
           <td style="flex-grow: 1;"><textarea onchange="updateSpellstorage('${spell}')" style="flex-grow: 1;">${spellDetails.descrp}</textarea></td>
           <td><button onclick="deletethisrow('${spell}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
         </tr>`;
 
-                        // Append the new row to the table
+                        let rowmacro = `<tr> 
+        <td colspan="6" ><textarea id='${spell}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${spell}')">${spellDetails.macro}</textarea></td>
+        <td><button onclick="runMacro('${spell}-macro-textarea')">Run</button></td>
+        </tr>`;
+
+                        // Append the new row to the table 
 
                         let newRow = document.createElement('tr');
                         newRow.id = spell;
                         newRow.innerHTML = row;
 
+                        let newRowmacro = document.createElement('tr');
+                        newRowmacro.id = spell + '-macro';
+                        newRowmacro.innerHTML = rowmacro;
+
                         lvlnumber = lvl.slice(3);
 
                         document.getElementById(`${type}_lvl_${lvlnumber}`).appendChild(newRow);
+                        document.getElementById(`${type}_lvl_${lvlnumber}`).appendChild(newRowmacro);
 
                     }
                 }
@@ -793,7 +845,7 @@ function generateRandomID() {
     return result;
 }
 
-// Funcion para borrar fila  de spell o cualquier tabla dependiendo de la id de la fila (row)
+// Funcion para borrar fila  de spell o cualquier tabla dependiendo de la id de la fila (row) 
 function deletethisrow(rowid) {
 
     let spellrow = document.getElementById(rowid);
@@ -808,6 +860,7 @@ function deletethisrow(rowid) {
     })
 
     document.getElementById(rowid).remove();
+    document.getElementById(rowid + '-macro').remove();
 
 }
 
@@ -834,6 +887,9 @@ function updateSpellstorage(rowid) {
 
     spellrow.cells[3].childNodes[0].innerHTML = cdvalue;
 
+    //Macro row
+    let macroTextarea = document.getElementById(rowid + '-macro-textarea').value;
+
     TS.localStorage.campaign.getBlob().then((storedData) => {
         data = JSON.parse(storedData || "{}");
 
@@ -843,10 +899,102 @@ function updateSpellstorage(rowid) {
             preparados: preparados,
             cd: cdvalue,
             modcd: modcd,
-            descrp: descrp
+            descrp: descrp,
+            macro: macroTextarea
         };
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
     });
+}
+
+//Function to run spell macros
+function runMacro(rndidmacro) {
+
+    let input = document.getElementById(rndidmacro).value;
+    input = input.trim();
+    let regex = /\s+/g;
+    input = input.replace(regex, "");
+
+    if (!isValidInput(input)) {
+        console.log('Invalid input')
+        return;
+    }
+
+    const STR = parseInt(document.getElementById('MODSTR').innerHTML);
+    const DEX = parseInt(document.getElementById('MODDEX').innerHTML);
+    const CON = parseInt(document.getElementById('MODCON').innerHTML);
+    const INT = parseInt(document.getElementById('MODINT').innerHTML);
+    const WIS = parseInt(document.getElementById('MODWIS').innerHTML);
+    const CHA = parseInt(document.getElementById('MODCHA').innerHTML);
+    const ACL = parseInt(document.getElementById('arcane_casterlvl').value);
+    const ACL1 = parseInt(document.getElementById('arcanemc1name').value);
+    const ACL2 = parseInt(document.getElementById('arcanemc2name').value);
+    const ACL3 = parseInt(document.getElementById('arcanemc3name').value);
+    let AAM = document.getElementById('arcane_car').value;
+    AAM = parseInt(document.getElementById('MOD' + AAM).innerHTML);
+    let AAM1 = document.getElementById('arcane_carml1').value;
+    AAM1 = parseInt(document.getElementById('MOD' + AAM1).innerHTML);
+    let AAM2 = document.getElementById('arcane_carml2').value;
+    AAM2 = parseInt(document.getElementById('MOD' + AAM2).innerHTML);
+    let AAM3 = document.getElementById('arcane_carml3').value;
+    AAM3 = parseInt(document.getElementById('MOD' + AAM3).innerHTML);
+    const DCL = parseInt(document.getElementById('divine_casterlvl').value);
+    const DCL1 = parseInt(document.getElementById('divinemc1name').value);
+    const DCL2 = parseInt(document.getElementById('divinemc2name').value);
+    const DCL3 = parseInt(document.getElementById('divinemc3name').value);
+    let DAM = document.getElementById('divine_car').value;
+    DAM = parseInt(document.getElementById('MOD' + DAM).innerHTML);
+    let DAM1 = document.getElementById('divine_carml1').value;
+    DAM1 = parseInt(document.getElementById('MOD' + DAM1).innerHTML);
+    let DAM2 = document.getElementById('divine_carml2').value;
+    DAM2 = parseInt(document.getElementById('MOD' + DAM2).innerHTML);
+    let DAM3 = document.getElementById('divine_carml3').value;
+    DAM3 = parseInt(document.getElementById('MOD' + DAM3).innerHTML);
+
+    let totalmod = [];
+    let result = [];
+    let entries = input.split(',');
+    //MACRO:1d20+STR
+    for (let i = 0; i < entries.length; i++) {
+        let parts = entries[i].split(':');
+        let name = parts[0];
+        let dice = '';
+        let mod = '';
+
+        if (parts[1].includes('_')) {
+
+            let rollParts = parts[1].split('_');
+            dice = rollParts[0];
+            mod = rollParts[1];
+        } else {
+            dice = parts[1];
+        }
+
+        let dices = dice.split('d');
+        let numberOfdices = eval(dices[0]);
+        let typeOfdices = dices[1];
+        dice = numberOfdices + 'd' + typeOfdices;
+
+        if (mod === '') {
+            result.push({ name: name, roll: dice });
+        } else {
+            // Evaluate the expression for mod
+            totalmod[i] = eval(mod);
+            let modsign = totalmod[i] > 0 ? '+' : '-';
+            result.push({ name: name, roll: dice + modsign + Math.abs(totalmod[i]) });
+        }
+    }
+    TS.dice.putDiceInTray(result, false);
+}
+
+//Validar input de macro
+function isValidInput(input) {
+
+    // Define the allowed characters in the input
+    let allowedChars = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789_:+-*/,() ';
+    // Split the input into an array of characters
+    let inputArray = input.split('');
+    // Check if every character in the input is allowed
+    return inputArray.every(char => allowedChars.includes(char));
 }
 
 function initSpellist(reset) { //R as input for reset the spells
@@ -919,7 +1067,7 @@ function initInventory(reset) { //R as input for reset inventory
 }
 ///////////////////////////////////////
 
-//ADD A SPELL WITH THE BUTTON
+//ADD AN ITEM WITH THE BUTTON
 function addInventoryItem() {
 
     let itemDetails = { item: 'nombre', cantidad: '0', pesoxunidad: '0', pesototal: '0', detalles: 'detalles' };
@@ -929,7 +1077,7 @@ function addInventoryItem() {
     <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory(${rndid});" value="${itemDetails.item}"></td>
     <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${rndid});" value="${itemDetails.cantidad}"></td>
     <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${rndid});" value="${itemDetails.pesoxunidad}"></td>
-    <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${rndid});" value="${itemDetails.pesototal}"></td>
+    <td style="width: 30px;  font-size:16px; text-align: center;"><span id="pesototal-${rndid}">${itemDetails.pesototal}</span></td>
     <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory(${rndid});" >${itemDetails.detalles}</textarea></td>
     <td><button onclick="deletethisitemrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
   </tr>`
@@ -954,6 +1102,14 @@ function deletethisitemrow(rowid) {
     TS.localStorage.campaign.getBlob().then((storedData) => {
         data = JSON.parse(storedData || "{}");
         delete data.inventory[rowid];
+
+        let Totalweight = 0;
+        for (const item in data.inventory) {
+            Totalweight += parseInt(data.inventory[item].pesototal);
+        }
+
+        document.getElementById('Totalweight').innerHTML = Totalweight;
+
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
     })
 
@@ -970,20 +1126,28 @@ function updateInventory(rowid) {
     itemDetails.item = itemrow.cells[0].childNodes[0].value;
     itemDetails.cantidad = itemrow.cells[1].childNodes[0].value;
     itemDetails.pesoxunidad = itemrow.cells[2].childNodes[0].value;
-    itemDetails.pesototal = itemrow.cells[3].childNodes[0].value;
+    itemDetails.pesototal = itemDetails.cantidad * itemDetails.pesoxunidad;
     itemDetails.detalles = itemrow.cells[4].childNodes[0].value;
+
+    document.getElementById(`pesototal-${rowid.id}`).innerHTML = itemDetails.pesototal;
 
     TS.localStorage.campaign.getBlob().then((storedData) => {
         data = JSON.parse(storedData || "{}");
 
         data.inventory[rowid.id] = itemDetails;
 
+        let Totalweight = 0;
+        for (const item in data.inventory) {
+            Totalweight += parseInt(data.inventory[item].pesototal);
+        }
+
+        document.getElementById('Totalweight').innerHTML = Totalweight;
+
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
     });
 }
 
-
-// Reload all spell list from file
+// Reload all inventory items from file
 function reloadInventory() {
 
     let table = document.getElementById('inventory-table');
@@ -1005,13 +1169,12 @@ function reloadInventory() {
             <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory(${item});" value="${itemDetails.item}"></td>
             <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${item});" value="${itemDetails.cantidad}"></td>
             <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${item});" value="${itemDetails.pesoxunidad}"></td>
-            <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${item});" value="${itemDetails.pesototal}"></td>
+            <td style="width: 30px;  font-size:16px text-align: center;"><span id="pesototal-${item}">${itemDetails.pesototal}</span></td>
             <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory(${item});" >${itemDetails.detalles}</textarea></td>
             <td><button onclick="deletethisitemrow('${item}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
           </tr>`
 
-                // Append the new row to the table <textarea name="" id="" cols="30" rows="10"></textarea>
-
+                // Append the new row to the table
                 let newRow = document.createElement('tr');
                 newRow.id = item;
                 newRow.innerHTML = row;
@@ -1019,6 +1182,13 @@ function reloadInventory() {
                 document.getElementById('inventory-table').appendChild(newRow);
 
             }
+
+            let Totalweight = 0;
+            for (const item in data.inventory) {
+                Totalweight += parseInt(data.inventory[item].pesototal);
+            }
+
+            document.getElementById('Totalweight').innerHTML = Totalweight;
         }
     });
 }

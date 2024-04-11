@@ -10,6 +10,9 @@
     "subscriptions": {
       "symbiote": {
         "onStateChangeEvent": "onStateChangeEvent"
+      },
+      "dice": {
+        "onRollResults": "handleRollResult"
       }
     }
   },

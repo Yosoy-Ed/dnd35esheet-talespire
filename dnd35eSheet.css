@@ -75,14 +75,13 @@ input{
 }
 
 #dnd35logo{
-    flex-shrink: 0;
-    text-align: center;
     background: url("35elogo.png");
     background-size: contain;
     background-color: transparent;  
     background-repeat: no-repeat; 
-    width: 171px;
-    height:49px;
+    width: 100px;
+    height:100px;
+    margin-left: 40px;
 }
 
 .ability-scores, .saving-scores, .pginivel, .CA, .bab, .touch-atacks {
@@ -116,7 +115,11 @@ align-items: center;
 select {
   overflow-y: auto;
 }
-
+/*
+#weapons-div table{
+  border: 1px solid white;
+}
+*/
 /* --------------------------------------------------------------------COLLAPSABLE----------------------------------------------------------------*/
 
 /* Style the button that is used to open and close the collapsible content */
