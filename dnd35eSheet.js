@@ -582,14 +582,28 @@ function rolldanho(isCritic, weaponNumber) {
 
     if (isCritic === '1') {
 
-        rollcritic(name, dice, weaponNumber);
+        name = name + 'Critical ';
+        const critMultiplier = parseInt(document.getElementById('crt-multiplier'+ weaponNumber).value);
+        const critDices = dices.split('d');
+        const critDicesnumber = critMultiplier * parseInt(critDices[0]);
+        const rollDice = critDicesnumber + 'd' + critDices[1];
+        const critModifier = critMultiplier*modifier;
+        const roll = rollDice + typeStr + critModifier;
+        
+        const msg = '<color="red">' +  name.toUpperCase() +': ' + roll;
+
+        TS.chat.send(msg, 'campaign' ); 
+        
+        TS.dice.putDiceInTray([{ name: name, roll: roll }], false);
+
+        //rollcritic(name, dice, weaponNumber);
 
     } else {
 
         TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
     }
 }
-
+/*
 function rollcritic(name, roll, weaponIndex) {
 
     TS.dice.putDiceInTray([{ name: name, roll: roll }], false).then((diceSetResponse) => {
@@ -623,7 +637,7 @@ async function handleRollResult(rollEvent) {
         }
     }
 }
-
+*/
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////  WEAPONS 
