@@ -344,6 +344,7 @@ function recalculate() {
     updateModifier('INT');
     updateModifier('WIS');
     updateModifier('CHA');
+    updateBab();
 
 }
 
@@ -430,9 +431,22 @@ function updateSkill(skill) {
 
     document.getElementById(`${skill}_mod`).innerHTML = modifier;
 }
+// Actualizacion de BAB
+function updateBab() {
+    const bab1 = document.getElementById('bab1').value;
 
-//////////////////////////////////////////// rolling buttons  ///////////////////////
+    let bab2 = bab1 >= 6 ? bab1 - 5 : 0;
+    let bab3 = bab2 >= 6 ? bab2 - 5 : 0;
+    let bab4 = bab3 >= 6 ? bab3 - 5 : 0;
 
+    document.getElementById('bab2').innerText = bab2;
+    document.getElementById('bab3').innerText = bab3;
+    document.getElementById('bab4').innerText = bab4;
+}
+
+//////////////////////////////////////////// ROLLING BUTTONS  ///////////////////////
+
+// ROLL AN ABILITY CHECK
 function rollAbility(ability) {
     let txtcheck = '';
     if (ability === 'STR') { txtcheck = 'Fuerza' }
@@ -453,7 +467,7 @@ function rollAbility(ability) {
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
 }
-
+/**** ROLL FOR INITIATIVE ****/
 function rollIniciative() {
     let name = 'Iniciativa';
     let dice = "1d20";
@@ -468,7 +482,7 @@ function rollIniciative() {
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
 }
-
+// ROLL SAVING THROWS
 function rollSaving(saving) {
     let txtcheck = '';
     if (saving === 'FOR') { txtcheck = 'Fortaleza' }
@@ -488,7 +502,7 @@ function rollSaving(saving) {
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
 }
-
+// ROLL TOUCH ATTACK MELEE OR RANGED
 function rollTouch(touch) {
     let txtcheck = '';
     let modifier = 0;
@@ -512,7 +526,7 @@ function rollTouch(touch) {
     TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
 
 }
-
+// ROLL A SKILL
 function rollSkill(skill) {
 
     let charmod = parseInt(document.getElementById(`${skill}_abilitymod`).innerHTML);
@@ -534,31 +548,50 @@ function rollSkill(skill) {
     TS.dice.putDiceInTray([{ name: skill, roll: dice }], false);
 
 }
-
-function rollatk(weaponNumber) {
+// ROLL ATTACK, SINGLE OR FULL ATTACK
+function rollatk(isFullattack, weaponNumber) {
 
     let name = document.getElementById(`skill_${weaponNumber}_name`).value;
     let caratk = document.getElementById(`skill_${weaponNumber}_caratk`).value;
     let modtatk = parseInt(document.getElementById(`skill_${weaponNumber}_modtatk`).value);
-    let bab1 = parseInt(document.getElementById(`bab1`).value);
+    const bab1 = parseInt(document.getElementById(`bab1`).value);
 
     let caratkval = parseInt(document.getElementById(`MOD${caratk}`).innerHTML);
 
     let modifier = modtatk + caratkval + bab1;
+    let modifier2 = modifier - 5;
+    let modifier3 = modifier - 10;
+    let modifier4 = modifier - 15;
 
-    let dice = "1d20";
-
-    let typeStr = modifier < 0 ? "-" : "+";
+    const typeStr = modifier < 0 ? "-" : "+";
+    const typeStr2 = modifier2 < 0 ? "-" : "+";
+    const typeStr3 = modifier3 < 0 ? "-" : "+";
+    const typeStr4 = modifier4 < 0 ? "-" : "+";
 
     modifier = Math.abs(modifier);
+    modifier2 = Math.abs(modifier2);
+    modifier3 = Math.abs(modifier3);
+    modifier4 = Math.abs(modifier4);
 
-    dice = dice + typeStr + modifier;
+    const dice = '1d20' + typeStr + modifier;
+    const dice2 = '1d20' + typeStr2 + modifier2;
+    const dice3 = '1d20' + typeStr3 + modifier3;
+    const dice4 = '1d20' + typeStr4 + modifier4;
 
     name = name + " Attack";
 
-    TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
-
+    if (isFullattack === '1') {
+        TS.chat.send('FULL ATTACK', 'campaign');
+        TS.dice.putDiceInTray([{ name: name + ' 1', roll: dice },
+        { name: name + ' 2', roll: dice2 },
+        { name: name + ' 3', roll: dice3 },
+        { name: name + ' 4', roll: dice4 }], false);
+    } else {
+        TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+    }
 }
+
+
 // ROLL DAMAGE
 let trackedIds = {};
 function rolldanho(isCritic, weaponNumber) {
@@ -583,17 +616,17 @@ function rolldanho(isCritic, weaponNumber) {
     if (isCritic === '1') {
 
         name = name + 'Critical ';
-        const critMultiplier = parseInt(document.getElementById('crt-multiplier'+ weaponNumber).value);
+        const critMultiplier = parseInt(document.getElementById('crt-multiplier' + weaponNumber).value);
         const critDices = dices.split('d');
         const critDicesnumber = critMultiplier * parseInt(critDices[0]);
         const rollDice = critDicesnumber + 'd' + critDices[1];
-        const critModifier = critMultiplier*modifier;
+        const critModifier = critMultiplier * modifier;
         const roll = rollDice + typeStr + critModifier;
-        
-        const msg = '<color="red">' +  name.toUpperCase() +': ' + roll;
 
-        TS.chat.send(msg, 'campaign' ); 
-        
+        const msg = '<color="red">' + name.toUpperCase() + ': ' + roll;
+
+        TS.chat.send(msg, 'campaign');
+
         TS.dice.putDiceInTray([{ name: name, roll: roll }], false);
 
         //rollcritic(name, dice, weaponNumber);
