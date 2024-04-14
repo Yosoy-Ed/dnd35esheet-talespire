@@ -18,7 +18,18 @@
                         <div><label>Clase</label><br><input type="text" class="text_border" id="charclass"></input>
                         </div>
                         <div><label>Raza</label><br><input type="text" class="text_border" id="charrace"></input></div>
-                        <div><label>Tamanho</label><br><input type="text" class="text_border" id="charsize"></input>
+                        <div><label>Tamanho</label><br><select id="charsize" onchange="reloadSizemods()">
+                                        <option value="8">Minusculo</option>
+                                        <option value="4">Diminuto</option>
+                                        <option value="2">Menudo</option>
+                                        <option value="1">Pequenho</option>
+                                        <option value="0" selected>Mediano</option>
+                                        <option value="-1">Grande</option>
+                                        <option value="-2">Enorme</option>
+                                        <option value="-4">Gargantuesco</option>
+                                        <option value="-8">Colosal</option>
+                                </select><span style="margin-left: 20px; font-size: 16px; color: white;"
+                                        class="charsizemod">0</span>
                         </div>
                         <div><label>Edad</label><br><input type="text" class="text_border" id="charage"></input></div>
                         <div><label>Sexo</label><br><input type="text" class="text_border" id="charsex"></input></div>
@@ -318,9 +329,7 @@
                                                         <td><input id="charshield" oninput="updatecharCA()"
                                                                         type="number" class="number-input" required
                                                                         min="-999" max="999" size="2"></td>
-                                                        <td><input id="charsizeca" oninput="updatecharCA()"
-                                                                        type="number" class="number-input" required
-                                                                        min="-999" max="999" size="2"></td>
+                                                        <td> <span id="charsizeca" class="charsizemod"></span></td>
                                                         <td><input id="chardeflection" oninput="updatecharCA()"
                                                                         type="number" class="number-input" required
                                                                         min="-999" max="999" size="2"></td>
@@ -469,9 +478,17 @@
                                                 <tr>
                                                         <td><button id="mt-attack" onclick="rollTouch('M')">Melee touch
                                                                         attack</button></td>
+                                                        <td><label for="tamextramod">Extra mod: </label><input
+                                                                        type="number" class="number-input"
+                                                                        id="tamextramod"></td>
+                                                </tr>
+                                                <tr>
                                                         <td><button id="rt-attack" onclick="rollTouch('R')">Ranged touch
                                                                         attack</button>
                                                         </td>
+                                                        <td><label for="tarextramod">Extra mod: </label><input
+                                                                        type="number" class="number-input"
+                                                                        id="tarextramod"></td>
                                                 </tr>
                                         </table>
                                 </div>

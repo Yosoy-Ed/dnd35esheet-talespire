@@ -44,6 +44,7 @@ var skill_array = [
     "Usar_objeto_magico",
     "Uso_de_cuerdas"
 ]
+let trackedIds = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////// GENERIC SHEET CODE ///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +292,7 @@ function onStateChangeEvent(msg) {
         initCustomobjects();
         zeroingInputs();
         reloadSpellist();
-        reloadInventory();
+        reloadInventory();        
         //recalculate();  
     }
 }
@@ -344,8 +345,8 @@ function recalculate() {
     updateModifier('INT');
     updateModifier('WIS');
     updateModifier('CHA');
-    updateBab();
-
+    updateBab();   
+    reloadSizemods();
 }
 
 //////////////////////////////////////////// input updates ////////////////////// 
@@ -364,8 +365,8 @@ function updateModifier(ability) {
     document.getElementById(`TOT${ability}`).innerHTML = total;
 
     //Actualizar todos los campos que tengan como clase la habilidad (ej: MODSTR)
-    var elements = document.getElementsByClassName(`MOD${ability}`);
-    for (var i = 0; i < elements.length; i++) {
+    let elements = document.getElementsByClassName(`MOD${ability}`);
+    for (let i = 0; i < elements.length; i++) {
         elements[i].innerHTML = modifier;
     }
 
@@ -400,7 +401,7 @@ function updateSaving(saving) {
 //Actualizacion de CA
 function updatecharCA() {
     let chararmor = parseInt(document.getElementById(`chararmor`).value);
-    let charsize = parseInt(document.getElementById(`charsizeca`).value);
+    let charsize = parseInt(document.getElementById(`charsize`).value);
     let charshield = parseInt(document.getElementById(`charshield`).value);
     let characnatural = parseInt(document.getElementById(`characnatural`).value);
     let characeesquiva = parseInt(document.getElementById(`characeesquiva`).value);
@@ -412,6 +413,8 @@ function updatecharCA() {
 
     let CATOTAL = 10 + chararmor + charshield + chardex + charsize + chardeflection + characnatural + characeesquiva + characex1 + characex2 + characex3;
     let CATOUCH = 10 + chardex + charsize + chardeflection + characeesquiva + characex1 + characex2 + characex3;
+
+    console.log(charsize)
 
     document.getElementById('CATOTAL').innerHTML = CATOTAL;
     document.getElementById('CATOUCH').innerHTML = CATOUCH;
@@ -442,6 +445,15 @@ function updateBab() {
     document.getElementById('bab2').innerText = bab2;
     document.getElementById('bab3').innerText = bab3;
     document.getElementById('bab4').innerText = bab4;
+}
+
+function reloadSizemods() {
+    const charsizemod = document.getElementById('charsize').value;
+    let charsizemodspans = document.getElementsByClassName('charsizemod');
+    for (let i=0; i < charsizemodspans.length; i++) {
+        charsizemodspans[i].innerHTML = charsizemod;
+    }
+    updatecharCA();
 }
 
 //////////////////////////////////////////// ROLLING BUTTONS  ///////////////////////
@@ -506,16 +518,23 @@ function rollSaving(saving) {
 function rollTouch(touch) {
     let txtcheck = '';
     let modifier = 0;
+    const sizemod = parseInt(document.getElementById(`charsize`).value);
     if (touch === 'M') {
         txtcheck = 'Melee touch attack';
         modifier = parseInt(document.getElementById(`bab1`).value) + parseInt(document.getElementById(`MODSTR`).innerHTML);
+        const extramod = parseInt(document.getElementById('tamextramod').value);
+        modifier = modifier + extramod;
     }
     if (touch === 'R') {
         txtcheck = 'Ranged touch attack';
         modifier = parseInt(document.getElementById(`bab1`).value) + parseInt(document.getElementById(`MODDEX`).innerHTML);
+        const extramod = parseInt(document.getElementById('tarextramod').value);
+        modifier = modifier + extramod;
     }
     let name = txtcheck;
     let dice = "1d20";
+
+    modifier = modifier + sizemod;
 
     let typeStr = modifier < 0 ? "-" : "+";
 
@@ -555,10 +574,11 @@ function rollatk(isFullattack, weaponNumber) {
     let caratk = document.getElementById(`skill_${weaponNumber}_caratk`).value;
     let modtatk = parseInt(document.getElementById(`skill_${weaponNumber}_modtatk`).value);
     const bab1 = parseInt(document.getElementById(`bab1`).value);
+    const sizemod = parseInt(document.getElementById(`charsize`).value);
 
     let caratkval = parseInt(document.getElementById(`MOD${caratk}`).innerHTML);
 
-    let modifier = modtatk + caratkval + bab1;
+    let modifier = modtatk + caratkval + bab1 + sizemod;
     let modifier2 = modifier - 5;
     let modifier3 = modifier - 10;
     let modifier4 = modifier - 15;
@@ -593,7 +613,6 @@ function rollatk(isFullattack, weaponNumber) {
 
 
 // ROLL DAMAGE
-let trackedIds = {};
 function rolldanho(isCritic, weaponNumber) {
 
     let name = document.getElementById(`skill_${weaponNumber}_name`).value;
@@ -636,42 +655,6 @@ function rolldanho(isCritic, weaponNumber) {
         TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
     }
 }
-/*
-function rollcritic(name, roll, weaponIndex) {
-
-    TS.dice.putDiceInTray([{ name: name, roll: roll }], false).then((diceSetResponse) => {
-        trackedIds[diceSetResponse] = weaponIndex; // Save the id of the rolls
-    });
-}
-
-async function handleRollResult(rollEvent) {   
-    
-    let roll = rollEvent.payload;
-
-    if (trackedIds[roll.rollId] == undefined) {
-        //if we haven't tracked that roll, ignore it because it's not from us
-        return;
-    }
-    if (rollEvent.kind == "rollResults") {        //user rolled the dice we tracked and there's a new result for us to look at
-
-        const weaponIndex = trackedIds[roll.rollId];         
-        const multiplier = parseInt(document.getElementById('crt-multiplier'+ weaponIndex).value);
-
-        let promises = [];
-        for (let group of roll.resultsGroups) {
-            TS.dice.evaluateDiceResultsGroup(group).then((value) => {
-            const critdmg = value*multiplier;     
-            
-            const msg = '<size=20><color="red"> Critical Damage: ' + '<color="green">' + critdmg + '</size>';
-
-            TS.chat.send(msg, 'campaign' );  
-
-            });
-        }
-    }
-}
-*/
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////  WEAPONS 
 
@@ -997,6 +980,9 @@ function runMacro(rndidmacro) {
     let DAM3 = document.getElementById('divine_carml3').value;
     DAM3 = parseInt(document.getElementById('MOD' + DAM3).innerHTML);
 
+    const isHidden = input.includes('hidden:') ? true : false;
+    input = isHidden ? input.replace("hidden:", "") : input;
+
     let totalmod = [];
     let result = [];
     let entries = input.split(',');
@@ -1030,7 +1016,42 @@ function runMacro(rndidmacro) {
             result.push({ name: name, roll: dice + modsign + Math.abs(totalmod[i]) });
         }
     }
-    TS.dice.putDiceInTray(result, false);
+    TS.dice.putDiceInTray(result, isHidden).then((diceSetResponse) => {
+        trackedIds[diceSetResponse] = isHidden; // Save the id of the rolls
+    });
+}
+
+async function handleRollResult(rollEvent) {
+
+    let roll = rollEvent.payload;
+
+    if (trackedIds[roll.rollId] == undefined) {
+        //if we haven't tracked that roll, ignore it because it's not from us
+        return;
+    }
+    if (rollEvent.kind == "rollResults") {        //user rolled the dice we tracked and there's a new result for us to look at
+
+        const isHidden = trackedIds[roll.rollId];
+        console.log()
+        //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);
+
+        if (isHidden) {
+
+            let msg = '';
+            let promises = [];
+
+            for (let group of rollEvent.payload.resultsGroups) {
+                let promise = TS.dice.evaluateDiceResultsGroup(group).then((value) => {
+                    msg = msg + '<color="red">' + group.name + ': <color="green">' + value + '<br>';
+                });
+                promises.push(promise);
+            }
+
+            Promise.all(promises).then(() => {
+                TS.chat.send(msg, "campaign");
+            });
+        }
+    }
 }
 
 //Validar input de macro
