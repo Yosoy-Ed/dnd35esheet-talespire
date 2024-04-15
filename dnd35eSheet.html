@@ -1363,11 +1363,11 @@
                                 -- Se pueden usar limitadores así [valor | maximo] --<br><br>
 
                                 Fireball : [ACL|10]d6 >>> Maximo 10 d6<br>
-                                Curar Heridas leves : 1d8+[ACL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
+                                Curar Heridas leves : 1d8_[ACL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
 
                                 -- Se pueden usar multiples lanzamientos seprando con comma (,) -- <br><br>
                                 Fireball : [ACL|10]d6, Resistencia a conjuros:1d20_ACL <br>
-                                Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6+1 <br><br>
+                                Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6_1 <br><br>
 
                                 -- Los siguientes valores predefinidos son validos --<br>
                         <table border="1px solid white" style="text-align:center;">
@@ -1862,7 +1862,90 @@
         <!------------------------------------------------------------------------------------------------------------------------>
 
         <div id="Tab6" class="tabcontent">
+                <button type="button" class="collapsible">CUSTOM MACROS</button>
+                <div class="content" style="font-family:Roboto">
 
+                        <br><br>
+                        <button type="button" class="collapsible">INFO MACROS</button>
+                        <div class="content" style="font-family:Roboto">
+                                <h1>Estructura de los macros:</h1>
+                                <p>
+
+                                        NO SE DEBEN USAR LETRAS CON ACENTOS<br><br>
+
+                                        -- Basico --<br><br>
+                                        nombre :dados <br>
+                                        Fireball : 8d6 <br><br>
+
+                                        -- Se debe usar guion de piso despues del dado para agregar modificadores, name : dice_mods -- <br><br>
+
+                                        Magic missile : 1d6_1 <br>
+                                        New Spell: 1d6_1+5<br><br>
+
+                                        -- Se pueden usar algunos valores predefinidos ( ej: ACL es "Arcane caster level", ver al final) --<br><br>
+                                        Fireball : ACLd6 <br>
+                                        Magic attack : ACLd6_INT*DEX/2<br><br>
+
+                                        -- Se pueden usar limitadores así [valor | maximo] --<br><br>
+
+                                        Fireball : [ACL|10]d6 >>> Maximo 10 d6<br>
+                                        Curar Heridas leves : 1d8_[ACL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
+
+                                        -- Se pueden usar multiples lanzamientos seprando con comma (,) -- <br><br>
+                                        Fireball : [ACL|10]d6, Resistencia a conjuros:1d20_ACL <br>
+                                        Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6_1 <br><br>
+
+                                        -- Los siguientes valores predefinidos son validos --<br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>Fuerza</th>
+                                                <th>Destreza</th>
+                                                <th>Constitucion</th>
+                                                <th>Inteligencia</th>
+                                                <th>Sabiduria</th>
+                                                <th>Carisma</th>
+                                        </tr>
+                                        <tr>
+                                                <td>STR</td>
+                                                <td>DEX</td>
+                                                <td>CON</td>
+                                                <td>INT</td>
+                                                <td>WIS</td>
+                                                <td>CHA</td>
+                                        </tr>
+                                </table><br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>Arcane Caster Level</th>
+                                                <th>Divine Caster Level</th>
+                                                <th>Arcane Ability Modifier</th>
+                                                <th>Divine Ability Modifier</th>
+                                        </tr>
+                                        <tr>
+                                                <td>ACL</td>
+                                                <td>DCL</td>
+                                                <td>AAM</td>
+                                                <td>DAM</td>
+                                        </tr>
+                                </table><br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>ACLn</th>
+                                                <th>DCLn</th>
+                                                <th>AAMn</th>
+                                                <th>DAMn</th>
+                                                <th colspan="6">n es el numero si es multiclase</th>
+                                        </tr>
+                                </table>
+                                <br><br>
+                                </p>
+                        </div>
+                        <br><br><button onclick="addnewMacro();">Agregar macro</button><br><br>
+
+                        <div id="macrotablesdiv"></div>
+
+                </div>
+                <br><br>
 
                 <button type="button" class="collapsible">GENERIC SHEET MACROS</button>
                 <div class="content" style="font-family:Roboto">
@@ -1884,13 +1967,7 @@
                         </div>
                 </div>
                 <br><br>
-                <button type="button" class="collapsible">CUSTOM MACROS</button>
-                <div class="content" style="font-family:Roboto">
-                        <br><button onclick="addnewMacro();">Agregar macro</button><br><br>
 
-                        <div id="macrotablesdiv"></div>
-
-                </div>
         </div>
 
         <!------------------------------------------------------------------------------------------------------------------------------>
