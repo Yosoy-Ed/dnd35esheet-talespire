@@ -45,6 +45,7 @@ var skill_array = [
     "Uso_de_cuerdas"
 ]
 let trackedIds = {};
+const mexp = new Mexp();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////// GENERIC SHEET CODE ///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,6 +226,7 @@ function loadStoredData() {
         let data = JSON.parse(storedData || "{}");
         delete data.spelltype; //--------------------------------------------------------excluir objeto de info de conjuros
         delete data.inventory; //--------------------------------------------------------excluir objeto de inventario
+        delete data.macros; //--------------------------------------------------------excluir objeto de inventario
         if (Object.entries(data).length > 0) {
             clearStorageButton.classList.add("danger");
             clearStorageButton.disabled = false;
@@ -287,12 +289,11 @@ function onStateChangeEvent(msg) {
         clearStorageButton = document.getElementById("clear-storage");
         loadStoredData();
         initSheet();
-        //initSpellist('I');// argument R to reset spells    
-        //initInventory('I');// argument R to reset inventory  
         initCustomobjects();
         zeroingInputs();
         reloadSpellist();
-        reloadInventory();        
+        reloadInventory();
+        loadMacros();
         //recalculate();  
     }
 }
@@ -301,7 +302,7 @@ function onStateChangeEvent(msg) {
 /////////////////////////////////////////////////////////////////////// DND 35e /////////////////////////////////////////////////////////// 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// -------------------------------------------------------------------TABS-
+// -------------------------------------------------------------------TABS--
 // Funcion para abrir pestañas 
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
@@ -317,7 +318,7 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-// Pestaña abierta por default 
+// Pestaña abierta por default
 document.getElementById("btab1").click();
 
 function zeroingInputs() {
@@ -345,7 +346,7 @@ function recalculate() {
     updateModifier('INT');
     updateModifier('WIS');
     updateModifier('CHA');
-    updateBab();   
+    updateBab();
     reloadSizemods();
 }
 
@@ -414,8 +415,6 @@ function updatecharCA() {
     let CATOTAL = 10 + chararmor + charshield + chardex + charsize + chardeflection + characnatural + characeesquiva + characex1 + characex2 + characex3;
     let CATOUCH = 10 + chardex + charsize + chardeflection + characeesquiva + characex1 + characex2 + characex3;
 
-    console.log(charsize)
-
     document.getElementById('CATOTAL').innerHTML = CATOTAL;
     document.getElementById('CATOUCH').innerHTML = CATOUCH;
 
@@ -436,21 +435,38 @@ function updateSkill(skill) {
 }
 // Actualizacion de BAB
 function updateBab() {
-    const bab1 = document.getElementById('bab1').value;
 
+    const bab1 = document.getElementById('bab1').value;
     let bab2 = bab1 >= 6 ? bab1 - 5 : 0;
     let bab3 = bab2 >= 6 ? bab2 - 5 : 0;
     let bab4 = bab3 >= 6 ? bab3 - 5 : 0;
 
-    document.getElementById('bab2').innerText = bab2;
-    document.getElementById('bab3').innerText = bab3;
-    document.getElementById('bab4').innerText = bab4;
+    const babClasses1 = document.getElementsByClassName('bab1');
+    const babClasses2 = document.getElementsByClassName('bab2');
+    const babClasses3 = document.getElementsByClassName('bab3');
+    const babClasses4 = document.getElementsByClassName('bab4');
+
+    for (let i = 0; i < babClasses1.length; i++) {
+        babClasses1[i].innerHTML = bab1;
+    }
+
+    for (let i = 0; i < babClasses2.length; i++) {
+        babClasses2[i].innerHTML = bab2;
+    }
+
+    for (let i = 0; i < babClasses3.length; i++) {
+        babClasses3[i].innerHTML = bab3;
+    }
+
+    for (let i = 0; i < babClasses4.length; i++) {
+        babClasses4[i].innerHTML = bab4;
+    }
 }
 
 function reloadSizemods() {
     const charsizemod = document.getElementById('charsize').value;
     let charsizemodspans = document.getElementsByClassName('charsizemod');
-    for (let i=0; i < charsizemodspans.length; i++) {
+    for (let i = 0; i < charsizemodspans.length; i++) {
         charsizemodspans[i].innerHTML = charsizemod;
     }
     updatecharCA();
@@ -598,10 +614,11 @@ function rollatk(isFullattack, weaponNumber) {
     const dice3 = '1d20' + typeStr3 + modifier3;
     const dice4 = '1d20' + typeStr4 + modifier4;
 
+    const faname = '<style="Title"><color="red">' + name.toUpperCase() + '   FULL ATTACK </style>';
     name = name + " Attack";
 
     if (isFullattack === '1') {
-        TS.chat.send('FULL ATTACK', 'campaign');
+        // TS.chat.send(faname, 'campaign');
         TS.dice.putDiceInTray([{ name: name + ' 1', roll: dice },
         { name: name + ' 2', roll: dice2 },
         { name: name + ' 3', roll: dice3 },
@@ -944,45 +961,58 @@ function runMacro(rndidmacro) {
     let regex = /\s+/g;
     input = input.replace(regex, "");
 
+    //VALIDATE CHARACTERS
     if (!isValidInput(input)) {
         console.log('Invalid input')
         return;
     }
 
-    const STR = parseInt(document.getElementById('MODSTR').innerHTML);
-    const DEX = parseInt(document.getElementById('MODDEX').innerHTML);
-    const CON = parseInt(document.getElementById('MODCON').innerHTML);
-    const INT = parseInt(document.getElementById('MODINT').innerHTML);
-    const WIS = parseInt(document.getElementById('MODWIS').innerHTML);
-    const CHA = parseInt(document.getElementById('MODCHA').innerHTML);
-    const ACL = parseInt(document.getElementById('arcane_casterlvl').value);
-    const ACL1 = parseInt(document.getElementById('arcanemc1name').value);
-    const ACL2 = parseInt(document.getElementById('arcanemc2name').value);
-    const ACL3 = parseInt(document.getElementById('arcanemc3name').value);
-    let AAM = document.getElementById('arcane_car').value;
-    AAM = parseInt(document.getElementById('MOD' + AAM).innerHTML);
-    let AAM1 = document.getElementById('arcane_carml1').value;
-    AAM1 = parseInt(document.getElementById('MOD' + AAM1).innerHTML);
-    let AAM2 = document.getElementById('arcane_carml2').value;
-    AAM2 = parseInt(document.getElementById('MOD' + AAM2).innerHTML);
-    let AAM3 = document.getElementById('arcane_carml3').value;
-    AAM3 = parseInt(document.getElementById('MOD' + AAM3).innerHTML);
-    const DCL = parseInt(document.getElementById('divine_casterlvl').value);
-    const DCL1 = parseInt(document.getElementById('divinemc1name').value);
-    const DCL2 = parseInt(document.getElementById('divinemc2name').value);
-    const DCL3 = parseInt(document.getElementById('divinemc3name').value);
+    //CONVERT CONSTANT TO VALUES
     let DAM = document.getElementById('divine_car').value;
-    DAM = parseInt(document.getElementById('MOD' + DAM).innerHTML);
     let DAM1 = document.getElementById('divine_carml1').value;
-    DAM1 = parseInt(document.getElementById('MOD' + DAM1).innerHTML);
     let DAM2 = document.getElementById('divine_carml2').value;
-    DAM2 = parseInt(document.getElementById('MOD' + DAM2).innerHTML);
     let DAM3 = document.getElementById('divine_carml3').value;
-    DAM3 = parseInt(document.getElementById('MOD' + DAM3).innerHTML);
+    let AAM = document.getElementById('arcane_car').value;
+    let AAM1 = document.getElementById('arcane_carml1').value;
+    let AAM2 = document.getElementById('arcane_carml2').value;
+    let AAM3 = document.getElementById('arcane_carml3').value;
 
+    let validConstant = {
+        'STR': parseInt(document.getElementById('MODSTR').innerHTML),
+        'DEX': parseInt(document.getElementById('MODDEX').innerHTML),
+        'CON': parseInt(document.getElementById('MODCON').innerHTML),
+        'INT': parseInt(document.getElementById('MODINT').innerHTML),
+        'WIS': parseInt(document.getElementById('MODWIS').innerHTML),
+        'CHA': parseInt(document.getElementById('MODCHA').innerHTML),
+        'ACL': parseInt(document.getElementById('arcane_casterlvl').value),
+        'ACL1': parseInt(document.getElementById('arcane_mcasterlvl1').value),
+        'ACL2': parseInt(document.getElementById('arcane_mcasterlvl2').value),
+        'ACL3': parseInt(document.getElementById('arcane_mcasterlvl3').value),
+        'AAM': parseInt(document.getElementById('MOD' + AAM).innerHTML),
+        'AAM1': parseInt(document.getElementById('MOD' + AAM1).innerHTML),
+        'AAM2': parseInt(document.getElementById('MOD' + AAM2).innerHTML),
+        'AAM3': parseInt(document.getElementById('MOD' + AAM3).innerHTML),
+        'DCL': parseInt(document.getElementById('divine_casterlvl').value),
+        'DCL1': parseInt(document.getElementById('divine_mcasterlvl1').value),
+        'DCL2': parseInt(document.getElementById('divine_mcasterlvl2').value),
+        'DCL3': parseInt(document.getElementById('divine_mcasterlvl3').value),
+        'DAM': parseInt(document.getElementById('MOD' + DAM).innerHTML),
+        'DAM1': parseInt(document.getElementById('MOD' + DAM1).innerHTML),
+        'DAM2': parseInt(document.getElementById('MOD' + DAM2).innerHTML),
+        'DAM3': parseInt(document.getElementById('MOD' + DAM3).innerHTML)
+    };
+    input = parseExpression(input, validConstant);
+
+    //Set the input with limits [a|b] -> a<b => a, a>b=>b. Ej: 5|6 + 6|5  - 5|5 returns 5+5-5
+    input = proccessLimiter(input);
+
+    console.log(input)
+
+    //CHECK IF THE ROLL SHOULD BE HIDDEN AND SHOW ONLY RESULTS
     const isHidden = input.includes('hidden:') ? true : false;
     input = isHidden ? input.replace("hidden:", "") : input;
 
+    //START PARSING AND EVALUATION
     let totalmod = [];
     let result = [];
     let entries = input.split(',');
@@ -1000,19 +1030,44 @@ function runMacro(rndidmacro) {
             mod = rollParts[1];
         } else {
             dice = parts[1];
+            if (dice.includes('+') || dice.includes('-')) {
+                console.log('error, use _ for modifiers instead of + or -');
+                return;
+            }
         }
 
         let dices = dice.split('d');
-        let numberOfdices = eval(dices[0]);
+        let numberOfdices;
+        ///evaluate number of dices to roll
+        try {
+            numberOfdices = mexp.eval(dices[0]);
+        } catch (error) {
+            console.log('error in number of dices');
+            return;
+        }
+
+        //Validate type of dice
         let typeOfdices = dices[1];
+        if (!['4', '6', '8', '10', '12', '20', '100'].includes(typeOfdices)) {
+
+            console.log('error in type of dice');
+            return;
+        }
+
         dice = numberOfdices + 'd' + typeOfdices;
 
         if (mod === '') {
             result.push({ name: name, roll: dice });
         } else {
             // Evaluate the expression for mod
-            totalmod[i] = eval(mod);
+            try {
+                totalmod[i] = mexp.eval(mod);
+            } catch (error) {
+                console.log('error in modifier');
+                return;
+            }
             let modsign = totalmod[i] > 0 ? '+' : '-';
+            console.log(name + '>>>' + dice + modsign + Math.abs(totalmod[i]))
             result.push({ name: name, roll: dice + modsign + Math.abs(totalmod[i]) });
         }
     }
@@ -1021,6 +1076,41 @@ function runMacro(rndidmacro) {
     });
 }
 
+// PARSE USER CONSTANTS
+function parseExpression(expression, validConstant) {
+    let parsedExpression = expression;
+    for (let key in validConstant) {
+        let value = validConstant[key];
+        let regex = new RegExp(key, 'g');
+        parsedExpression = parsedExpression.replace(regex, value);
+    }
+    return parsedExpression;
+}
+
+// PARSE USER LIMITERS, [a|b] -> a<b => a, a>b=>b 
+function proccessLimiter(str) {
+
+    result = str.replace(/\[(\d+)\|(\d+)\]/g, function (_, num1, num2) {
+        console.log(Math.min(num1, num2))
+        return Math.min(num1, num2);
+    });
+
+    return result;
+}
+
+//Validar input de macro
+function isValidInput(input) {
+
+    // Define the allowed characters in the input
+    let allowedChars = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789_:+-*/,()|[] ';
+    // Split the input into an array of characters
+    let inputArray = input.split('');
+    // Check if every character in the input is allowed
+    return inputArray.every(char => allowedChars.includes(char));
+}
+
+
+// EVALUTE ROLLS RESULTS BASED ON THE trackedIds object
 async function handleRollResult(rollEvent) {
 
     let roll = rollEvent.payload;
@@ -1032,10 +1122,9 @@ async function handleRollResult(rollEvent) {
     if (rollEvent.kind == "rollResults") {        //user rolled the dice we tracked and there's a new result for us to look at
 
         const isHidden = trackedIds[roll.rollId];
-        console.log()
         //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);
 
-        if (isHidden) {
+        if (isHidden === true) {
 
             let msg = '';
             let promises = [];
@@ -1052,88 +1141,12 @@ async function handleRollResult(rollEvent) {
             });
         }
     }
+    trackedIds = {};
 }
-
-//Validar input de macro
-function isValidInput(input) {
-
-    // Define the allowed characters in the input
-    let allowedChars = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789_:+-*/,() ';
-    // Split the input into an array of characters
-    let inputArray = input.split('');
-    // Check if every character in the input is allowed
-    return inputArray.every(char => allowedChars.includes(char));
-}
-
-function initSpellist(reset) { //R as input for reset the spells
-
-    TS.localStorage.campaign.getBlob().then((storedData) => {
-
-        let data = JSON.parse(storedData || "{}");
-
-        if (typeof data.spelltype === 'undefined' || reset === 'R') {
-
-            let spelltype = {
-                arcane: {
-                    lvl0: {},
-                    lvl1: {},
-                    lvl2: {},
-                    lvl3: {},
-                    lvl4: {},
-                    lvl5: {},
-                    lvl6: {},
-                    lvl7: {},
-                    lvl8: {},
-                    lvl9: {}
-                },
-                divine: {
-                    lvl0: {},
-                    lvl1: {},
-                    lvl2: {},
-                    lvl3: {},
-                    lvl4: {},
-                    lvl5: {},
-                    lvl6: {},
-                    lvl7: {},
-                    lvl8: {},
-                    lvl9: {}
-                }
-            }
-
-            data['spelltype'] = spelltype;
-            // Store updated data with the new row  
-            TS.localStorage.campaign.setBlob(JSON.stringify(data));
-            console.log('Spells object created');
-        } else {
-            console.log('Spells object already exists');
-        }
-    });
-}
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////// INVENTARIO //////////////////////////////////////////////////////
-
-function initInventory(reset) { //R as input for reset inventory
-
-    TS.localStorage.campaign.getBlob().then((storedData) => {
-        let data = JSON.parse(storedData || "{}");
-
-        if (typeof data.inventory === 'undefined' || reset === 'R') {
-
-            let inventory = {};
-
-            data['inventory'] = inventory;
-            // Store updated data with the new row  
-            TS.localStorage.campaign.setBlob(JSON.stringify(data));
-            console.log('Inventory object created');
-        } else {
-            console.log('Inventory object already exists');
-        }
-    });
-}
-///////////////////////////////////////
 
 //ADD AN ITEM WITH THE BUTTON
 function addInventoryItem() {
@@ -1260,7 +1273,100 @@ function reloadInventory() {
         }
     });
 }
+///////////////////////////////////////////////////// MACROS TAB /////////////////////////////////////////
 
+// AGREGAR  MACRO
+function addnewMacro() {
+
+    let rndid = generateRandomID();
+
+    let macro = 'roll:1d20_INT+1';
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+
+        data.macros[rndid] = macro;
+
+        TS.localStorage.campaign.setBlob(JSON.stringify(data)).then(() => {
+            loadMacros();
+        });
+    });
+}
+
+// CARGAR MACROS DESDE MEMORIA
+function loadMacros() {        
+
+    document.getElementById('macrotablesdiv').innerHTML = '';
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+
+        let macros = data.macros;
+
+        for (let macroid in macros) {
+
+            console.log(macros[macroid]);
+            let macroTxt = macros[macroid];
+
+            let newMacrotable = `
+            <table">
+        <tbody>
+        <tr>
+            <td><button onclick="runMacro('${macroid}-macro-textarea')">Run Macro</button></td> 
+            <td><textarea id='${macroid}-macro-textarea' style="width: 350px;" onchange="updateMacrostorage('${macroid}')">${macroTxt}</textarea></td>  
+            <td rowspan="2"><button style="background-color:red;" onclick="deleteMacrotable('${macroid}-macro');" ><b>x</b></button></td>
+        </tr>
+        </tbody>
+        </table>
+            `
+            let newTablemacro = document.createElement('table');
+
+            newTablemacro.id = macroid + '-macro';
+            newTablemacro.style.border = '1px solid white';
+            newTablemacro.style.margin = '1em';
+            newTablemacro.innerHTML = newMacrotable;
+        
+            document.getElementById('macrotablesdiv').appendChild(newTablemacro);
+        }
+    });
+}
+// BORRAR TABLAS
+function deleteMacrotable(tableid) {
+
+    let macroid = tableid.split('-');
+    macroid = macroid[0];
+
+    let tbl = document.getElementById(tableid);
+    if(tbl) tbl.parentNode.removeChild(tbl);
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+        console.log(macroid)
+        console.log(data.macros[macroid])
+        delete data.macros[macroid];
+
+        TS.localStorage.campaign.setBlob(JSON.stringify(data));
+    });
+}
+
+// GUARDAR AL EDITAR 
+function updateMacrostorage(macroid) {
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+
+        data.macros[macroid] = document.getElementById(`${macroid}-macro-textarea`).value;
+
+        TS.localStorage.campaign.setBlob(JSON.stringify(data));
+    });
+}
+/*      <tr>
+            <td style="text-align: center;"><button onclick="validateMacro('${macroid}-macro')">Validar</button></td>
+            <td style="background-color: white;text-align: center;"><span id="${macroid}-macro-validation" style="color:black">OK</span></td>
+        </tr>
+*/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 function initCustomobjects() {
 
     TS.localStorage.campaign.getBlob().then((storedData) => {
@@ -1272,14 +1378,27 @@ function initCustomobjects() {
             let inventory = {};
 
             data['inventory'] = inventory;
-            // Store updated data with the new row  
+
             TS.localStorage.campaign.setBlob(JSON.stringify(data));
             console.log('Inventory object created');
         } else {
             console.log('Inventory object already exists');
         }
 
+        //Initialize Macros object
+        if (typeof data.macros === 'undefined') {
 
+            let macros = {};
+
+            data['macros'] = macros;
+
+            TS.localStorage.campaign.setBlob(JSON.stringify(data));
+            console.log('macros object created');
+        } else {
+            console.log('macros object already exists');
+        }
+
+        //Initialize Spell object
         if (typeof data.spelltype === 'undefined') {
 
             let spelltype = {
