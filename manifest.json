@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "name": "dnd 3.5e Character Sheet",
   "entryPoint": "/dnd35eSheet.html",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "descriptionFilePath": "/readme.md",
   "api": {
     "version": "0.1",

@@ -36,7 +36,17 @@
                 <div class="div-charinfo-blocks">
                         <div><label>XP</label><br><input type="number" class="text_border" id="charxp" style="width: 100px;"></input></div>
                         <div><label>Nivel</label><br><input type="number" class="text_border number-input" id="charlvl"></input></div>
-                        <div><label>Alineamiento</label><br><input type="text" class="text_border" id="charaligment"></input></div>
+                        <div><label>Alineamiento</label><br><select id="characteraligment">
+                                <option value="LB">Legal Bueno</option>
+                                <option value="LN">Legal Neutral</option>
+                                <option value="LM">Legal Maligno</option>
+                                <option value="NB">Neutral Bueno</option>
+                                <option value="NN" selected>Neutral</option>
+                                <option value="NM">Neutral Maligno</option>
+                                <option value="CB">Caotico Bueno</option>
+                                <option value="CN">Caotico Neutral</option>
+                                <option value="CM">Caotico Maligno</option>
+                        </select></div>
                         <div><label>Deidad</label><br><input type="text" class="text_border" id="chargod"></input></div>
                         <div><label>Altura</label><br><input type="text" class="text_border" id="charheight"></input>
                         </div>
@@ -976,6 +986,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_0_name" style="width: 100px;"></td>
                                         <td><select id="skill_0_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -988,6 +999,7 @@
 
                                         <td><input id="skill_0_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_0_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1011,6 +1023,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">2</span></td>
                                         <td><input id="skill_1_name" style="width: 100px;"></td>
                                         <td><select id="skill_1_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1023,6 +1036,7 @@
 
                                         <td><input id="skill_1_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_1_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1047,6 +1061,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">3</span></td>
                                         <td><input id="skill_2_name" style="width: 100px;"></td>
                                         <td><select id="skill_2_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1059,6 +1074,7 @@
 
                                         <td><input id="skill_2_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_2_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1083,6 +1099,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">4</span></td>
                                         <td><input id="skill_3_name" style="width: 100px;"></td>
                                         <td><select id="skill_3_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1095,6 +1112,7 @@
 
                                         <td><input id="skill_3_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_3_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1119,6 +1137,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">5</span></td>
                                         <td><input id="skill_4_name" style="width: 100px;"></td>
                                         <td><select id="skill_4_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1131,6 +1150,7 @@
 
                                         <td><input id="skill_4_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_4_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1155,6 +1175,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">6</span></td>
                                         <td><input id="skill_5_name" style="width: 100px;"></td>
                                         <td><select id="skill_5_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1167,6 +1188,7 @@
 
                                         <td><input id="skill_5_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_5_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1191,6 +1213,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">7</span></td>
                                         <td><input id="skill_6_name" style="width: 100px;"></td>
                                         <td><select id="skill_6_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1203,6 +1226,7 @@
 
                                         <td><input id="skill_6_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_6_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1227,6 +1251,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">8</span></td>
                                         <td><input id="skill_7_name" style="width: 100px;"></td>
                                         <td><select id="skill_7_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1239,6 +1264,7 @@
 
                                         <td><input id="skill_7_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_7_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1263,6 +1289,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">9</span></td>
                                         <td><input id="skill_8_name" style="width: 100px;"></td>
                                         <td><select id="skill_8_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1275,6 +1302,7 @@
 
                                         <td><input id="skill_8_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_8_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1299,6 +1327,7 @@
                                         <td rowspan="3"><span style="font-size: 20px;">10</span></td>
                                         <td><input id="skill_9_name" style="width: 100px;"></td>
                                         <td><select id="skill_9_caratk" style="width: 60px;">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1311,6 +1340,7 @@
 
                                         <td><input id="skill_9_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_9_cardanho">
+                                                        <option value="0">NONE</option>
                                                         <option value="STR">STR</option>
                                                         <option value="DEX">DEX</option>
                                                         <option value="CON">CON</option>
@@ -1342,77 +1372,106 @@
 
                 <button type="button" class="collapsible">INFO MACROS</button>
                 <div class="content" style="font-family:Roboto">
-                        <h1>Estructura de los macros:</h1>
-                        <p>
+                        
+                        <div id="infomacros">
+                                <h1>Estructura de los macros:</h1>
+                                <p>
 
-                                NO SE DEBEN USAR LETRAS CON ACENTOS<br><br>
+                                        <br>
 
-                                -- Basico --<br><br>
-                                nombre :dados <br>
-                                Fireball : 8d6 <br><br>
+                                        <span class="infomacroscomment">-- Basico --</span><br><br>
+                                        nombre de lanzamiento:dados <br>
+                                        Fireball : 8d6 <br><br>
 
-                                -- Se debe usar guion de piso despues del dado para agregar modificadores, name : dice_mods -- <br><br>
+                                        <span class="infomacroscomment">-- Se debe usar guion de piso despues del dado para agregar modificadores, name : dice_mods -- </span><br><br>
 
-                                Magic missile : 1d6_1 <br>
-                                New Spell: 1d6_1+5<br><br>
+                                        Magic missile : 1d6_1 <br>
+                                        New Spell: 1d6_1+5<br><br>
 
-                                -- Se pueden usar algunos valores predefinidos ( ej: ACL es "Arcane caster level", ver al final) --<br><br>
-                                Fireball : ACLd6 <br>
-                                Magic attack : ACLd6_INT*DEX/2<br><br>
+                                        <span class="infomacroscomment">-- Se pueden usar algunos valores predefinidos ( ej: ACL es "Arcane caster level", ver al final) -- </span><br><br>
+                                        Fireball : ACLd6 <br>
+                                        Magic attack : ACLd6_INT*DEX/2<br><br>
 
-                                -- Se pueden usar limitadores así [valor | maximo] --<br><br>
+                                        <span class="infomacroscomment">-- Se pueden usar limitadores así [valor | maximo] --</span><br><br>
 
-                                Fireball : [ACL|10]d6 >>> Maximo 10 d6<br>
-                                Curar Heridas leves : 1d8_[ACL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
+                                        Fireball : [ACL|10]d6 >>> Maximo 10 d6<br>
+                                        Curar Heridas leves : 1d8_[DCL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
 
-                                -- Se pueden usar multiples lanzamientos seprando con comma (,) -- <br><br>
-                                Fireball : [ACL|10]d6, Resistencia a conjuros:1d20_ACL <br>
-                                Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6_1 <br><br>
+                                        <span class="infomacroscomment">-- Se pueden usar multiples lanzamientos separando con comma (,) -- </span><br><br>
+                                        Fireball : [ACL|10]d6, Resistencia a conjuros:1d20_ACL <br>
+                                        Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6_1 <br><br>
 
-                                -- Los siguientes valores predefinidos son validos --<br>
-                        <table border="1px solid white" style="text-align:center;">
+                                        <span class="infomacroscomment">-- Se pueden agregar comentarios con @:Comentario despues de una coma, el comentario debe tener _ para dejar espacios entre palabras sin usar comas -- </span><br><br>
+                                        Curar Heridas leves : 1d8_[DCL|5], @:1d8_+_nivel_de_lanzador_Maximo_5<br><br>
+                                        
+
+                                        <span class="infomacroscomment">-- Los siguientes valores predefinidos son validos --</span><br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>Fuerza</th>
+                                                <th>Destreza</th>
+                                                <th>Constitucion</th>
+                                                <th>Inteligencia</th>
+                                                <th>Sabiduria</th>
+                                                <th>Carisma</th>
+                                        </tr>
+                                        <tr>
+                                                <td>STR</td>
+                                                <td>DEX</td>
+                                                <td>CON</td>
+                                                <td>INT</td>
+                                                <td>WIS</td>
+                                                <td>CHA</td>
+                                        </tr>
+                                </table><br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>Arcane Caster Level</th>
+                                                <th>Divine Caster Level</th>
+                                                <th>Arcane Ability Modifier</th>
+                                                <th>Divine Ability Modifier</th>
+                                        </tr>
+                                        <tr>
+                                                <td>ACL</td>
+                                                <td>DCL</td>
+                                                <td>AAM</td>
+                                                <td>DAM</td>
+                                        </tr>
+                                </table><br>
+                                <table border="1px solid white" style="text-align:center;">
+                                        <tr>
+                                                <th>ACLn</th>
+                                                <th>DCLn</th>
+                                                <th>AAMn</th>
+                                                <th>DAMn</th>
+                                                <th colspan="6">n es el numero si es multiclase (1, 2, 3) </th>
+                                        </tr>
+                                </table>
+                                <br>
+                                <table border="1px solid white" style="text-align:center;">
                                 <tr>
-                                        <th>Fuerza</th>
-                                        <th>Destreza</th>
-                                        <th>Constitucion</th>
-                                        <th>Inteligencia</th>
-                                        <th>Sabiduria</th>
-                                        <th>Carisma</th>
+                                        <th>Base Attack Bonus<br>change n for 1,2,3,4</th>
+                                        <th>FORTITUDE SAVE MOD</th>
+                                        <th>REFLEX SAVE MOD</th>
+                                        <th>WILL SAVE MOD</th>
                                 </tr>
                                 <tr>
-                                        <td>STR</td>
-                                        <td>DEX</td>
-                                        <td>CON</td>
-                                        <td>INT</td>
-                                        <td>WIS</td>
-                                        <td>CHA</td>
+                                        <td>BABn</td>
+                                        <td>FORM</td>
+                                        <td>REFM</td>
+                                        <td>WILM</td>
                                 </tr>
-                        </table><br>
-                        <table border="1px solid white" style="text-align:center;">
-                                <tr>
-                                        <th>Arcane Caster Level</th>
-                                        <th>Divine Caster Level</th>
-                                        <th>Arcane Ability Modifier</th>
-                                        <th>Divine Ability Modifier</th>
-                                </tr>
-                                <tr>
-                                        <td>ACL</td>
-                                        <td>DCL</td>
-                                        <td>AAM</td>
-                                        <td>DAM</td>
-                                </tr>
-                        </table><br>
-                        <table border="1px solid white" style="text-align:center;">
-                                <tr>
-                                        <th>ACLn</th>
-                                        <th>DCLn</th>
-                                        <th>AAMn</th>
-                                        <th>DAMn</th>
-                                        <th colspan="6">n es el numero si es multiclase</th>
-                                </tr>
-                        </table>
-                        <br><br>
-                        </p>
+                                </table><br><br>
+                                <div id="restricciones infomacros" style="padding:1em; border: 1px solid red;">
+                                        <span style="color:red">RESTRICCIONES</span><br><br>
+                                        - No se pueden usar sumas de dados, ej: 1d8_1d4, 1d8+1d4, 1d8-1d4_3, no funcionarian. aunque tecnicamente es posible, se hace demasiado complejo y por la forma en la que talespire agrupa lanzamientos de dados, puede generar confusiones y resultados no deseados.<br><br>
+                                        - No se pueden realizar multipliacion de dados. ej: 3*(1d8_1), se deberia escribIr 3d8_3. Si se puede realizar operacion en la parte del modificador, ej: 1d8_3*INT/2<br><br>
+                                        - 1d2 y 1d3 se implementaron de manera adicional ya que no hay soporte para estos dados, estos dados no generan lanzamientos, si en el macro hay mas dados soportados (d4 d6 d8 d11 d12 d20 d100), esos si generan lanzamiento. ej: 1d3_INT, muestra el resultado en el chat directamente. 1d3_INT, 1d6,@:Sneak_attack_extra_1d6_cada_dos_niveles, mostrara el resultado del d3 despues de lanzar el d6 junto al comentario. <br><br>
+                                        - No se deben usar acentos en el nombre del lanzamiento
+
+                                </div>
+                                </p>
+                        </div>
                 </div>
                 <br><br>
                 <button type="button" class="collapsible">Divinos</button>
@@ -1829,14 +1888,26 @@
                 <div style="display: flex; justify-content: center; text-align: center;">
                         <textarea id="inventario-textarea" style="flex-grow:1;">Cosas</textarea>
                 </div>
+                
+                <br>
+                <div style="text-align: center;">
+                <span>PC  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pc">
+                <span>PP  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pp">
+                <span>PO  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="po">
+                <span>PPT </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="ppt">
+                </div>
+                <br><br>
 
-                <br><button id="additem_btn" onclick="addInventoryItem()">Agregar Item</button>
-                <br><br>
-                <span>PC </span><input type="number" class="number-input" style="width: 90px;" id="pc">
-                <span>PP </span><input type="number" class="number-input" style="width: 90px;" id="pp">
-                <span>PO </span><input type="number" class="number-input" style="width: 90px;" id="po">
-                <span>PPT </span><input type="number" class="number-input" style="width: 90px;" id="ppt">
-                <br><br>
+
+                <div id="capacidadcarga">
+                        <span>Carga ligera </span><span id="carga-l" style="margin: 0.5em;border-bottom: 1px solid white">33</span><br>
+                        <span>Carga  media </span><span id="carga-m" style="margin: 0.5em;border-bottom: 1px solid white">34-66</span><br>
+                        <span>Carga pesada </span><span id="carga-p" style="margin: 0.5em;border-bottom: 1px solid white">67-100</span><br>
+                </div>
+
+                <br><button id="additem_btn" onclick="addInventoryItem()">Agregar Item</button><br><br>
+
+                
 
                 <table id="inventory-table">
 
@@ -1851,7 +1922,7 @@
                 </table>
                 <br> <br>
                 <div style="border: 1px solid white; font-size: 30px; text-align: center;">
-                        <span>Peso Total:</span><span id="Totalweight">0</span>
+                        <span>Peso Total </span><span id="Totalweight">0</span><span style="margin-left: 0.25em;">lbs</span>
                 </div>
 
         </div>
@@ -1867,78 +1938,7 @@
 
                         <br><br>
                         <button type="button" class="collapsible">INFO MACROS</button>
-                        <div class="content" style="font-family:Roboto">
-                                <h1>Estructura de los macros:</h1>
-                                <p>
-
-                                        NO SE DEBEN USAR LETRAS CON ACENTOS<br><br>
-
-                                        -- Basico --<br><br>
-                                        nombre :dados <br>
-                                        Fireball : 8d6 <br><br>
-
-                                        -- Se debe usar guion de piso despues del dado para agregar modificadores, name : dice_mods -- <br><br>
-
-                                        Magic missile : 1d6_1 <br>
-                                        New Spell: 1d6_1+5<br><br>
-
-                                        -- Se pueden usar algunos valores predefinidos ( ej: ACL es "Arcane caster level", ver al final) --<br><br>
-                                        Fireball : ACLd6 <br>
-                                        Magic attack : ACLd6_INT*DEX/2<br><br>
-
-                                        -- Se pueden usar limitadores así [valor | maximo] --<br><br>
-
-                                        Fireball : [ACL|10]d6 >>> Maximo 10 d6<br>
-                                        Curar Heridas leves : 1d8_[ACL|5] >>> 1d8 + nivel de lanzador, Maximo 5 <br><br>
-
-                                        -- Se pueden usar multiples lanzamientos seprando con comma (,) -- <br><br>
-                                        Fireball : [ACL|10]d6, Resistencia a conjuros:1d20_ACL <br>
-                                        Fireball : ACLd6, Magic attack : ACLd6_INT+3, Magic missile : 1d6_1 <br><br>
-
-                                        -- Los siguientes valores predefinidos son validos --<br>
-                                <table border="1px solid white" style="text-align:center;">
-                                        <tr>
-                                                <th>Fuerza</th>
-                                                <th>Destreza</th>
-                                                <th>Constitucion</th>
-                                                <th>Inteligencia</th>
-                                                <th>Sabiduria</th>
-                                                <th>Carisma</th>
-                                        </tr>
-                                        <tr>
-                                                <td>STR</td>
-                                                <td>DEX</td>
-                                                <td>CON</td>
-                                                <td>INT</td>
-                                                <td>WIS</td>
-                                                <td>CHA</td>
-                                        </tr>
-                                </table><br>
-                                <table border="1px solid white" style="text-align:center;">
-                                        <tr>
-                                                <th>Arcane Caster Level</th>
-                                                <th>Divine Caster Level</th>
-                                                <th>Arcane Ability Modifier</th>
-                                                <th>Divine Ability Modifier</th>
-                                        </tr>
-                                        <tr>
-                                                <td>ACL</td>
-                                                <td>DCL</td>
-                                                <td>AAM</td>
-                                                <td>DAM</td>
-                                        </tr>
-                                </table><br>
-                                <table border="1px solid white" style="text-align:center;">
-                                        <tr>
-                                                <th>ACLn</th>
-                                                <th>DCLn</th>
-                                                <th>AAMn</th>
-                                                <th>DAMn</th>
-                                                <th colspan="6">n es el numero si es multiclase</th>
-                                        </tr>
-                                </table>
-                                <br><br>
-                                </p>
+                        <div id="infomacrosintab" class="content" style="font-family:Roboto">                                
                         </div>
                         <br><br><button onclick="addnewMacro();">Agregar macro</button><br><br>
 

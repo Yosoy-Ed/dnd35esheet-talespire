@@ -46,6 +46,46 @@ var skill_array = [
 ]
 let trackedIds = {};
 const mexp = new Mexp();
+
+const carringCapacity = {
+    1: { "LightLoad": "3 lb. or less", "MediumLoad": "4-6 lb.", "HeavyLoad": "7-10 lb." },
+    2: { "LightLoad": "6 lb. or less", "MediumLoad": "7-13 lb.", "HeavyLoad": "14-20 lb." },
+    3: { "LightLoad": "10 lb. or less", "MediumLoad": "11-20 lb.", "HeavyLoad": "21-30 lb." },
+    4: { "LightLoad": "13 lb. or less", "MediumLoad": "14-26 lb.", "HeavyLoad": "27-40 lb." },
+    5: { "LightLoad": "16 lb. or less", "MediumLoad": "17-33 lb.", "HeavyLoad": "34-50 lb." },
+    6: { "LightLoad": "20 lb. or less", "MediumLoad": "21-40 lb.", "HeavyLoad": "41-60 lb." },
+    7: { "LightLoad": "23 lb. or less", "MediumLoad": "24-46 lb.", "HeavyLoad": "47-70 lb." },
+    8: { "LightLoad": "26 lb. or less", "MediumLoad": "27-53 lb.", "HeavyLoad": "54-80 lb." },
+    9: { "LightLoad": "30 lb. or less", "MediumLoad": "31-60 lb.", "HeavyLoad": "61-90 lb." },
+    10: { "LightLoad": "33 lb. or less", "MediumLoad": "34-66 lb.", "HeavyLoad": "67-100 lb." },
+    11: { "LightLoad": "38 lb. or less", "MediumLoad": "39-76 lb.", "HeavyLoad": "77-115 lb." },
+    12: { "LightLoad": "43 lb. or less", "MediumLoad": "44-86 lb.", "HeavyLoad": "87-130 lb." },
+    13: { "LightLoad": "50 lb. or less", "MediumLoad": "51-100 lb.", "HeavyLoad": "101-150 lb." },
+    14: { "LightLoad": "58 lb. or less", "MediumLoad": "59-116 lb.", "HeavyLoad": "117-175 lb." },
+    15: { "LightLoad": "66 lb. or less", "MediumLoad": "67-133 lb.", "HeavyLoad": "134-200 lb." },
+    16: { "LightLoad": "76 lb. or less", "MediumLoad": "77-153 lb.", "HeavyLoad": "154-230 lb." },
+    17: { "LightLoad": "86 lb. or less", "MediumLoad": "87-173 lb.", "HeavyLoad": "174-260 lb." },
+    18: { "LightLoad": "100 lb. or less", "MediumLoad": "101-200 lb.", "HeavyLoad": "201-300 lb." },
+    19: { "LightLoad": "116 lb. or less", "MediumLoad": "117-233 lb.", "HeavyLoad": "234-350 lb." },
+    20: { "LightLoad": "133 lb. or less", "MediumLoad": "134-266 lb.", "HeavyLoad": "267-400 lb." },
+    21: { "LightLoad": "153 lb. or less", "MediumLoad": "154-306 lb.", "HeavyLoad": "307-460 lb." },
+    22: { "LightLoad": "173 lb. or less", "MediumLoad": "174-346 lb.", "HeavyLoad": "347-520 lb." },
+    23: { "LightLoad": "200 lb. or less", "MediumLoad": "201-400 lb.", "HeavyLoad": "401-600 lb." },
+    24: { "LightLoad": "233 lb. or less", "MediumLoad": "234-466 lb.", "HeavyLoad": "467-700 lb." },
+    25: { "LightLoad": "266 lb. or less", "MediumLoad": "267-533 lb.", "HeavyLoad": "534-800 lb." },
+    26: { "LightLoad": "306 lb. or less", "MediumLoad": "307-613 lb.", "HeavyLoad": "614-920 lb." },
+    27: { "LightLoad": "346 lb. or less", "MediumLoad": "347-693 lb.", "HeavyLoad": "694-1,040 lb." },
+    28: { "LightLoad": "400 lb. or less", "MediumLoad": "401-800 lb.", "HeavyLoad": "801-1,200 lb." },
+    29: { "LightLoad": "466 lb. or less", "MediumLoad": "467-933 lb.", "HeavyLoad": "934-1,400 lb." }
+};
+
+
+window.onload = function () {
+    let originalDiv = document.getElementById('infomacros');
+    let clonedDiv = originalDiv.cloneNode(true);
+    document.getElementById('infomacrosintab').appendChild(clonedDiv);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////// GENERIC SHEET CODE ///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +266,7 @@ function loadStoredData() {
         let data = JSON.parse(storedData || "{}");
         delete data.spelltype; //--------------------------------------------------------excluir objeto de info de conjuros
         delete data.inventory; //--------------------------------------------------------excluir objeto de inventario
-        delete data.macros; //--------------------------------------------------------excluir objeto de inventario
+        delete data.macros; //--------------------------------------------------------excluir objeto de inventario         
         if (Object.entries(data).length > 0) {
             clearStorageButton.classList.add("danger");
             clearStorageButton.disabled = false;
@@ -234,6 +274,8 @@ function loadStoredData() {
         }
         let keyCount = 0;
         for (let [key, value] of Object.entries(data)) {
+            //console.log(key + ':' + value)        
+            if (key === 'charaligment') continue;  //Variable name changed
             keyCount++;
             let element = document.getElementById(key);
             element.value = value;
@@ -372,6 +414,7 @@ function updateModifier(ability) {
     }
 
     //-----------------Actualizar modificadores dependientes de las habilidades
+    if (ability === 'STR') { updateCarringcap(); }
     if (ability === 'CON') { updateSaving('FOR'); }
     if (ability === 'WIS') { updateSaving('WIL'); }
     if (ability === 'DEX') {
@@ -382,6 +425,16 @@ function updateModifier(ability) {
     for (let skill of skill_array) {
         updateSkill(skill);
     }
+}
+
+function updateCarringcap() {
+
+    const charStr = document.getElementById('TOTSTR').innerHTML;
+
+    document.getElementById('carga-l').innerHTML = carringCapacity[charStr].LightLoad;
+    document.getElementById('carga-m').innerHTML = carringCapacity[charStr].MediumLoad;
+    document.getElementById('carga-p').innerHTML = carringCapacity[charStr].HeavyLoad;
+
 }
 
 //Actualizacion de salvaciones     
@@ -592,7 +645,8 @@ function rollatk(isFullattack, weaponNumber) {
     const bab1 = parseInt(document.getElementById(`bab1`).value);
     const sizemod = parseInt(document.getElementById(`charsize`).value);
 
-    let caratkval = parseInt(document.getElementById(`MOD${caratk}`).innerHTML);
+    //let caratkval = parseInt(document.getElementById(`MOD${caratk}`).innerHTML);
+    let caratkval = caratk === '0' ? 0 : parseInt(document.getElementById(`MOD${caratk}`).innerHTML);
 
     let modifier = modtatk + caratkval + bab1 + sizemod;
     let modifier2 = modifier - 5;
@@ -637,7 +691,8 @@ function rolldanho(isCritic, weaponNumber) {
     let card = document.getElementById(`skill_${weaponNumber}_cardanho`).value;
     let modtd = parseInt(document.getElementById(`skill_${weaponNumber}_modtdanho`).value);
 
-    let caratkval = parseInt(document.getElementById(`MOD${card}`).innerHTML);
+    //let caratkval = parseInt(document.getElementById(`MOD${card}`).innerHTML);
+    let caratkval = card === '0' ? '0' : parseInt(document.getElementById(`MOD${card}`).innerHTML);
 
     let modifier = caratkval + modtd;
 
@@ -645,13 +700,32 @@ function rolldanho(isCritic, weaponNumber) {
 
     modifier = Math.abs(modifier);
 
+    const numberOfdices = dices.split('d')[0];
+    const diceType = dices.split('d')[1];
+
+    let isQuietroll = false;
+
+    let isd2 = false;
+    if (diceType === '2') {
+        isQuietroll = true;
+        isd2 = true;
+        dices = numberOfdices + 'd4';
+    }
+
+    let isd3 = false;
+    if (diceType === '3') {
+        isQuietroll = true;
+        isd3 = true;
+        dices = numberOfdices + 'd6';
+    }
+
     let dice = dices + typeStr + modifier;
 
-    name = name + " Damage";
+    name = name + " Damage ";
 
     if (isCritic === '1') {
 
-        name = name + 'Critical ';
+        name = 'Critical ' + name;
         const critMultiplier = parseInt(document.getElementById('crt-multiplier' + weaponNumber).value);
         const critDices = dices.split('d');
         const critDicesnumber = critMultiplier * parseInt(critDices[0]);
@@ -659,17 +733,24 @@ function rolldanho(isCritic, weaponNumber) {
         const critModifier = critMultiplier * modifier;
         const roll = rollDice + typeStr + critModifier;
 
-        const msg = '<color="red">' + name.toUpperCase() + ': ' + roll;
+        //const msg = '<align="center"><style="Title"><color="red">' + name + '</style>' ;
+        //TS.chat.send(msg, 'campaign');
 
-        TS.chat.send(msg, 'campaign');
-
-        TS.dice.putDiceInTray([{ name: name, roll: roll }], false);
+        TS.dice.putDiceInTray([{ name: name, roll: roll }], isQuietroll).then((diceSetResponse) => {
+            if (isd2) { trackedIds[diceSetResponse] = 'isCritical_isd2' } else {
+                if (isd3) { trackedIds[diceSetResponse] = 'isCritical_isd3' }
+            }
+        });
 
         //rollcritic(name, dice, weaponNumber);
 
     } else {
 
-        TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+        TS.dice.putDiceInTray([{ name: name, roll: dice }], isQuietroll).then((diceSetResponse) => {
+            if (isd2) { trackedIds[diceSetResponse] = 'isd2' } else {
+                if (isd3) { trackedIds[diceSetResponse] = 'isd3' }
+            }
+        });
     }
 }
 
@@ -999,14 +1080,20 @@ function runMacro(rndidmacro) {
         'DAM': parseInt(document.getElementById('MOD' + DAM).innerHTML),
         'DAM1': parseInt(document.getElementById('MOD' + DAM1).innerHTML),
         'DAM2': parseInt(document.getElementById('MOD' + DAM2).innerHTML),
-        'DAM3': parseInt(document.getElementById('MOD' + DAM3).innerHTML)
+        'DAM3': parseInt(document.getElementById('MOD' + DAM3).innerHTML),
+        'BAB1': parseInt(document.getElementById('bab1').value),
+        'BAB2': parseInt(document.getElementById('bab2').innerHTML),
+        'BAB3': parseInt(document.getElementById('bab3').innerHTML),
+        'BAB4': parseInt(document.getElementById('bab4').innerHTML),
+        'FORM': parseInt(document.getElementById('SAVFOR').innerHTML),
+        'REFM': parseInt(document.getElementById('SAVREF').innerHTML),
+        'WILM': parseInt(document.getElementById('SAVWIL').innerHTML)
     };
+    //Replaces Variables with numbers
     input = parseExpression(input, validConstant);
 
-    //Set the input with limits [a|b] -> a<b => a, a>b=>b. Ej: 5|6 + 6|5  - 5|5 returns 5+5-5
+    //Set the input with limits [a|b] -> a<b => a, a>b=>b. Ej: 5|6 + 6|5 - 5|5 returns 5+5-5
     input = proccessLimiter(input);
-
-    console.log(input)
 
     //CHECK IF THE ROLL SHOULD BE HIDDEN AND SHOW ONLY RESULTS
     const isHidden = input.includes('hidden:') ? true : false;
@@ -1015,10 +1102,19 @@ function runMacro(rndidmacro) {
     //START PARSING AND EVALUATION
     let totalmod = [];
     let result = [];
+    let userComments = [];
+    let fakeDice = false;
+    let customDices = [];
     let entries = input.split(',');
-    //MACRO:1d20+STR
+    // PROCCESS EACH MACRO SPEARATED BY COMMA
     for (let i = 0; i < entries.length; i++) {
         let parts = entries[i].split(':');
+        // if this is a part @:helloworld 
+        if (parts[0] === '@') {
+            userComments.push(parts[1]);
+            continue;
+        }
+        // if this is a part something:NdM+n
         let name = parts[0];
         let dice = '';
         let mod = '';
@@ -1048,13 +1144,23 @@ function runMacro(rndidmacro) {
 
         //Validate type of dice
         let typeOfdices = dices[1];
-        if (!['4', '6', '8', '10', '12', '20', '100'].includes(typeOfdices)) {
+        if (!['2', '3', '4', '6', '8', '10', '12', '20', '100'].includes(typeOfdices)) {
 
             console.log('error in type of dice');
             return;
         }
 
         dice = numberOfdices + 'd' + typeOfdices;
+
+        if (typeOfdices === '2' || typeOfdices === '3') {
+            fakeDice = true;
+            let fakemod = mod === '' ? '0' : mod;
+            fakemod = mexp.eval(fakemod);
+            let modsign = fakemod > 0 ? '+' : '-';
+            customDices.push(name + '^' + dice + '_' + modsign + ':' + Math.abs(fakemod));
+            console.log(customDices)
+            continue;
+        }
 
         if (mod === '') {
             result.push({ name: name, roll: dice });
@@ -1071,9 +1177,18 @@ function runMacro(rndidmacro) {
             result.push({ name: name, roll: dice + modsign + Math.abs(totalmod[i]) });
         }
     }
-    TS.dice.putDiceInTray(result, isHidden).then((diceSetResponse) => {
-        trackedIds[diceSetResponse] = isHidden; // Save the id of the rolls
-    });
+
+    if (result.length > 0) {
+        TS.dice.putDiceInTray(result, isHidden).then((diceSetResponse) => {
+            trackedIds[diceSetResponse] = isHidden ? 'isHidden_isMacro' : 'isMacro';
+            trackedIds[diceSetResponse + '-comments'] = userComments;
+            trackedIds[diceSetResponse + '-fakedice'] = fakeDice ? customDices : '';//Save an array of d2 and d3 
+            //trackedIds[diceSetResponse] = 'isHidden'; // Save the id of the rolls        
+        });
+    } else {
+        macroCustomdice(customDices);
+    }
+
 }
 
 // PARSE USER CONSTANTS
@@ -1091,7 +1206,6 @@ function parseExpression(expression, validConstant) {
 function proccessLimiter(str) {
 
     result = str.replace(/\[(\d+)\|(\d+)\]/g, function (_, num1, num2) {
-        console.log(Math.min(num1, num2))
         return Math.min(num1, num2);
     });
 
@@ -1102,11 +1216,67 @@ function proccessLimiter(str) {
 function isValidInput(input) {
 
     // Define the allowed characters in the input
-    let allowedChars = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789_:+-*/,()|[] ';
+    let allowedChars = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789_:+-*/,()|[]@ ';
     // Split the input into an array of characters
     let inputArray = input.split('');
     // Check if every character in the input is allowed
     return inputArray.every(char => allowedChars.includes(char));
+}
+
+function macroCustomdice(customDices) {
+    let cDmsg = '';
+    for (let dices of customDices) {
+
+        let name = dices.split('^')[0];
+        dices = dices.split('^')[1];
+
+        let dice = dices.split('_')[0];
+        let mod = dices.split('_')[1];
+        let modsign = mod.split(':')[0];
+        let modval = mod.split(':')[1];
+        let nOfdices = dice.split('d')[0];
+        let tOfdices = dice.split('d')[1];
+
+        if (tOfdices === '2') {
+            for (let i = 0; i < nOfdices; i++) {
+                let thisval = Math.floor(Math.random() * 2) + 1;
+                let total = mexp.eval(thisval + modsign + modval);
+                //let total = thisval + parseInt(modval);
+
+                cDmsg = cDmsg + `<color="red">${name} (d2) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
+            }
+        }
+
+        if (tOfdices === '3') {
+            for (let i = 0; i < nOfdices; i++) {
+                let thisval = Math.floor(Math.random() * 3) + 1;
+                let total = mexp.eval(thisval + modsign + modval);
+                cDmsg = cDmsg + `<color="red">${name} (d3) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
+            }
+        }
+    }
+
+    let msgSplit = cDmsg.split('<br>');
+    let msg2send = [];
+    let msgpart = '';
+
+    for (let i = 0; i < msgSplit.length; i++) {
+        msgpart += msgSplit[i];
+        if ((i + 1) % 4 !== 0 && i !== msgSplit.length - 1) {
+            msgpart += '<br>';
+        }
+        if ((i + 1) % 4 === 0 || i === msgSplit.length - 1) {
+            msg2send.push(msgpart);
+            msgpart = '';
+        }
+    }
+
+    for (let msgFrag of msg2send) {
+        TS.chat.send(msgFrag, "campaign");
+    }
+
+    //TS.chat.send(cDmsg, "campaign");
+
 }
 
 
@@ -1121,14 +1291,61 @@ async function handleRollResult(rollEvent) {
     }
     if (rollEvent.kind == "rollResults") {        //user rolled the dice we tracked and there's a new result for us to look at
 
-        const isHidden = trackedIds[roll.rollId];
-        //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);
+        const idCustom = trackedIds[roll.rollId]; // String containing a custom id like 'isd3' 'isCritical'
 
-        if (isHidden === true) {
+        //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);  trackedIds[diceSetResponse] = 'isd3';
+
+        if (idCustom.includes('isMacro')) {
 
             let msg = '';
             let promises = [];
+            let userComments = trackedIds[roll.rollId + '-comments'];
+            let customDices = trackedIds[roll.rollId + '-fakedice'];
+            let isFake = false;
+            let cDmsg = '';
 
+            //Eval custom dices -- customDices.push(dice + '_' + modsign + ':' + Math.abs(fakemod)); --
+            ///1d2_-:1,1d2_+:5
+            if (customDices !== '') {
+
+                for (let dices of customDices) {
+
+                    let name = dices.split('^')[0];
+                    dices = dices.split('^')[1];
+
+                    let dice = dices.split('_')[0];
+                    let mod = dices.split('_')[1];
+                    let modsign = mod.split(':')[0];
+                    let modval = mod.split(':')[1];
+                    let nOfdices = dice.split('d')[0];
+                    let tOfdices = dice.split('d')[1];
+
+                    if (tOfdices === '2') {
+                        for (let i = 0; i < nOfdices; i++) {
+                            //let rollobject = { val: Math.floor(Math.random() * 2) + 1, mod: modval }
+                            //d2Arr.push(rollobject);
+                            let thisval = Math.floor(Math.random() * 2) + 1;
+                            let total = mexp.eval(thisval + modsign + modval);
+
+                            cDmsg = cDmsg + `<color="red">${name} (d2) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
+                        }
+                    }
+
+                    if (tOfdices === '3') {
+                        for (let i = 0; i < nOfdices; i++) {
+                            let thisval = Math.floor(Math.random() * 3) + 1;
+                            let total = mexp.eval(thisval + modsign + modval);
+                            cDmsg = cDmsg + `<color="red">${name} (d3) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
+                        }
+                    }
+                }
+
+                //TS.chat.send(cDmsg, "campaign");
+                isFake = true;
+            }
+
+
+            //Get standard dices
             for (let group of rollEvent.payload.resultsGroups) {
                 let promise = TS.dice.evaluateDiceResultsGroup(group).then((value) => {
                     msg = msg + '<color="red">' + group.name + ': <color="green">' + value + '<br>';
@@ -1137,9 +1354,79 @@ async function handleRollResult(rollEvent) {
             }
 
             Promise.all(promises).then(() => {
-                TS.chat.send(msg, "campaign");
+                msg = isFake ? msg + cDmsg : msg;
+                msg = msg + userComments.join('<br>').replace(/_/g, ' ');
+
+                //Divide message to get around the 400 chars limit, dividing the message if there are more than 4 lines in the msg.
+                let msgSplit = msg.split('<br>');
+                let msg2send = [];
+                let msgpart = '';
+
+                for (let i = 0; i < msgSplit.length; i++) {
+                    msgpart += msgSplit[i];
+                    if ((i + 1) % 4 !== 0 && i !== msgSplit.length - 1) {
+                        msgpart += '<br>';
+                    }
+                    if ((i + 1) % 4 === 0 || i === msgSplit.length - 1) {
+                        msg2send.push(msgpart);
+                        msgpart = '';
+                    }
+                }
+
+                for (let msgFrag of msg2send) {
+                    TS.chat.send(msgFrag, "campaign");
+                }
+
             });
         }
+
+        if (idCustom.includes('isCritical')) {
+            let name = rollEvent.payload.resultsGroups[0].name;
+            const msg = '<align="center"><style="Title"><color="red">' + name + '</style>';
+            TS.chat.send(msg, 'campaign');
+        }
+
+        if (idCustom.includes('isd3')) {
+
+            for (let group of rollEvent.payload.resultsGroups) {
+                //console.log(rollEvent.payload.resultsGroups)
+                const diceResults = group.result.operands[0].results; //array with the dices result
+                const mod = group.result.operands[1].value;
+                console.log(mod)
+                let results = [];
+                for (let result of diceResults) {
+                    let d3Conversion = Math.round(result / 2);
+                    results.push(d3Conversion);
+                }
+
+                let rollGroup = [{ "name": group.name, "result": { "operator": "+", "operands": [{ "kind": "d6", "results": results }, { "value": mod }] } }]
+                const msg = '<align="center"><color="red">El resultado mostrado se convirtio en d3 <br>1,2 = 1 -- 3,4 = 2 -- 5,6 = 3';
+                TS.dice.sendDiceResult(rollGroup, roll.rollId);
+                TS.chat.send(msg, 'campaign');
+            }
+        }
+
+        if (idCustom.includes('isd2')) {
+
+            for (let group of rollEvent.payload.resultsGroups) {
+                //console.log(rollEvent.payload.resultsGroups)
+                const diceResults = group.result.operands[0].results; //array with the dices result
+                const mod = group.result.operands[1].value;
+                console.log(mod)
+                let results = [];
+                for (let result of diceResults) {
+                    let d3Conversion = Math.round(result / 2);
+                    results.push(d3Conversion);
+                }
+
+                let rollGroup = [{ "name": group.name, "result": { "operator": "+", "operands": [{ "kind": "d4", "results": results }, { "value": mod }] } }]
+                const msg = '<align="center"><color="red">El resultado del d4 se convirtio en d2 <br>1,2 = 1 -- 3,4 = 2';
+                TS.dice.sendDiceResult(rollGroup, roll.rollId);
+                TS.chat.send(msg, 'campaign');
+            }
+        }
+        // TS.chat.send(msg, "campaign");
+
     }
     trackedIds = {};
 }
@@ -1155,11 +1442,11 @@ function addInventoryItem() {
     let rndid = generateRandomID();
 
     let row = `<tr>
-    <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory(${rndid});" value="${itemDetails.item}"></td>
-    <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${rndid});" value="${itemDetails.cantidad}"></td>
-    <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${rndid});" value="${itemDetails.pesoxunidad}"></td>
+    <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory('${rndid}');" value="${itemDetails.item}"></td>
+    <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${rndid}');" value="${itemDetails.cantidad}"></td>
+    <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${rndid}');" value="${itemDetails.pesoxunidad}"></td>
     <td style="width: 30px;  font-size:16px; text-align: center;"><span id="pesototal-${rndid}">${itemDetails.pesototal}</span></td>
-    <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory(${rndid});" >${itemDetails.detalles}</textarea></td>
+    <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory('${rndid}');" >${itemDetails.detalles}</textarea></td>
     <td><button onclick="deletethisitemrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
   </tr>`
     // ADD ROW TO TABLE
@@ -1184,12 +1471,19 @@ function deletethisitemrow(rowid) {
         data = JSON.parse(storedData || "{}");
         delete data.inventory[rowid];
 
-        let Totalweight = 0;
+        let Totalweight = 0.00;
         for (const item in data.inventory) {
-            Totalweight += parseInt(data.inventory[item].pesototal);
+            Totalweight += parseFloat(data.inventory[item].pesototal);
         }
 
-        document.getElementById('Totalweight').innerHTML = Totalweight;
+        coinsPc = parseFloat((0.02) * document.getElementById('pc').value);
+        coinsPp = parseFloat((0.02) * document.getElementById('pp').value);
+        coinsPo = parseFloat((0.02) * document.getElementById('po').value);
+        coinsPpt = parseFloat((0.02) * document.getElementById('ppt').value);
+
+        Totalweight = Totalweight + coinsPc + coinsPp + coinsPo + coinsPpt;
+
+        document.getElementById('Totalweight').innerHTML = ' ' + Totalweight.toFixed(2);
 
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
     })
@@ -1200,29 +1494,59 @@ function deletethisitemrow(rowid) {
 // Update inventory when editing input field
 function updateInventory(rowid) {
 
-    let itemrow = rowid;
+    let itemrow = document.getElementById(rowid);
 
     let itemDetails = {};
 
     itemDetails.item = itemrow.cells[0].childNodes[0].value;
     itemDetails.cantidad = itemrow.cells[1].childNodes[0].value;
     itemDetails.pesoxunidad = itemrow.cells[2].childNodes[0].value;
-    itemDetails.pesototal = itemDetails.cantidad * itemDetails.pesoxunidad;
+    itemDetails.pesototal = parseFloat(itemDetails.cantidad * itemDetails.pesoxunidad).toFixed(2);
     itemDetails.detalles = itemrow.cells[4].childNodes[0].value;
 
-    document.getElementById(`pesototal-${rowid.id}`).innerHTML = itemDetails.pesototal;
+    document.getElementById(`pesototal-${rowid}`).innerHTML = itemDetails.pesototal;
+
 
     TS.localStorage.campaign.getBlob().then((storedData) => {
         data = JSON.parse(storedData || "{}");
 
-        data.inventory[rowid.id] = itemDetails;
+        data.inventory[rowid] = itemDetails;
 
-        let Totalweight = 0;
+        let Totalweight = 0.00;
         for (const item in data.inventory) {
-            Totalweight += parseInt(data.inventory[item].pesototal);
+            Totalweight += parseFloat(data.inventory[item].pesototal);
         }
 
-        document.getElementById('Totalweight').innerHTML = Totalweight;
+        coinsPc = parseFloat((0.02) * document.getElementById('pc').value);
+        coinsPp = parseFloat((0.02) * document.getElementById('pp').value);
+        coinsPo = parseFloat((0.02) * document.getElementById('po').value);
+        coinsPpt = parseFloat((0.02) * document.getElementById('ppt').value);
+
+        Totalweight = Totalweight + coinsPc + coinsPp + coinsPo + coinsPpt;
+
+        document.getElementById('Totalweight').innerHTML = ' ' + Totalweight.toFixed(2);
+
+        TS.localStorage.campaign.setBlob(JSON.stringify(data));
+    });
+}
+
+function updateCoin() {
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+
+        let Totalweight = 0.00;
+        for (const item in data.inventory) {
+            Totalweight += parseFloat(data.inventory[item].pesototal);
+        }
+
+        coinsPc = parseFloat((0.02) * document.getElementById('pc').value);
+        coinsPp = parseFloat((0.02) * document.getElementById('pp').value);
+        coinsPo = parseFloat((0.02) * document.getElementById('po').value);
+        coinsPpt = parseFloat((0.02) * document.getElementById('ppt').value);
+
+        Totalweight = Totalweight + coinsPc + coinsPp + coinsPo + coinsPpt;
+
+        document.getElementById('Totalweight').innerHTML = ' ' + Totalweight.toFixed(2);
 
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
     });
@@ -1247,15 +1571,15 @@ function reloadInventory() {
                 let itemDetails = inventory[item];
 
                 let row = `<tr>
-            <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory(${item});" value="${itemDetails.item}"></td>
-            <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${item});" value="${itemDetails.cantidad}"></td>
-            <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory(${item});" value="${itemDetails.pesoxunidad}"></td>
+            <td style="width: 200px; font-size:14px;"><input type="text" onchange="updateInventory('${item}');" value="${itemDetails.item}"></td>
+            <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${item}');" value="${itemDetails.cantidad}"></td>
+            <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${item}');" value="${itemDetails.pesoxunidad}"></td>
             <td style="width: 30px;  font-size:16px text-align: center;"><span id="pesototal-${item}">${itemDetails.pesototal}</span></td>
-            <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory(${item});" >${itemDetails.detalles}</textarea></td>
+            <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory('${item}');" >${itemDetails.detalles}</textarea></td>
             <td><button onclick="deletethisitemrow('${item}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
           </tr>`
 
-                // Append the new row to the table
+                // Append the new row to the table 
                 let newRow = document.createElement('tr');
                 newRow.id = item;
                 newRow.innerHTML = row;
@@ -1264,12 +1588,20 @@ function reloadInventory() {
 
             }
 
-            let Totalweight = 0;
+            let Totalweight = 0.00;
             for (const item in data.inventory) {
-                Totalweight += parseInt(data.inventory[item].pesototal);
+                Totalweight += parseFloat(data.inventory[item].pesototal);
+
             }
 
-            document.getElementById('Totalweight').innerHTML = Totalweight;
+            coinsPc = parseFloat((0.02) * document.getElementById('pc').value);
+            coinsPp = parseFloat((0.02) * document.getElementById('pp').value);
+            coinsPo = parseFloat((0.02) * document.getElementById('po').value);
+            coinsPpt = parseFloat((0.02) * document.getElementById('ppt').value);
+
+            Totalweight = Totalweight + coinsPc + coinsPp + coinsPo + coinsPpt;
+
+            document.getElementById('Totalweight').innerHTML = ' ' + Totalweight.toFixed(2);
         }
     });
 }
@@ -1294,7 +1626,7 @@ function addnewMacro() {
 }
 
 // CARGAR MACROS DESDE MEMORIA
-function loadMacros() {        
+function loadMacros() {
 
     document.getElementById('macrotablesdiv').innerHTML = '';
 
@@ -1305,7 +1637,6 @@ function loadMacros() {
 
         for (let macroid in macros) {
 
-            console.log(macros[macroid]);
             let macroTxt = macros[macroid];
 
             let newMacrotable = `
@@ -1325,7 +1656,7 @@ function loadMacros() {
             newTablemacro.style.border = '1px solid white';
             newTablemacro.style.margin = '1em';
             newTablemacro.innerHTML = newMacrotable;
-        
+
             document.getElementById('macrotablesdiv').appendChild(newTablemacro);
         }
     });
@@ -1337,12 +1668,10 @@ function deleteMacrotable(tableid) {
     macroid = macroid[0];
 
     let tbl = document.getElementById(tableid);
-    if(tbl) tbl.parentNode.removeChild(tbl);
+    if (tbl) tbl.parentNode.removeChild(tbl);
 
     TS.localStorage.campaign.getBlob().then((storedData) => {
         data = JSON.parse(storedData || "{}");
-        console.log(macroid)
-        console.log(data.macros[macroid])
         delete data.macros[macroid];
 
         TS.localStorage.campaign.setBlob(JSON.stringify(data));
