@@ -274,7 +274,7 @@ function loadStoredData() {
         }
         let keyCount = 0;
         for (let [key, value] of Object.entries(data)) {
-            //console.log(key + ':' + value)        
+
             if (key === 'charaligment') continue;  //Variable name changed
             keyCount++;
             let element = document.getElementById(key);
@@ -672,7 +672,7 @@ function rollatk(isFullattack, weaponNumber) {
     name = name + " Attack";
 
     if (isFullattack === '1') {
-        // TS.chat.send(faname, 'campaign');
+
         TS.dice.putDiceInTray([{ name: name + ' 1', roll: dice },
         { name: name + ' 2', roll: dice2 },
         { name: name + ' 3', roll: dice3 },
@@ -721,7 +721,7 @@ function rolldanho(isCritic, weaponNumber) {
 
     let dice = dices + typeStr + modifier;
 
-    name = name + " Damage ";
+    // name = name + " Damage ";
 
     if (isCritic === '1') {
 
@@ -732,9 +732,6 @@ function rolldanho(isCritic, weaponNumber) {
         const rollDice = critDicesnumber + 'd' + critDices[1];
         const critModifier = critMultiplier * modifier;
         const roll = rollDice + typeStr + critModifier;
-
-        //const msg = '<align="center"><style="Title"><color="red">' + name + '</style>' ;
-        //TS.chat.send(msg, 'campaign');
 
         TS.dice.putDiceInTray([{ name: name, roll: roll }], isQuietroll).then((diceSetResponse) => {
             if (isd2) { trackedIds[diceSetResponse] = 'isCritical_isd2' } else {
@@ -856,12 +853,12 @@ function addSpell(type, lvl) {
     <td style="width: 30px;"><input onchange="updateSpellstorage('${rndid}')" type="number" style="width: 30px;" value="${spellDetails.preparados}"></td>
     <td style="text-align: center; width: 30px;"><span style="width: 30px;">${spellDetails.cd}</span></td>
     <td style="width: 30px;"><input onchange="updateSpellstorage('${rndid}')" type="number" style="width: 30px;" value="${spellDetails.modcd}"></td>
-    <td style="flex-grow: 1;"><textarea class="spell-description" onchange="updateSpellstorage('${rndid}')" style="flex-grow: 1;">${spellDetails.descrp}</textarea></td>
+    <td style="flex-grow: 1;"><textarea spellcheck="false" class="spell-description" onchange="updateSpellstorage('${rndid}')" style="flex-grow: 1;">${spellDetails.descrp}</textarea></td>
     <td><button onclick="deletethisrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
   </tr>`;
 
     let rowMacro = `<tr>
-    <td colspan="6"><textarea id='${rndid}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${rndid}')">${spellDetails.macro}</textarea></td>  
+    <td colspan="6"><textarea spellcheck="false" id='${rndid}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${rndid}')">${spellDetails.macro}</textarea></td>  
     <td><button onclick="runMacro('${rndid}-macro-textarea')">Run</button></td>      
     </tr>`;
 
@@ -932,12 +929,12 @@ function reloadSpellist() {
           <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.preparados}"></td> 
           <td style="text-align: center; width: 30px;"><span style="width: 30px;">${spellDetails.cd}</span></td>
           <td style="width: 30px;"><input onchange="updateSpellstorage('${spell}')" type="number" style="width: 30px;" value="${spellDetails.modcd}"></td>
-          <td style="flex-grow: 1;"><textarea onchange="updateSpellstorage('${spell}')" style="flex-grow: 1;">${spellDetails.descrp}</textarea></td>
+          <td style="flex-grow: 1;"><textarea spellcheck="false" onchange="updateSpellstorage('${spell}')" style="flex-grow: 1;">${spellDetails.descrp}</textarea></td>
           <td><button onclick="deletethisrow('${spell}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
         </tr>`;
 
                         let rowmacro = `<tr> 
-        <td colspan="6" ><textarea id='${spell}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${spell}')">${spellDetails.macro}</textarea></td>
+        <td colspan="6" ><textarea spellcheck="false" id='${spell}-macro-textarea' style="width: 450px" onchange="updateSpellstorage('${spell}')">${spellDetails.macro}</textarea></td>
         <td><button onclick="runMacro('${spell}-macro-textarea')">Run</button></td>
         </tr>`;
 
@@ -1034,17 +1031,18 @@ function updateSpellstorage(rowid) {
     });
 }
 
-//Function to run spell macros
+//Function to run spell macros 
 function runMacro(rndidmacro) {
 
     let input = document.getElementById(rndidmacro).value;
-    input = input.trim();
-    let regex = /\s+/g;
+    //input = input.trim();
+    //let regex = /\s+/g;
+    const regex = /[\n\r]/g;
     input = input.replace(regex, "");
 
     //VALIDATE CHARACTERS
     if (!isValidInput(input)) {
-        console.log('Invalid input')
+        TS.chat.send('Invalid input', 'campaign');
         return;
     }
 
@@ -1110,7 +1108,7 @@ function runMacro(rndidmacro) {
     for (let i = 0; i < entries.length; i++) {
         let parts = entries[i].split(':');
         // if this is a part @:helloworld 
-        if (parts[0] === '@') {
+        if (parts[0].includes('@')) {
             userComments.push(parts[1]);
             continue;
         }
@@ -1127,7 +1125,7 @@ function runMacro(rndidmacro) {
         } else {
             dice = parts[1];
             if (dice.includes('+') || dice.includes('-')) {
-                console.log('error, use _ for modifiers instead of + or -');
+                TS.chat.send('error, use _ after dice for the first modifier <br> instead of + or -', 'campaign');
                 return;
             }
         }
@@ -1138,7 +1136,7 @@ function runMacro(rndidmacro) {
         try {
             numberOfdices = mexp.eval(dices[0]);
         } catch (error) {
-            console.log('error in number of dices');
+            TS.chat.send('error in number of dices', 'campaign');
             return;
         }
 
@@ -1146,7 +1144,7 @@ function runMacro(rndidmacro) {
         let typeOfdices = dices[1];
         if (!['2', '3', '4', '6', '8', '10', '12', '20', '100'].includes(typeOfdices)) {
 
-            console.log('error in type of dice');
+            TS.chat.send('error in type of dice', 'campaign');
             return;
         }
 
@@ -1158,7 +1156,6 @@ function runMacro(rndidmacro) {
             fakemod = mexp.eval(fakemod);
             let modsign = fakemod > 0 ? '+' : '-';
             customDices.push(name + '^' + dice + '_' + modsign + ':' + Math.abs(fakemod));
-            console.log(customDices)
             continue;
         }
 
@@ -1169,11 +1166,10 @@ function runMacro(rndidmacro) {
             try {
                 totalmod[i] = mexp.eval(mod);
             } catch (error) {
-                console.log('error in modifier');
+                TS.chat.send('error in modifier', 'campaign');
                 return;
             }
             let modsign = totalmod[i] > 0 ? '+' : '-';
-            console.log(name + '>>>' + dice + modsign + Math.abs(totalmod[i]))
             result.push({ name: name, roll: dice + modsign + Math.abs(totalmod[i]) });
         }
     }
@@ -1186,7 +1182,7 @@ function runMacro(rndidmacro) {
             //trackedIds[diceSetResponse] = 'isHidden'; // Save the id of the rolls        
         });
     } else {
-        macroCustomdice(customDices);
+        macroCustomdice(customDices, false);
     }
 
 }
@@ -1223,7 +1219,7 @@ function isValidInput(input) {
     return inputArray.every(char => allowedChars.includes(char));
 }
 
-function macroCustomdice(customDices) {
+function macroCustomdice(customDices, withNormalDice) {
     let cDmsg = '';
     for (let dices of customDices) {
 
@@ -1234,48 +1230,50 @@ function macroCustomdice(customDices) {
         let mod = dices.split('_')[1];
         let modsign = mod.split(':')[0];
         let modval = mod.split(':')[1];
-        let nOfdices = dice.split('d')[0];
-        let tOfdices = dice.split('d')[1];
+        let nOfdices = dice.split('d')[0]; //number of dices
+        let tOfdices = dice.split('d')[1]; //type of dices
 
-        if (tOfdices === '2') {
+        if (tOfdices === '2' || tOfdices === '3') {
+            let eachDiceResult = [];
             for (let i = 0; i < nOfdices; i++) {
-                let thisval = Math.floor(Math.random() * 2) + 1;
-                let total = mexp.eval(thisval + modsign + modval);
-                //let total = thisval + parseInt(modval);
-
-                cDmsg = cDmsg + `<color="red">${name} (d2) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
+                eachDiceResult.push(Math.floor(Math.random() * parseInt(tOfdices)) + 1);
             }
-        }
+            let diceSum = eachDiceResult.join('+');
+            diceSum = diceSum + modsign + modval;
+            let result = mexp.eval(diceSum);
 
-        if (tOfdices === '3') {
-            for (let i = 0; i < nOfdices; i++) {
-                let thisval = Math.floor(Math.random() * 3) + 1;
-                let total = mexp.eval(thisval + modsign + modval);
-                cDmsg = cDmsg + `<color="red">${name} (d3) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
-            }
+            cDmsg = cDmsg + `<color="red">${name}, ${nOfdices}d${tOfdices} ${modsign} ${modval}: <color="green">${diceSum} = <color="white">${result}<br>`
+
         }
     }
 
-    let msgSplit = cDmsg.split('<br>');
-    let msg2send = [];
-    let msgpart = '';
+    if (withNormalDice) {
+        return cDmsg;
+    } else {
+        splitMessageAndSend(cDmsg);
 
-    for (let i = 0; i < msgSplit.length; i++) {
-        msgpart += msgSplit[i];
-        if ((i + 1) % 4 !== 0 && i !== msgSplit.length - 1) {
-            msgpart += '<br>';
-        }
-        if ((i + 1) % 4 === 0 || i === msgSplit.length - 1) {
-            msg2send.push(msgpart);
-            msgpart = '';
-        }
     }
+}
 
-    for (let msgFrag of msg2send) {
-        TS.chat.send(msgFrag, "campaign");
+function splitMessageAndSend(msg) {
+
+    // Split the string into an array of lines
+    let lines = msg.split('<br>');
+    let linesArray = [];
+    // Loop through the array of lines
+    for (let i = 0; i < lines.length; i += 4) {
+        // Get a slice of the array containing 4 lines and join them into a string
+        let element = lines.slice(i, i + 4).join('<br>') + '<br>';
+
+        // Add an additional <br> tag if it's not the last element
+        //if (i + 4 < lines.length) {
+        //    element += '<br>';
+        //}
+        linesArray.push(element);
     }
-
-    //TS.chat.send(cDmsg, "campaign");
+    for (let fourLines of linesArray) {
+        TS.chat.send(fourLines, "campaign");
+    }
 
 }
 
@@ -1294,56 +1292,22 @@ async function handleRollResult(rollEvent) {
         const idCustom = trackedIds[roll.rollId]; // String containing a custom id like 'isd3' 'isCritical'
 
         //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);  trackedIds[diceSetResponse] = 'isd3';
-
+        let msg = '';
         if (idCustom.includes('isMacro')) {
-
-            let msg = '';
+            
             let promises = [];
             let userComments = trackedIds[roll.rollId + '-comments'];
             let customDices = trackedIds[roll.rollId + '-fakedice'];
-            let isFake = false;
+            let isFakeRoll = false;
             let cDmsg = '';
 
             //Eval custom dices -- customDices.push(dice + '_' + modsign + ':' + Math.abs(fakemod)); --
-            ///1d2_-:1,1d2_+:5
+            ///1d2_-:1,1d2_+:5            
+            // If a custom dice is rolled (1d2 or 1d3)
             if (customDices !== '') {
-
-                for (let dices of customDices) {
-
-                    let name = dices.split('^')[0];
-                    dices = dices.split('^')[1];
-
-                    let dice = dices.split('_')[0];
-                    let mod = dices.split('_')[1];
-                    let modsign = mod.split(':')[0];
-                    let modval = mod.split(':')[1];
-                    let nOfdices = dice.split('d')[0];
-                    let tOfdices = dice.split('d')[1];
-
-                    if (tOfdices === '2') {
-                        for (let i = 0; i < nOfdices; i++) {
-                            //let rollobject = { val: Math.floor(Math.random() * 2) + 1, mod: modval }
-                            //d2Arr.push(rollobject);
-                            let thisval = Math.floor(Math.random() * 2) + 1;
-                            let total = mexp.eval(thisval + modsign + modval);
-
-                            cDmsg = cDmsg + `<color="red">${name} (d2) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
-                        }
-                    }
-
-                    if (tOfdices === '3') {
-                        for (let i = 0; i < nOfdices; i++) {
-                            let thisval = Math.floor(Math.random() * 3) + 1;
-                            let total = mexp.eval(thisval + modsign + modval);
-                            cDmsg = cDmsg + `<color="red">${name} (d3) : <color="green">${thisval} ${modsign} ${modval} = <color="white">${total}<br>`
-                        }
-                    }
-                }
-
-                //TS.chat.send(cDmsg, "campaign");
-                isFake = true;
+                cDmsg = macroCustomdice(customDices, true);
+                isFakeRoll = true;
             }
-
 
             //Get standard dices
             for (let group of rollEvent.payload.resultsGroups) {
@@ -1354,81 +1318,66 @@ async function handleRollResult(rollEvent) {
             }
 
             Promise.all(promises).then(() => {
-                msg = isFake ? msg + cDmsg : msg;
-                msg = msg + userComments.join('<br>').replace(/_/g, ' ');
+                msg = isFakeRoll ? msg + cDmsg : msg;
+                msg = msg + userComments.join('<br>');
 
                 //Divide message to get around the 400 chars limit, dividing the message if there are more than 4 lines in the msg.
-                let msgSplit = msg.split('<br>');
-                let msg2send = [];
-                let msgpart = '';
-
-                for (let i = 0; i < msgSplit.length; i++) {
-                    msgpart += msgSplit[i];
-                    if ((i + 1) % 4 !== 0 && i !== msgSplit.length - 1) {
-                        msgpart += '<br>';
-                    }
-                    if ((i + 1) % 4 === 0 || i === msgSplit.length - 1) {
-                        msg2send.push(msgpart);
-                        msgpart = '';
-                    }
-                }
-
-                for (let msgFrag of msg2send) {
-                    TS.chat.send(msgFrag, "campaign");
-                }
+                splitMessageAndSend(msg);
 
             });
         }
 
-        if (idCustom.includes('isCritical')) {
+        /* if (idCustom.includes('isCritical')) {
             let name = rollEvent.payload.resultsGroups[0].name;
-            const msg = '<align="center"><style="Title"><color="red">' + name + '</style>';
-            TS.chat.send(msg, 'campaign');
-        }
+            msg = '<align="center"><style="Title"><color="red">' + name + '</style><br>';
+
+        } */
 
         if (idCustom.includes('isd3')) {
 
             for (let group of rollEvent.payload.resultsGroups) {
-                //console.log(rollEvent.payload.resultsGroups)
+
                 const diceResults = group.result.operands[0].results; //array with the dices result
                 const mod = group.result.operands[1].value;
-                console.log(mod)
+
                 let results = [];
                 for (let result of diceResults) {
                     let d3Conversion = Math.round(result / 2);
                     results.push(d3Conversion);
+                    //msg = msg  + ` - 1d6 = ${result} >>> 1d3 = ${d3Conversion} - ` ;
                 }
 
-                let rollGroup = [{ "name": group.name, "result": { "operator": "+", "operands": [{ "kind": "d6", "results": results }, { "value": mod }] } }]
-                const msg = '<align="center"><color="red">El resultado mostrado se convirtio en d3 <br>1,2 = 1 -- 3,4 = 2 -- 5,6 = 3';
+                let rollGroup = [{ "name": group.name + '<br>(convertido a d3)', "result": { "operator": "+", "operands": [{ "kind": "d6", "results": results }, { "value": mod }] } }]
+                //msg = '<align="center"><color="red">El resultado del d6 se convirtio en d3 <br>[ 1,2 = 1 ] - [ 3,4 = 2 ] - [ 5,6 = 3 ]<br>';
                 TS.dice.sendDiceResult(rollGroup, roll.rollId);
-                TS.chat.send(msg, 'campaign');
             }
+            //TS.chat.send(msg, 'campaign');
         }
 
         if (idCustom.includes('isd2')) {
 
             for (let group of rollEvent.payload.resultsGroups) {
-                //console.log(rollEvent.payload.resultsGroups)
+
                 const diceResults = group.result.operands[0].results; //array with the dices result
                 const mod = group.result.operands[1].value;
-                console.log(mod)
+
                 let results = [];
                 for (let result of diceResults) {
-                    let d3Conversion = Math.round(result / 2);
-                    results.push(d3Conversion);
+                    let d2Conversion = Math.round(result / 2);
+                    results.push(d2Conversion);
+                    //msg = msg  + ` - 1d4 = ${result} >>> 1d2 = ${d2Conversion} - ` ;
                 }
 
-                let rollGroup = [{ "name": group.name, "result": { "operator": "+", "operands": [{ "kind": "d4", "results": results }, { "value": mod }] } }]
-                const msg = '<align="center"><color="red">El resultado del d4 se convirtio en d2 <br>1,2 = 1 -- 3,4 = 2';
+                let rollGroup = [{ "name": group.name + '<br>(convertido a d2)', "result": { "operator": "+", "operands": [{ "kind": "d4", "results": results }, { "value": mod }] } }]
+                //msg = '<align="center"><color="red">El resultado del d4 se convirtio en d2 <br>[ 1,2 = 1 ] - [ 3,4 = 2 ] <br>';
                 TS.dice.sendDiceResult(rollGroup, roll.rollId);
-                TS.chat.send(msg, 'campaign');
             }
+            //TS.chat.send(msg, 'campaign');
         }
-        // TS.chat.send(msg, "campaign");
-
     }
+    console.log(trackedIds)
     trackedIds = {};
+    console.log(trackedIds)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1446,7 +1395,7 @@ function addInventoryItem() {
     <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${rndid}');" value="${itemDetails.cantidad}"></td>
     <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${rndid}');" value="${itemDetails.pesoxunidad}"></td>
     <td style="width: 30px;  font-size:16px; text-align: center;"><span id="pesototal-${rndid}">${itemDetails.pesototal}</span></td>
-    <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory('${rndid}');" >${itemDetails.detalles}</textarea></td>
+    <td style="width: 200px; font-size:14px;"><textarea spellcheck="false" onchange="updateInventory('${rndid}');" >${itemDetails.detalles}</textarea></td>
     <td><button onclick="deletethisitemrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
   </tr>`
     // ADD ROW TO TABLE
@@ -1575,7 +1524,7 @@ function reloadInventory() {
             <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${item}');" value="${itemDetails.cantidad}"></td>
             <td style="width: 30px;  font-size:14px;"><input type="number" onchange="updateInventory('${item}');" value="${itemDetails.pesoxunidad}"></td>
             <td style="width: 30px;  font-size:16px text-align: center;"><span id="pesototal-${item}">${itemDetails.pesototal}</span></td>
-            <td style="width: 200px; font-size:14px;"><textarea onchange="updateInventory('${item}');" >${itemDetails.detalles}</textarea></td>
+            <td style="width: 200px; font-size:14px;"><textarea spellcheck="false" onchange="updateInventory('${item}');" >${itemDetails.detalles}</textarea></td>
             <td><button onclick="deletethisitemrow('${item}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
           </tr>`
 
@@ -1644,7 +1593,7 @@ function loadMacros() {
         <tbody>
         <tr>
             <td><button onclick="runMacro('${macroid}-macro-textarea')">Run Macro</button></td> 
-            <td><textarea id='${macroid}-macro-textarea' style="width: 350px;" onchange="updateMacrostorage('${macroid}')">${macroTxt}</textarea></td>  
+            <td><textarea spellcheck="false" id='${macroid}-macro-textarea' style="width: 350px;" onchange="updateMacrostorage('${macroid}')">${macroTxt}</textarea></td>  
             <td rowspan="2"><button style="background-color:red;" onclick="deleteMacrotable('${macroid}-macro');" ><b>x</b></button></td>
         </tr>
         </tbody>
