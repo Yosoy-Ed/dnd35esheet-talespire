@@ -676,9 +676,15 @@ function rollatk(isFullattack, weaponNumber) {
         TS.dice.putDiceInTray([{ name: name + ' 1', roll: dice },
         { name: name + ' 2', roll: dice2 },
         { name: name + ' 3', roll: dice3 },
-        { name: name + ' 4', roll: dice4 }], false);
+        { name: name + ' 4', roll: dice4 }], false).then((diceSetResponse) => {
+            trackedIds[diceSetResponse] = 'isAttack';
+            trackedIds[diceSetResponse + 'weaponNumber'] = weaponNumber;
+        });
     } else {
-        TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+        TS.dice.putDiceInTray([{ name: name, roll: dice }], false).then((diceSetResponse) => {
+            trackedIds[diceSetResponse] = 'isAttack';
+            trackedIds[diceSetResponse + 'weaponNumber'] = weaponNumber;
+        });
     }
 }
 
@@ -1142,6 +1148,8 @@ function runMacro(rndidmacro) {
 
         //Validate type of dice
         let typeOfdices = dices[1];
+        let regexEmptySpace = /\s+/g;
+        typeOfdices = typeOfdices.replace(regexEmptySpace, "");
         if (!['2', '3', '4', '6', '8', '10', '12', '20', '100'].includes(typeOfdices)) {
 
             TS.chat.send('error in type of dice', 'campaign');
@@ -1242,7 +1250,7 @@ function macroCustomdice(customDices, withNormalDice) {
             diceSum = diceSum + modsign + modval;
             let result = mexp.eval(diceSum);
 
-            cDmsg = cDmsg + `<color="red">${name}, ${nOfdices}d${tOfdices} ${modsign} ${modval}: <color="green">${diceSum} = <color="white">${result}<br>`
+            cDmsg = cDmsg + `<color="red">${name}, ${nOfdices}d${tOfdices} ${modsign} ${modval}: <color="green">${diceSum} = <color="white">${result}<br>`;
 
         }
     }
@@ -1251,30 +1259,25 @@ function macroCustomdice(customDices, withNormalDice) {
         return cDmsg;
     } else {
         splitMessageAndSend(cDmsg);
-
     }
 }
 
 function splitMessageAndSend(msg) {
 
     // Split the string into an array of lines
-    let lines = msg.split('<br>');
+    let lines = msg.endsWith('<br>') ? msg.slice(0, -4) : msg;
+    lines = lines.split('<br>');
     let linesArray = [];
     // Loop through the array of lines
     for (let i = 0; i < lines.length; i += 4) {
         // Get a slice of the array containing 4 lines and join them into a string
         let element = lines.slice(i, i + 4).join('<br>') + '<br>';
 
-        // Add an additional <br> tag if it's not the last element
-        //if (i + 4 < lines.length) {
-        //    element += '<br>';
-        //}
         linesArray.push(element);
     }
     for (let fourLines of linesArray) {
         TS.chat.send(fourLines, "campaign");
     }
-
 }
 
 
@@ -1294,7 +1297,7 @@ async function handleRollResult(rollEvent) {
         //const multiplier = parseInt(document.getElementById('crt-multiplier'+ rndidmacro).value);  trackedIds[diceSetResponse] = 'isd3';
         let msg = '';
         if (idCustom.includes('isMacro')) {
-            
+
             let promises = [];
             let userComments = trackedIds[roll.rollId + '-comments'];
             let customDices = trackedIds[roll.rollId + '-fakedice'];
@@ -1373,6 +1376,15 @@ async function handleRollResult(rollEvent) {
                 TS.dice.sendDiceResult(rollGroup, roll.rollId);
             }
             //TS.chat.send(msg, 'campaign');
+        }
+
+        if (idCustom.includes('isAttack')) {
+            const weaponNumber = trackedIds[roll.rollId + 'weaponNumber'] ;
+            const weaponText = document.getElementById('weapon' + weaponNumber).value;
+
+            TS.chat.send('<color="white">' + weaponText, 'campaign');
+            
+
         }
     }
     console.log(trackedIds)
