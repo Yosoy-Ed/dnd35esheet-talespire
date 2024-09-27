@@ -266,7 +266,8 @@ function loadStoredData() {
         let data = JSON.parse(storedData || "{}");
         delete data.spelltype; //--------------------------------------------------------excluir objeto de info de conjuros
         delete data.inventory; //--------------------------------------------------------excluir objeto de inventario
-        delete data.macros; //--------------------------------------------------------excluir objeto de inventario         
+        delete data.macros; //--------------------------------------------------------excluir objeto de inventario 
+        delete data.feats; //--------------------------------------------------------excluir objeto de feats          
         if (Object.entries(data).length > 0) {
             clearStorageButton.classList.add("danger");
             clearStorageButton.disabled = false;
@@ -334,6 +335,7 @@ function onStateChangeEvent(msg) {
         initCustomobjects();
         zeroingInputs();
         reloadSpellist();
+        reloadFeatList();
         reloadInventory();
         loadMacros();
         //recalculate();  
@@ -572,7 +574,7 @@ function rollSaving(saving) {
     let name = txtcheck;  // Capitalize first letter
     let dice = "1d20";
 
-    let modifier = parseInt(document.getElementById(`SAV${saving}`));
+    let modifier = parseInt(document.getElementById(`SAV${saving}`).innerHTML);
 
     let typeStr = modifier < 0 ? "-" : "+";
 
@@ -839,6 +841,106 @@ for (i = 0; i < coll.length; i++) {
     });
 }
 
+
+/////////////////////////////////////////////////////////////// FEATS  //////////////////////////////////////////////////////
+function addFeat() {
+    let rndid = generateRandomID();
+
+    let row = `<tr>
+    <td><input style="width: 180px;" onchange="updateFeatStorage('${rndid}')" style="width: 120px;" value="Nombre"></td> 
+    <td flex-grow: 1;"><textarea style="width: 220px; spellcheck="false" class="spell-description" onchange="updateFeatStorage('${rndid}')" style="flex-grow: 1;">Descripcion</textarea></td>
+    <td><button onclick="sendFeat2Chat('${rndid}')" style="background-color: green; width: 60px; height: 30px;">to Chat</button></td>
+    <td><button onclick="deletethisfeatrow('${rndid}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
+  </tr>`;
+
+    let newRow = document.createElement('tr');
+    newRow.id = rndid;
+    newRow.innerHTML = row;
+
+    document.getElementById(`agregar_dote`).appendChild(newRow);
+
+        // SAVE TO LOCALSTORAGE         
+        TS.localStorage.campaign.getBlob().then((storedData) => {
+            let data = JSON.parse(storedData || "{}");
+            data.feats[rndid] = {"nombre":"Nombre","descripcion":"Descripcion"};
+    
+            TS.localStorage.campaign.setBlob(JSON.stringify(data));
+        });  
+}
+
+
+function updateFeatStorage(rowid) {
+
+    let featRow = document.getElementById(rowid);
+
+    let Fnombre = featRow.cells[0].childNodes[0].value; //name
+    let Fdescripcion = featRow.cells[1].childNodes[0].value; //Descripcion
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+
+        data.feats[rowid] = {
+            nombre: Fnombre,
+            descripcion: Fdescripcion
+        };
+        TS.localStorage.campaign.setBlob(JSON.stringify(data));
+    });
+}
+
+// Reload all feat list from file
+function reloadFeatList() {
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        let data = JSON.parse(storedData || "{}");
+        let featList = data.feats;
+
+        if (typeof featList !== 'undefined') {
+
+            for (let key in featList) {
+                let Fnombre = featList[key]["nombre"];
+                let Fdescription = featList[key]["descripcion"];
+
+                let row = `<tr>
+                <td><input style="width: 180px;" onchange="updateFeatStorage('${key}')" style="width: 120px;" value=${Fnombre}></td> 
+                <td flex-grow: 1;"><textarea style="width: 220px; spellcheck="false" class="spell-description" onchange="updateFeatStorage('${key}')" style="flex-grow: 1;">${Fdescription}</textarea></td>
+                <td><button onclick="sendFeat2Chat('${key}')" style="background-color: green; width: 60px; height: 30px;">to Chat</button></td>
+                <td><button onclick="deletethisfeatrow('${key}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>
+              </tr>`;
+
+                let newRow = document.createElement('tr');
+                newRow.id = key;
+                newRow.innerHTML = row;
+
+                document.getElementById(`agregar_dote`).appendChild(newRow);
+            }
+        }
+    });
+}
+
+function deletethisfeatrow(rowid) {
+
+    TS.localStorage.campaign.getBlob().then((storedData) => {
+        data = JSON.parse(storedData || "{}");
+        delete data.feats[rowid]
+        TS.localStorage.campaign.setBlob(JSON.stringify(data));
+    })
+
+    document.getElementById(rowid).remove();
+
+}
+
+function sendFeat2Chat (id){
+
+    let featRow = document.getElementById(id);
+
+    let Fnombre = featRow.cells[0].childNodes[0].value; //name
+    let Fdescripcion = featRow.cells[1].childNodes[0].value; //Descripcion
+
+    let msg = `<size=140%><color="red">${Fnombre}<br><br><size=110%><color="green">${Fdescripcion}<br>`
+
+    splitMessageAndSend(msg);
+
+}
 
 /////////////////////////////////////////////////////////////// SPELLS //////////////////////////////////////////////////////
 
@@ -1673,6 +1775,20 @@ function initCustomobjects() {
             console.log('Inventory object created');
         } else {
             console.log('Inventory object already exists');
+        }
+
+        //Initialize Feats object
+        if (typeof data.feats === 'undefined') {
+
+            let feats = {};
+
+            data['feats'] = feats;
+
+            TS.localStorage.campaign.setBlob(JSON.stringify(data));
+            addFeat(); 
+            console.log('Feats object created');
+        } else {
+            console.log('Feats object already exists');
         }
 
         //Initialize Macros object
