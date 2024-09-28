@@ -840,6 +840,81 @@ for (i = 0; i < coll.length; i++) {
         }
     });
 }
+///////////////////////////////////////////////////// SPECIAL ATTACKS  //////////////////////////////////////////////////////
+
+function specialAttack(type) { // Grapple, Trip
+
+    // MEELE TOUCH 
+    let txtcheckmele = '';
+    let modifiermele = 0;
+    const sizemodmele = parseInt(document.getElementById(`charsize`).value);
+
+    txtcheckmele = 'Melee touch attack';
+    modifiermele = parseInt(document.getElementById(`bab1`).value) + parseInt(document.getElementById(`MODSTR`).innerHTML);
+    const extramod = parseInt(document.getElementById('tamextramod').value);
+    modifiermele = modifiermele + extramod;
+
+
+    let namemele = txtcheckmele;
+    let dicemele = "1d20";
+
+    modifiermele = modifiermele + sizemodmele;
+
+    let typeStrmele = modifiermele < 0 ? "-" : "+";
+
+    modifiermele = Math.abs(modifiermele);
+
+    dicemele = dicemele + typeStrmele + modifiermele;
+
+    // TS.dice.putDiceInTray([{ name: namemele, roll: dicemele }], false);
+
+    // SPECIAL ATTACK
+    let txtcheck = '';
+    let modifier = 0;
+    let typemod = 0;
+    let includeMelee = false;
+    const sizemod = (-4) * parseInt(document.getElementById(`charsize`).value);
+
+    if (type === 'G') {
+        txtcheck = 'Grapple Check';
+        typemod = parseInt(document.getElementById(`bab1`).value) + parseInt(document.getElementById('grapplebonus').value);
+        includeMelee = true;
+    }
+
+    if (type === 'T') {
+        txtcheck = 'Trip Check';
+        typemod = parseInt(document.getElementById('tripbonus').value);
+        includeMelee = true;
+    }
+
+    if (type === 'BR') {
+        txtcheck = 'Bull Rush Check';
+        typemod = parseInt(document.getElementById('brbonus').value);
+    }
+
+    modifier = typemod + parseInt(document.getElementById(`MODSTR`).innerHTML) + sizemod;
+
+    let name = txtcheck;
+    let dice = "1d20";
+
+    let typeStr = modifier < 0 ? "-" : "+";
+
+    modifier = Math.abs(modifier);
+
+    dice = dice + typeStr + modifier;
+
+    ///
+
+    if (includeMelee) {
+
+        TS.dice.putDiceInTray([
+            { name: namemele, roll: dicemele },
+            { name: name, roll: dice }], false);
+    } else {
+        TS.dice.putDiceInTray([{ name: name, roll: dice }], false);
+    }
+
+}
 
 
 /////////////////////////////////////////////////////////////// FEATS  //////////////////////////////////////////////////////
@@ -899,9 +974,11 @@ function reloadFeatList() {
             for (let key in featList) {
                 let Fnombre = featList[key]["nombre"];
                 let Fdescription = featList[key]["descripcion"];
+                console.log(Fdescription);
+                console.log(Fnombre);
 
                 let row = `<tr>
-                <td><input style="width: 180px;" onchange="updateFeatStorage('${key}')" style="width: 120px;" value=${Fnombre}></td> 
+                <td><input style="width: 180px;" onchange="updateFeatStorage('${key}')" style="width: 120px;" value='${Fnombre}'></td> 
                 <td flex-grow: 1;"><textarea style="width: 220px; spellcheck="false" class="spell-description" onchange="updateFeatStorage('${key}')" style="flex-grow: 1;">${Fdescription}</textarea></td>
                 <td><button onclick="sendFeat2Chat('${key}')" style="background-color: green; width: 60px; height: 30px;">to Chat</button></td>
                 <td><button onclick="deletethisfeatrow('${key}')" style="background-color: red; width: 30px; height: 30px;">X</button></td>

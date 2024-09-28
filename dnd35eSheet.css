@@ -90,9 +90,29 @@ border: 2px solid white;
 
 }
 
-.ability-name, .saving-name{
-    font-weight: bold;
-    text-align:left;
+.ability-name{
+  font-weight: bold;
+  text-align:left;
+  width: 150px;
+  height: 26px;
+}
+
+.saving-name{
+  font-weight: bold;
+  width: 150px;
+  height: 26px;
+}
+
+.abilitybtn{
+  text-align:left;
+  width: 150px;
+  height: 26px;
+}
+
+.savingbtn{
+  text-align:left;
+  width: 90px;
+  height: 21px;
 }
 
 input[type='number']{
@@ -121,11 +141,12 @@ color:lightseagreen;
 font-size: 1.1em;
 text-decoration: underline;
 }
-/*
+
+
 #weapons-div table{
   border: 1px solid white;
 }
-*/
+
 /* --------------------------------------------------------------------COLLAPSABLE----------------------------------------------------------------*/
 
 /* Style the button that is used to open and close the collapsible content */

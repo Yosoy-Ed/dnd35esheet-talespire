@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="dnd35eSheet.css">
         <script src="lib/math-expression-evaluator/math-expression-evaluator.min.js" defer></script>
         <script src="dnd35eSheet.js" defer></script>
+        <link href="lib/fontawesome/css/fontawesome.css" rel="stylesheet" />
+        <link href="lib/fontawesome/css/brands.css" rel="stylesheet" />
+        <link href="lib/fontawesome/css/solid.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -37,16 +40,16 @@
                         <div><label>XP</label><br><input type="number" class="text_border" id="charxp" style="width: 100px;"></input></div>
                         <div><label>Nivel</label><br><input type="number" class="text_border number-input" id="charlvl"></input></div>
                         <div><label>Alineamiento</label><br><select id="characteraligment">
-                                <option value="LB">Legal Bueno</option>
-                                <option value="LN">Legal Neutral</option>
-                                <option value="LM">Legal Maligno</option>
-                                <option value="NB">Neutral Bueno</option>
-                                <option value="NN" selected>Neutral</option>
-                                <option value="NM">Neutral Maligno</option>
-                                <option value="CB">Caotico Bueno</option>
-                                <option value="CN">Caotico Neutral</option>
-                                <option value="CM">Caotico Maligno</option>
-                        </select></div>
+                                        <option value="LB">Legal Bueno</option>
+                                        <option value="LN">Legal Neutral</option>
+                                        <option value="LM">Legal Maligno</option>
+                                        <option value="NB">Neutral Bueno</option>
+                                        <option value="NN" selected>Neutral</option>
+                                        <option value="NM">Neutral Maligno</option>
+                                        <option value="CB">Caotico Bueno</option>
+                                        <option value="CN">Caotico Neutral</option>
+                                        <option value="CM">Caotico Maligno</option>
+                                </select></div>
                         <div><label>Deidad</label><br><input type="text" class="text_border" id="chargod"></input></div>
                         <div><label>Altura</label><br><input type="text" class="text_border" id="charheight"></input>
                         </div>
@@ -85,17 +88,17 @@
                                 <br>
                                 <table class="ability-scores">
                                         <tr>
-                                                <th>(Ability) Carasteristica</th>
+                                                <th>Carasteristica</th>
                                                 <th>Base</th>
                                                 <th>Total</th>
                                                 <th>MOD</th>
-                                                <th>mod-racial</th>
-                                                <th>mod-item</th>
-                                                <th>mod-extra</th>
-                                                <th>mod-temporal</th>
+                                                <th style="width: 56px;">mod-racial</th>
+                                                <th style="width: 56px;">mod-item</th>
+                                                <th style="width: 56px;">mod-extra</th>
+                                                <th style="width: 56px;">mod-temporal</th>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnSTR" onclick="rollAbility('STR')">Fuerza (STR) </button>
+                                                <td class="ability-name"><button class="abilitybtn" id="btnSTR" onclick="rollAbility('STR')"><i class="fa-solid fa-hand-fist"></i> Fuerza (STR) </button>
                                                 </td>
                                                 <td><input oninput="updateModifier('STR')" type="number" id="charSTRbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTSTR" style="font-size: 18px; border: 1px solid white">0</td>
@@ -106,7 +109,7 @@
                                                 <td><input oninput="updateModifier('STR')" type="number" id="charSTRmodtemp" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnDEX" onclick="rollAbility('DEX')">Destreza (DEX)
+                                                <td class="ability-name"><button class="abilitybtn" id="btnDEX" onclick="rollAbility('DEX')"><i class="fa-solid fa-person-running"></i> Destreza (DEX)
                                                         </button></td>
                                                 <td><input oninput="updateModifier('DEX')" type="number" id="charDEXbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTDEX" style="font-size: 18px; border: 1px solid white">0</td>
@@ -117,7 +120,7 @@
                                                 <td><input oninput="updateModifier('DEX')" type="number" id="charDEXmodtemp" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnCON" onclick="rollAbility('CON')">Constitucion (CON)
+                                                <td class="ability-name"><button class="abilitybtn" id="btnCON" onclick="rollAbility('CON')"><i class="fa-solid fa-heart-pulse"></i> Constitucion (CON)
                                                         </button></td>
                                                 <td><input oninput="updateModifier('CON')" type="number" id="charCONbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTCON" style="font-size: 18px; border: 1px solid white">0</td>
@@ -128,7 +131,7 @@
                                                 <td><input oninput="updateModifier('CON')" type="number" id="charCONmodtemp" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnINT" onclick="rollAbility('INT')">Inteligencia (INT)
+                                                <td class="ability-name"><button class="abilitybtn" id="btnINT" onclick="rollAbility('INT')"><i class="fa-solid fa-brain"></i> Inteligencia (INT)
                                                         </button></td>
                                                 <td><input oninput="updateModifier('INT')" type="number" id="charINTbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTINT" style="font-size: 18px; border: 1px solid white">0</td>
@@ -139,7 +142,7 @@
                                                 <td><input oninput="updateModifier('INT')" type="number" id="charINTmodtemp" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnWIS" onclick="rollAbility('WIS')">Sabiduria (WIS)
+                                                <td class="ability-name"><button class="abilitybtn" id="btnWIS" onclick="rollAbility('WIS')"> <i class="fa-solid fa-eye"></i> Sabiduria (WIS)
                                                         </button></td>
                                                 <td><input oninput="updateModifier('WIS')" type="number" id="charWISbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTWIS" style="font-size: 18px; border: 1px solid white">0</td>
@@ -150,7 +153,7 @@
                                                 <td><input oninput="updateModifier('WIS')" type="number" id="charWISmodtemp" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="ability-name"><button id="btnCHA" onclick="rollAbility('CHA')">Carisma (CHA)
+                                                <td class="ability-name"><button class="abilitybtn" id="btnCHA" onclick="rollAbility('CHA')"><i class="fa-solid fa-star"></i> Carisma (CHA)
                                                         </button></td>
                                                 <td><input oninput="updateModifier('CHA')" type="number" id="charCHAbase" class="ability-base" style="font-weight: bold; font-size:16px;width: 50px;" required min="0" max="99" size="2"></td>
                                                 <td id="TOTCHA" style="font-size: 18px; border: 1px solid white">0</td>
@@ -196,16 +199,19 @@
                                                         <td style="height: 30px;"></td>
                                                 </tr>
                                                 <tr>
-                                                        <th>Velocidad</th>
+                                                        <th>Velocidad de movimiento </th>
                                                 </tr>
                                                 <tr>
-                                                        <td><input id="charspeed" type="number" class="number-input" required min="0" max="999" size="2"></td>
+                                                        <td><input id="charspeed" type="number" class="number-input" required min="0" max="999" size="2"> ft </td>
                                                 </tr>
                                                 <tr>
                                                         <td style="height: 10px;"></td>
                                                 </tr>
                                                 <tr>
-                                                        <th><button id="btnFor" style="font-size:16px;" onclick="rollIniciative()">Iniciativa</button>
+                                                        <th><button id="btnFor" style="font-size:14px; " onclick="rollIniciative()"><b>Iniciativa</b><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="transform: scale(0.75);">
+                                                                                <title>sword-cross</title>
+                                                                                <path d="M6.2,2.44L18.1,14.34L20.22,12.22L21.63,13.63L19.16,16.1L22.34,19.28C22.73,19.67 22.73,20.3 22.34,20.69L21.63,21.4C21.24,21.79 20.61,21.79 20.22,21.4L17,18.23L14.56,20.7L13.15,19.29L15.27,17.17L3.37,5.27V2.44H6.2M15.89,10L20.63,5.26V2.44H17.8L13.06,7.18L15.89,10M10.94,15L8.11,12.13L5.9,14.34L3.78,12.22L2.37,13.63L4.84,16.1L1.66,19.29C1.27,19.68 1.27,20.31 1.66,20.7L2.37,21.41C2.76,21.8 3.39,21.8 3.78,21.41L7,18.23L9.44,20.7L10.85,19.29L8.73,17.17L10.94,15Z" />
+                                                                        </svg></button>
                                                         </th>
                                                 </tr>
                                                 <tr>
@@ -275,7 +281,7 @@
                                                 </tr>
                                                 <tr>
                                                         <td style="height: 30px;"><span><b>Touch <br> CA</b></span></td>
-                                                        <td colspan="7" rowspan="4" style="text-align: left;"><textarea spellcheck="false"  id="cacomments" cols="36" rows="6" style="margin-left: 10px;">CA Comments</textarea>
+                                                        <td colspan="7" rowspan="4" style="text-align: left;"><textarea spellcheck="false" id="cacomments" cols="36" rows="6" style="margin-left: 10px;">CA Comments</textarea>
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -295,7 +301,9 @@
                                 <br>
                                 <table class="saving-scores">
                                         <tr>
-                                                <th>Salvacion</th>
+                                                <th>
+                                                        <p style="font-size: 20px;">Salvacion</p>
+                                                </th>
                                                 <th>Total</th>
                                                 <th>Base</th>
                                                 <th>Mod-Car</th>
@@ -305,7 +313,7 @@
                                                 <th>Mod-extra4</th>
                                         </tr>
                                         <tr>
-                                                <td class="saving-name"><button id="btnFor" onclick="rollSaving('FOR')">Fortaleza</button></td>
+                                                <td class="saving-name"><button class="savingbtn" id="btnFor" onclick="rollSaving('FOR')"><i class="fa-solid fa-shield-heart"></i> Fortaleza</button></td>
                                                 <td id="SAVFOR" class="number-input" style="font-size: 18px; border: 1px solid white"></td>
                                                 <td><input id="charFORbase" oninput="updateSaving('FOR')" type="number" class="number-input" required min="0" max="99" size="2">
                                                 </td>
@@ -316,7 +324,7 @@
                                                 <td><input id="charFORmodextra4" oninput="updateSaving('FOR')" type="number" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td class="saving-name"><button id="btnFor" onclick="rollSaving('REF')">Reflejos</button></td>
+                                                <td class="saving-name"><button class="savingbtn" id="btnFor" onclick="rollSaving('REF')"><i class="fa-solid fa-reply-all"></i> Reflejos</button></td>
                                                 <td id="SAVREF" class="number-input" style="font-size: 18px; border: 1px solid white"></td>
                                                 <td><input id="charREFbase" oninput="updateSaving('REF')" type="number" class="number-input" required min="0" max="99" size="2">
                                                 </td>
@@ -326,7 +334,7 @@
                                                 <td><input id="charREFmodextra3" oninput="updateSaving('REF')" type="number" class="number-input" required min="-9" max="99" size="2"></td>
                                                 <td><input id="charREFmodextra4" oninput="updateSaving('REF')" type="number" class="number-input" required min="-9" max="99" size="2"></td>
                                         </tr <tr>
-                                        <td class="saving-name"><button id="btnFor" onclick="rollSaving('WIL')">Voluntad</button></td>
+                                        <td class="saving-name"><button class="savingbtn" id="btnFor" onclick="rollSaving('WIL')"><i class="fa-solid fa-brain"></i> Voluntad</button></td>
                                         <td id="SAVWIL" class="number-input" style="font-size: 18px; border: 1px solid white"></td>
                                         <td><input id="charWILbase" oninput="updateSaving('WIL')" type="number" class="number-input" required min="0" max="99" size="2"></td>
                                         <td id="charWILabmod" class="MODWIS number-input"></td>
@@ -337,13 +345,15 @@
                                         </tr>
                                 </table>
                                 <br>
-                                <div style="display: flex; gap: 10px;">
+                                <div style="display: flex; gap: 24px;">
                                         <table class="bab">
                                                 <tr>
-                                                        <th colspan="4">BAB</th>
+                                                        <th colspan="4">
+                                                                <p style="font-size: 24px; margin-top: 4px; margin-bottom: 4px;">BAB</p>
+                                                        </th>
                                                 </tr>
-                                                <tr>
-                                                        <td><input onchange="updateBab();" id="bab1" type="number" class="number-input bab1" required min="0" max="999" size="2">
+                                                <tr style="font-size: 26px;">
+                                                        <td><input style="font-size: 26px;" onchange="updateBab();" id="bab1" type="number" class="number-input bab1" required min="0" max="999" size="2">
                                                         </td>
                                                         <td style="width: 40px;"><span id="bab2" class="bab2"></span></td>
                                                         <td style="width: 40px;"><span id="bab3" class="bab3"></span></td>
@@ -354,15 +364,17 @@
                                         <br>
                                         <table class="touch-atacks">
                                                 <tr>
-                                                        <th colspan="2">Touch Attacks</th>
+                                                        <th colspan="2">
+                                                                <p style="font-size: 24px;  margin-top: 4px; margin-bottom: 4px;">Touch Attacks</p>
+                                                        </th>
                                                 </tr>
                                                 <tr>
-                                                        <td><button id="mt-attack" onclick="rollTouch('M')">Melee touch
+                                                        <td><button style="text-align: left; width: 170px; height: 22px;" id="mt-attack" onclick="rollTouch('M')"> <i class="fa-solid fa-hand"></i> Melee touch
                                                                         attack</button></td>
                                                         <td><label for="tamextramod">Extra mod: </label><input type="number" class="number-input" id="tamextramod"></td>
                                                 </tr>
                                                 <tr>
-                                                        <td><button id="rt-attack" onclick="rollTouch('R')">Ranged touch
+                                                        <td><button style="text-align: left; width: 170px; height: 22px;" id="rt-attack" onclick="rollTouch('R')"> <i class="fa-solid fa-wifi"></i> Ranged touch
                                                                         attack</button>
                                                         </td>
                                                         <td><label for="tarextramod">Extra mod: </label><input type="number" class="number-input" id="tarextramod"></td>
@@ -372,6 +384,42 @@
                                 <br>
                         </div>
                 </div>
+
+                <div style="border: 1px solid white; padding: 10px;">
+
+                        <h2>Ataques Especiales </h2>
+                        <div style="display: flex;">
+
+
+                                <table>
+                                        <tr>
+                                                <td style="text-align: center;"><span>Bonus <br> extra</span></td>
+                                        </tr>
+
+                                        <tr>
+                                                <td><input style="font-size: 20px;" id="grapplebonus" type="number" class="number-input sa-bonus" required min="0" max="999" size="2"></td>
+                                                <td class="special-attack"><button style="text-align: left; height: 30px; width: 130px;" class="specialbtn" id="btnGrapple" onclick="specialAttack('G')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="transform: scale(1.5);">
+                                                                        <path fill="currentColor" d="M29 19a7.96 7.96 0 0 0-.985-3.85q.125-.185.213-.394a2.21 2.21 0 0 0-2.292-3.048q.252-.508.4-1.06l.734-2.727a5.42 5.42 0 0 0-9.844-4.371A4.419 4.419 0 0 0 9.443 7.5H7.152c-3.958 0-5.512 5.133-2.219 7.328l1.94 1.294L5.52 21.43a4.29 4.29 0 0 0 .77 3.74a4.34 4.34 0 0 0 2.09 1.468V30a1 1 0 0 0 1 1H28a1 1 0 0 0 1-1zm-14 7.85h2.72a2.21 2.21 0 0 0 2.21-2.17a2.25 2.25 0 0 0-2.26-2.25H15v-2.759a1 1 0 0 0-.445-.832l-8.513-5.675C4.396 12.066 5.173 9.5 7.152 9.5H9.99l.24.89a4.67 4.67 0 0 0 3.66 3.38a4.16 4.16 0 0 0 3.232-.784q.083.014.17.014H21q.575.001 1.12.104l-2.51.966a2.21 2.21 0 0 0 .79 4.27c.274 0 .545-.051.8-.15l5.119-1.97c.435.83.681 1.777.681 2.78v10H15zM18.605 11q.057-.148.105-.3a4.65 4.65 0 0 0 .051-2.59l-.448-1.621l.24-.894l.006-.024a3.42 3.42 0 1 1 6.6 1.764l-.007.022l-.747 2.775a3.7 3.7 0 0 1-.68 1.344A8 8 0 0 0 21 11z" />
+                                                                </svg><span style="font-size: 18px; font-weight: bold;"> Grapple</span></button></td>
+                                        </tr>
+                                        <tr>
+
+                                                <td><input style="font-size: 20px;" id="tripbonus" type="number" class="number-input sa-bonus" required min="0" max="999" size="2"></td>
+                                                <td class="special-attack"><button style="text-align: left; height: 30px; width: 130px;" class="specialbtn" id="btnTrip" onclick="specialAttack('T')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" style="transform: scale(2);">
+                                                                        <path fill="currentColor" d="m364.2 78.46l-61.7 74.74l-18.7-56.06l-20.6 56.06c2.4 1.3 4.8 2.7 7.2 4c-15.9 1.1-32.2 5.8-48.3 14.7c142.1 0 224.3 149.5 119.6 261.6c17.1-11.6 30.8-24.5 41.5-38.1c-.1.3-.2.5-.3.8l54.2 18.6l-26.2-56h67.3L424 321.4l69.1-37.4l-71-18.7l67.3-74.7l-89.7 18.7l46.7-93.5l-91.6 56.1zM139 102.7c-1.6 0-3.4.7-6 2.2l-2 1.1h-2.3c-38.05 0-78.77 16.3-109.11 68.8c-2.93 24.6 3.45 35 11.59 48.5c7.41 12.4 16.35 27.4 16.85 51.8c22.72-.4 52.37-3.6 82.27-31.7l-20.7-115l71.7 67.2c4.2-5.1 8.6-8.8 11.9-11.7s5.5-5 7-8c-19.1-12.4-30-34.4-40.1-50.8c-5.6-9.1-11-16.5-15.2-19.7c-2.2-1.6-3.6-2.6-5.3-2.7zm-2.4 75.3l12.9 71.6l-3.3 3.3C127 272.1 107 282 88.73 287.2L138 358.8l28.1 56c10.1 4.6 27.7 3.5 48.4-1.5l-3.6-35.8l33.3 26.6c59.1-21.7 126.1-65.4 123.7-101.4c-24.3-51.9-86.9-103.8-139.1-51.9c-14.2 16.5-22.3 34.9-30.5 67.4c1.7-32.8 1.9-51.3 12-67.9l-17-41.2c-.9 1.2-1.7 2.6-2.5 4.2l-5.3 10.6z" />
+                                                                </svg> <span style="font-size: 18px; font-weight: bold; margin-left: 2px;"> Trip</span></button></td>
+                                        </tr>
+                                        <tr>
+
+                                                <td><input style="font-size: 20px;" id="brbonus" type="number" class="number-input sa-bonus" required min="0" max="999" size="2"></td>
+                                                <td class="special-attack"><button style="text-align: left; height: 30px; width: 130px;" class="specialbtn" id="btnTrip" onclick="specialAttack('BR')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" style="transform: scale(2);">
+                                                                        <path fill="currentColor" d="m224 27.027l14.037 110.54l14.807-103.032zm112.71 21.127l-61.58 92.37l88.4-70.518zM125.15 69.012V98.81l77.475 41.715zM319 143.088C364.826 255.36 348.206 384 319 493h174V143.088zm-78.598 11.463q-.85-.01-1.718.02c-12.517.413-26.47 6.774-37.893 17.274c-15.774 14.527-23.843 34.25-20.167 49.3c-45 12.35-76.594 62.683-81.64 102.18c-3.968 37.166 15.322 61.415.558 85.432L40.77 447.54l-20.458 9.997L55.33 496.19h15.686l-17.27-32.17l72.906-38.573c14.698-8.6 16.065-23.74 19.28-41.092c16.147 11.876 33.577 23.202 47.56 32.48c-6.36 27.685-38.544 52.854-58.512 79.356h77.827l-2.905-5.21s-39.03-6.813-43.77-7.498c-.15.01-.29.005-.407-.02c-.327-.076-.082-.05.408.02c8.143-.477 65.126-51.946 63.53-64.54c-13.498-23.115-34.03-44.835-54.974-66.276c1.845-25.475 2.3-52.734 40.75-75.596l110.044-4.566c-.94-22.375-4.53-59.816-10.35-66.018c-9.702 7.54-10.872 30.843-11.628 48.637l-79.463-2.283c-8.445-.63-14.943-7.846-21.15-12.822c13.6 1.556 30.02-4.91 43.218-17.024c20.673-19.002 27.286-45.857 14.77-59.982c-4.795-5.412-11.97-8.365-20.478-8.46z" />
+                                                                </svg><span style="font-size: 18px; font-weight: bold; margin-left: 4px;"> Bull Rush</span></button></td>
+                                        </tr>
+                                </table>
+
+                        </div>
+                </div><br>
 
                 <div style="border: 1px solid white; padding: 10px;">
                         <span><b>DOTES</b></span>
@@ -390,16 +438,16 @@
                 <span>BIO</span>
 
                 <div style="display: flex; justify-content: center; text-align: center; align-items: center;">
-                        <textarea spellcheck="false"  id="bio_txtarea" style="flex-grow: 1;"></textarea>
+                        <textarea spellcheck="false" id="bio_txtarea" style="flex-grow: 1;"></textarea>
                 </div>
 
                 <br>
                 <span>RASGOS - LENGUAJES - OTROS </span>
 
                 <div style="display: flex; justify-content: center; text-align: center; align-items: center;">
-                        <textarea spellcheck="false"  id="others_txtarea" style="flex-grow: 1;"></textarea>
+                        <textarea spellcheck="false" id="others_txtarea" style="flex-grow: 1;"></textarea>
                 </div>
-                
+
                 <br>
         </div>
 
@@ -424,7 +472,7 @@
                                                 <th>Extra3</th>
                                         </tr>
                                         <tr>
-                                                <td><button id="Abrir_cerraduras_btn" onclick="rollSkill('Abrir_cerraduras')">Roll</button>
+                                                <td><button id="Abrir_cerraduras_btn" onclick="rollSkill('Abrir_cerraduras')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Abrir_cerraduras</td>
                                                 <td id="Abrir_cerraduras_mod"></td>
@@ -437,7 +485,7 @@
                                                 <td><input type="number" id="Abrir_cerraduras_extra3" class="number-input skill-input" oninput="updateSkill('Abrir_cerraduras')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Artesania_btn" onclick="rollSkill('Artesania')">Roll</button></td>
+                                                <td><button id="Artesania_btn" onclick="rollSkill('Artesania')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Artesania</td>
                                                 <td id="Artesania_mod"></td>
                                                 <td>INT</td>
@@ -448,7 +496,7 @@
                                                 <td><input type="number" id="Artesania_extra3" class="number-input skill-input" oninput="updateSkill('Artesania')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Averiguar_intenciones_btn" onclick="rollSkill('Averiguar_intenciones')">Roll</button>
+                                                <td><button id="Averiguar_intenciones_btn" onclick="rollSkill('Averiguar_intenciones')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Averiguar_intenciones</td>
                                                 <td id="Averiguar_intenciones_mod"></td>
@@ -464,7 +512,7 @@
                                                 </td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Avistar_btn" onclick="rollSkill('Avistar')">Roll</button></td>
+                                                <td><button id="Avistar_btn" onclick="rollSkill('Avistar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Avistar</td>
                                                 <td id="Avistar_mod"></td>
                                                 <td>WIS</td>
@@ -475,7 +523,7 @@
                                                 <td><input type="number" id="Avistar_extra3" class="number-input skill-input" oninput="updateSkill('Avistar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Buscar_btn" onclick="rollSkill('Buscar')">Roll</button>
+                                                <td><button id="Buscar_btn" onclick="rollSkill('Buscar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Buscar</td>
                                                 <td id="Buscar_mod"></td>
@@ -488,7 +536,7 @@
                                                 <td><input type="number" id="Buscar_extra3" class="number-input skill-input" oninput="updateSkill('Buscar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Concentracion_btn" onclick="rollSkill('Concentracion')">Roll</button></td>
+                                                <td><button id="Concentracion_btn" onclick="rollSkill('Concentracion')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Concentracion</td>
                                                 <td id="Concentracion_mod"></td>
                                                 <td>CON</td>
@@ -500,7 +548,7 @@
                                                 <td><input type="number" id="Concentracion_extra3" class="number-input skill-input" oninput="updateSkill('Concentracion')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Conocimiento_de_conjuros_btn" onclick="rollSkill('Conocimiento_de_conjuros')">Roll</button>
+                                                <td><button id="Conocimiento_de_conjuros_btn" onclick="rollSkill('Conocimiento_de_conjuros')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Conocimiento_de_conjuros</td>
                                                 <td id="Conocimiento_de_conjuros_mod"></td>
@@ -517,7 +565,7 @@
                                                 </td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Descifrar_escritura_btn" onclick="rollSkill('Descifrar_escritura')">Roll</button>
+                                                <td><button id="Descifrar_escritura_btn" onclick="rollSkill('Descifrar_escritura')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Descifrar_escritura</td>
                                                 <td id="Descifrar_escritura_mod"></td>
@@ -529,7 +577,7 @@
                                                 <td><input type="number" id="Descifrar_escritura_extra3" class="number-input skill-input" oninput="updateSkill('Descifrar_escritura')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Diplomacia_btn" onclick="rollSkill('Diplomacia')">Roll</button></td>
+                                                <td><button id="Diplomacia_btn" onclick="rollSkill('Diplomacia')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Diplomacia</td>
                                                 <td id="Diplomacia_mod"></td>
                                                 <td>CHA</td>
@@ -540,7 +588,7 @@
                                                 <td><input type="number" id="Diplomacia_extra3" class="number-input skill-input" oninput="updateSkill('Diplomacia')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Disfrazarse_btn" onclick="rollSkill('Disfrazarse')">Roll</button></td>
+                                                <td><button id="Disfrazarse_btn" onclick="rollSkill('Disfrazarse')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Disfrazarse</td>
                                                 <td id="Disfrazarse_mod"></td>
                                                 <td>CHA</td>
@@ -551,7 +599,7 @@
                                                 <td><input type="number" id="Disfrazarse_extra3" class="number-input skill-input" oninput="updateSkill('Disfrazarse')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Enganar_btn" onclick="rollSkill('Enganar')">Roll</button></td>
+                                                <td><button id="Enganar_btn" onclick="rollSkill('Enganar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Enganar</td>
                                                 <td id="Enganar_mod"></td>
                                                 <td>CHA</td>
@@ -562,7 +610,7 @@
                                                 <td><input type="number" id="Enganar_extra3" class="number-input skill-input" oninput="updateSkill('Enganar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Equilibrio_btn" onclick="rollSkill('Equilibrio')">Roll</button></td>
+                                                <td><button id="Equilibrio_btn" onclick="rollSkill('Equilibrio')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Equilibrio</td>
                                                 <td id="Equilibrio_mod"></td>
                                                 <td>DEX</td>
@@ -573,7 +621,7 @@
                                                 <td><input type="number" id="Equilibrio_extra3" class="number-input skill-input" oninput="updateSkill('Equilibrio')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Escapismo_btn" onclick="rollSkill('Escapismo')">Roll</button></td>
+                                                <td><button id="Escapismo_btn" onclick="rollSkill('Escapismo')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Escapismo</td>
                                                 <td id="Escapismo_mod"></td>
                                                 <td>DEX</td>
@@ -584,7 +632,7 @@
                                                 <td><input type="number" id="Escapismo_extra3" class="number-input skill-input" oninput="updateSkill('Escapismo')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Esconderse_btn" onclick="rollSkill('Esconderse')">Roll</button></td>
+                                                <td><button id="Esconderse_btn" onclick="rollSkill('Esconderse')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Esconderse</td>
                                                 <td id="Esconderse_mod"></td>
                                                 <td>DEX</td>
@@ -595,7 +643,7 @@
                                                 <td><input type="number" id="Esconderse_extra3" class="number-input skill-input" oninput="updateSkill('Esconderse')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Escuchar_btn" onclick="rollSkill('Escuchar')">Roll</button></td>
+                                                <td><button id="Escuchar_btn" onclick="rollSkill('Escuchar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Escuchar</td>
                                                 <td id="Escuchar_mod"></td>
                                                 <td>WIS</td>
@@ -606,7 +654,7 @@
                                                 <td><input type="number" id="Escuchar_extra3" class="number-input skill-input" oninput="updateSkill('Escuchar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Falsificar_btn" onclick="rollSkill('Falsificar')">Roll</button></td>
+                                                <td><button id="Falsificar_btn" onclick="rollSkill('Falsificar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Falsificar</td>
                                                 <td id="Falsificar_mod"></td>
                                                 <td>INT</td>
@@ -617,7 +665,7 @@
                                                 <td><input type="number" id="Falsificar_extra3" class="number-input skill-input" oninput="updateSkill('Falsificar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Interpretar_btn" onclick="rollSkill('Interpretar')">Roll</button></td>
+                                                <td><button id="Interpretar_btn" onclick="rollSkill('Interpretar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Interpretar</td>
                                                 <td id="Interpretar_mod"></td>
                                                 <td>CHA</td>
@@ -628,7 +676,7 @@
                                                 <td><input type="number" id="Interpretar_extra3" class="number-input skill-input" oninput="updateSkill('Interpretar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Intimidar_btn" onclick="rollSkill('Intimidar')">Roll</button></td>
+                                                <td><button id="Intimidar_btn" onclick="rollSkill('Intimidar')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Intimidar</td>
                                                 <td id="Intimidar_mod"></td>
                                                 <td>CHA</td>
@@ -639,7 +687,7 @@
                                                 <td><input type="number" id="Intimidar_extra3" class="number-input skill-input" oninput="updateSkill('Intimidar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Inutilizar_mecanismo_btn" onclick="rollSkill('Inutilizar_mecanismo')">Roll</button>
+                                                <td><button id="Inutilizar_mecanismo_btn" onclick="rollSkill('Inutilizar_mecanismo')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Inutilizar_mecanismo</td>
                                                 <td id="Inutilizar_mecanismo_mod"></td>
@@ -655,7 +703,7 @@
                                                 </td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Juego_de_manos_btn" onclick="rollSkill('Juego_de_manos')">Roll</button></td>
+                                                <td><button id="Juego_de_manos_btn" onclick="rollSkill('Juego_de_manos')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Juego_de_manos</td>
                                                 <td id="Juego_de_manos_mod"></td>
                                                 <td>DEX</td>
@@ -667,7 +715,7 @@
                                                 <td><input type="number" id="Juego_de_manos_extra3" class="number-input skill-input" oninput="updateSkill('Juego_de_manos')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Montar_btn" onclick="rollSkill('Montar')">Roll</button>
+                                                <td><button id="Montar_btn" onclick="rollSkill('Montar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Montar</td>
                                                 <td id="Montar_mod"></td>
@@ -680,7 +728,7 @@
                                                 <td><input type="number" id="Montar_extra3" class="number-input skill-input" oninput="updateSkill('Montar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Moverse_sigilosamente_btn" onclick="rollSkill('Moverse_sigilosamente')">Roll</button>
+                                                <td><button id="Moverse_sigilosamente_btn" onclick="rollSkill('Moverse_sigilosamente')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Moverse_sigilosamente</td>
                                                 <td id="Moverse_sigilosamente_mod"></td>
@@ -696,7 +744,7 @@
                                                 </td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Nadar_btn" onclick="rollSkill('Nadar')">Roll</button>
+                                                <td><button id="Nadar_btn" onclick="rollSkill('Nadar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Nadar</td>
                                                 <td id="Nadar_mod"></td>
@@ -709,7 +757,7 @@
                                                 <td><input type="number" id="Nadar_extra3" class="number-input skill-input" oninput="updateSkill('Nadar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Oficio_btn" onclick="rollSkill('Oficio')">Roll</button>
+                                                <td><button id="Oficio_btn" onclick="rollSkill('Oficio')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Oficio</td>
                                                 <td id="Oficio_mod"></td>
@@ -722,7 +770,7 @@
                                                 <td><input type="number" id="Oficio_extra3" class="number-input skill-input" oninput="updateSkill('Oficio')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Piruetas_btn" onclick="rollSkill('Piruetas')">Roll</button></td>
+                                                <td><button id="Piruetas_btn" onclick="rollSkill('Piruetas')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Piruetas</td>
                                                 <td id="Piruetas_mod"></td>
                                                 <td>DEX</td>
@@ -733,7 +781,7 @@
                                                 <td><input type="number" id="Piruetas_extra3" class="number-input skill-input" oninput="updateSkill('Piruetas')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Reunir_informacion_btn" onclick="rollSkill('Reunir_informacion')">Roll</button>
+                                                <td><button id="Reunir_informacion_btn" onclick="rollSkill('Reunir_informacion')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Reunir_informacion</td>
                                                 <td id="Reunir_informacion_mod"></td>
@@ -745,7 +793,7 @@
                                                 <td><input type="number" id="Reunir_informacion_extra3" class="number-input skill-input" oninput="updateSkill('Reunir_informacion')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_arcano_btn" onclick="rollSkill('Saber_arcano')">Roll</button></td>
+                                                <td><button id="Saber_arcano_btn" onclick="rollSkill('Saber_arcano')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_arcano</td>
                                                 <td id="Saber_arcano_mod"></td>
                                                 <td>INT</td>
@@ -756,7 +804,7 @@
                                                 <td><input type="number" id="Saber_arcano_extra3" class="number-input skill-input" oninput="updateSkill('Saber_arcano')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_arq_ing_btn" onclick="rollSkill('Saber_arq_ing')">Roll</button></td>
+                                                <td><button id="Saber_arq_ing_btn" onclick="rollSkill('Saber_arq_ing')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_arq_ing</td>
                                                 <td id="Saber_arq_ing_mod"></td>
                                                 <td>INT</td>
@@ -768,7 +816,7 @@
                                                 <td><input type="number" id="Saber_arq_ing_extra3" class="number-input skill-input" oninput="updateSkill('Saber_arq_ing')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_dungeons_btn" onclick="rollSkill('Saber_dungeons')">Roll</button></td>
+                                                <td><button id="Saber_dungeons_btn" onclick="rollSkill('Saber_dungeons')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_dungeons</td>
                                                 <td id="Saber_dungeons_mod"></td>
                                                 <td>INT</td>
@@ -780,7 +828,7 @@
                                                 <td><input type="number" id="Saber_dungeons_extra3" class="number-input skill-input" oninput="updateSkill('Saber_dungeons')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_geografia_btn" onclick="rollSkill('Saber_geografia')">Roll</button>
+                                                <td><button id="Saber_geografia_btn" onclick="rollSkill('Saber_geografia')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Saber_geografia</td>
                                                 <td id="Saber_geografia_mod"></td>
@@ -793,7 +841,7 @@
                                                 <td><input type="number" id="Saber_geografia_extra3" class="number-input skill-input" oninput="updateSkill('Saber_geografia')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_historia_btn" onclick="rollSkill('Saber_historia')">Roll</button></td>
+                                                <td><button id="Saber_historia_btn" onclick="rollSkill('Saber_historia')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_historia</td>
                                                 <td id="Saber_historia_mod"></td>
                                                 <td>INT</td>
@@ -805,7 +853,7 @@
                                                 <td><input type="number" id="Saber_historia_extra3" class="number-input skill-input" oninput="updateSkill('Saber_historia')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_local_btn" onclick="rollSkill('Saber_local')">Roll</button></td>
+                                                <td><button id="Saber_local_btn" onclick="rollSkill('Saber_local')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_local</td>
                                                 <td id="Saber_local_mod"></td>
                                                 <td>INT</td>
@@ -816,7 +864,7 @@
                                                 <td><input type="number" id="Saber_local_extra3" class="number-input skill-input" oninput="updateSkill('Saber_local')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_planos_btn" onclick="rollSkill('Saber_planos')">Roll</button></td>
+                                                <td><button id="Saber_planos_btn" onclick="rollSkill('Saber_planos')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_planos</td>
                                                 <td id="Saber_planos_mod"></td>
                                                 <td>INT</td>
@@ -827,7 +875,7 @@
                                                 <td><input type="number" id="Saber_planos_extra3" class="number-input skill-input" oninput="updateSkill('Saber_planos')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_naturaleza_btn" onclick="rollSkill('Saber_naturaleza')">Roll</button>
+                                                <td><button id="Saber_naturaleza_btn" onclick="rollSkill('Saber_naturaleza')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Saber_naturaleza</td>
                                                 <td id="Saber_naturaleza_mod"></td>
@@ -840,7 +888,7 @@
                                                 <td><input type="number" id="Saber_naturaleza_extra3" class="number-input skill-input" oninput="updateSkill('Saber_naturaleza')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_nobleza_btn" onclick="rollSkill('Saber_nobleza')">Roll</button></td>
+                                                <td><button id="Saber_nobleza_btn" onclick="rollSkill('Saber_nobleza')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_nobleza</td>
                                                 <td id="Saber_nobleza_mod"></td>
                                                 <td>INT</td>
@@ -852,7 +900,7 @@
                                                 <td><input type="number" id="Saber_nobleza_extra3" class="number-input skill-input" oninput="updateSkill('Saber_nobleza')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saber_religion_btn" onclick="rollSkill('Saber_religion')">Roll</button></td>
+                                                <td><button id="Saber_religion_btn" onclick="rollSkill('Saber_religion')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Saber_religion</td>
                                                 <td id="Saber_religion_mod"></td>
                                                 <td>INT</td>
@@ -864,7 +912,7 @@
                                                 <td><input type="number" id="Saber_religion_extra3" class="number-input skill-input" oninput="updateSkill('Saber_religion')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Saltar_btn" onclick="rollSkill('Saltar')">Roll</button>
+                                                <td><button id="Saltar_btn" onclick="rollSkill('Saltar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Saltar</td>
                                                 <td id="Saltar_mod"></td>
@@ -877,7 +925,7 @@
                                                 <td><input type="number" id="Saltar_extra3" class="number-input skill-input" oninput="updateSkill('Saltar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Sanar_btn" onclick="rollSkill('Sanar')">Roll</button>
+                                                <td><button id="Sanar_btn" onclick="rollSkill('Sanar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Sanar</td>
                                                 <td id="Sanar_mod"></td>
@@ -890,7 +938,7 @@
                                                 <td><input type="number" id="Sanar_extra3" class="number-input skill-input" oninput="updateSkill('Sanar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Supervivencia_btn" onclick="rollSkill('Supervivencia')">Roll</button></td>
+                                                <td><button id="Supervivencia_btn" onclick="rollSkill('Supervivencia')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Supervivencia</td>
                                                 <td id="Supervivencia_mod"></td>
                                                 <td>WIS</td>
@@ -902,7 +950,7 @@
                                                 <td><input type="number" id="Supervivencia_extra3" class="number-input skill-input" oninput="updateSkill('Supervivencia')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Tasacion_btn" onclick="rollSkill('Tasacion')">Roll</button></td>
+                                                <td><button id="Tasacion_btn" onclick="rollSkill('Tasacion')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Tasacion</td>
                                                 <td id="Tasacion_mod"></td>
                                                 <td>INT</td>
@@ -913,7 +961,7 @@
                                                 <td><input type="number" id="Tasacion_extra3" class="number-input skill-input" oninput="updateSkill('Tasacion')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Trato_con_animales_btn" onclick="rollSkill('Trato_con_animales')">Roll</button>
+                                                <td><button id="Trato_con_animales_btn" onclick="rollSkill('Trato_con_animales')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Trato_con_animales</td>
                                                 <td id="Trato_con_animales_mod"></td>
@@ -925,7 +973,7 @@
                                                 <td><input type="number" id="Trato_con_animales_extra3" class="number-input skill-input" oninput="updateSkill('Trato_con_animales')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Trepar_btn" onclick="rollSkill('Trepar')">Roll</button>
+                                                <td><button id="Trepar_btn" onclick="rollSkill('Trepar')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Trepar</td>
                                                 <td id="Trepar_mod"></td>
@@ -938,7 +986,7 @@
                                                 <td><input type="number" id="Trepar_extra3" class="number-input skill-input" oninput="updateSkill('Trepar')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Usar_objeto_magico_btn" onclick="rollSkill('Usar_objeto_magico')">Roll</button>
+                                                <td><button id="Usar_objeto_magico_btn" onclick="rollSkill('Usar_objeto_magico')"><i class="fa fa-dice-d20"></i></button>
                                                 </td>
                                                 <td class="skill-name">Usar_objeto_magico</td>
                                                 <td id="Usar_objeto_magico_mod"></td>
@@ -950,7 +998,7 @@
                                                 <td><input type="number" id="Usar_objeto_magico_extra3" class="number-input skill-input" oninput="updateSkill('Usar_objeto_magico')" required="" min="0" max="99" size="2"></td>
                                         </tr>
                                         <tr>
-                                                <td><button id="Uso_de_cuerdas_btn" onclick="rollSkill('Uso_de_cuerdas')">Roll</button></td>
+                                                <td><button id="Uso_de_cuerdas_btn" onclick="rollSkill('Uso_de_cuerdas')"><i class="fa fa-dice-d20"></i></button></td>
                                                 <td class="skill-name">Uso_de_cuerdas</td>
                                                 <td id="Uso_de_cuerdas_mod"></td>
                                                 <td>DEX</td>
@@ -974,7 +1022,6 @@
         <!------------------------------------------------------------TAB ARMAS ----------------------------------------------------->
         <!--------------------------------------------------------------------------------------------------------------------------->
 
-
         <div id="Tab3" class="tabcontent">
 
                 <div id="weapons-div">
@@ -984,19 +1031,24 @@
                                 <div style="padding: 5px; border-bottom: 1px solid white;"> <span>BAB2 : </span><span class="bab2"></span></div>
                                 <div style="padding: 5px; border-bottom: 1px solid white;"> <span>BAB3 : </span><span class="bab3"></span></div>
                                 <div style="padding: 5px; border-bottom: 1px solid white;"> <span>BAB4 : </span><span class="bab4"></span></div>
-                        </div> <br><br>
-                        <div>
-                                <span style="margin-left: 120px; font-size: 14px;font-weight: bold;">ATTACK</span>
-                                <span style="margin-left: 140px; font-size: 14px;font-weight: bold;">DAMAGE</span><br><br>
-                                <span style="margin-left: 20px;">Nombre Arma</span>
-                                <span style="margin-left: 10px;">Car</span>
-                                <span style="margin-left: 20px;">Mod</span>
-                                <span style="margin-left: 40px;">Dados</span>
-                                <span style="margin-left: 20px;">Car</span>
-                                <span style="margin-left: 10px;">Mod</span>
-                        </div>
+                        </div> <br>
                         <br>
-                        <table>
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr0" style="font-size: 10px; text-align: center;">
                                         <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_0_name" style="width: 100px;"></td>
@@ -1010,7 +1062,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_0_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_0_btnatk" onclick="rollatk('0','0')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_0_btnatk" onclick="rollatk('0','0')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_0_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_0_cardanho">
@@ -1023,19 +1075,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_0_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_0_btndanho" onclick="rolldanho('0','0')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_0_btndanho" onclick="rolldanho('0','0')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','0');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang0" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier0" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn0" onclick="rolldanho('1','0')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','0');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang0" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier0" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn0" onclick="rolldanho('1','0')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon0" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion0" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon0" style="width:500px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr1" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">2</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_1_name" style="width: 100px;"></td>
                                         <td><select id="skill_1_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1047,7 +1122,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_1_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_1_btnatk" onclick="rollatk('0','1')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_1_btnatk" onclick="rollatk('0','1')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_1_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_1_cardanho">
@@ -1060,20 +1135,41 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_1_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_1_btndanho" onclick="rolldanho('0','1')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_1_btndanho" onclick="rolldanho('0','1')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','1');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang1" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier1" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn1" onclick="rolldanho('1','1')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','1');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang1" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier1" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn1" onclick="rolldanho('1','1')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon1" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion1" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon1" style="width:500px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr2" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">3</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_2_name" style="width: 100px;"></td>
                                         <td><select id="skill_2_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1085,7 +1181,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_2_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_2_btnatk" onclick="rollatk('0','2')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_2_btnatk" onclick="rollatk('0','2')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_2_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_2_cardanho">
@@ -1098,20 +1194,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_2_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_2_btndanho" onclick="rolldanho('0','2')" style="width: 35px; height: 20px;">Roll</button></td>
-                                <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','2');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang2" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier2" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn2" onclick="rolldanho('1','2')">Roll Critico</button></td>
-                                </tr>
+                                        <td><button id="skill_2_btndanho" onclick="rolldanho('0','2')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon2" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','2');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang2" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier2" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn2" onclick="rolldanho('1','2')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion2" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon2" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr3" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">4</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_3_name" style="width: 100px;"></td>
                                         <td><select id="skill_3_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1123,7 +1241,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_3_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_3_btnatk" onclick="rollatk('0','3')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_3_btnatk" onclick="rollatk('0','3')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_3_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_3_cardanho">
@@ -1136,20 +1254,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_3_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_3_btndanho" onclick="rolldanho('0','3')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_3_btndanho" onclick="rolldanho('0','3')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','3');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang3" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier3" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn3" onclick="rolldanho('1','3')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','3');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang3" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier3" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn3" onclick="rolldanho('1','3')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon3" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion3" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon3" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr4" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">5</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_4_name" style="width: 100px;"></td>
                                         <td><select id="skill_4_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1161,7 +1301,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_4_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_4_btnatk" onclick="rollatk('0','4')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_4_btnatk" onclick="rollatk('0','4')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_4_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_4_cardanho">
@@ -1174,20 +1314,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_4_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_4_btndanho" onclick="rolldanho('0','4')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_4_btndanho" onclick="rolldanho('0','4')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','4');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang4" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier4" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn4" onclick="rolldanho('1','4')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','4');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang4" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier4" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn4" onclick="rolldanho('1','4')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon4" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion4" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon4" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr5" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">6</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_5_name" style="width: 100px;"></td>
                                         <td><select id="skill_5_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1199,7 +1361,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_5_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_5_btnatk" onclick="rollatk('0','5')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_5_btnatk" onclick="rollatk('0','5')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_5_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_5_cardanho">
@@ -1212,20 +1374,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_5_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_5_btndanho" onclick="rolldanho('0','5')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_5_btndanho" onclick="rolldanho('0','5')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','5');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang5" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier5" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn5" onclick="rolldanho('1','5')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','5');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang5" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier5" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn5" onclick="rolldanho('1','5')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon5" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion5" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon5" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr6" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">7</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_6_name" style="width: 100px;"></td>
                                         <td><select id="skill_6_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1237,7 +1421,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_6_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_6_btnatk" onclick="rollatk('0','6')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_6_btnatk" onclick="rollatk('0','6')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_6_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_6_cardanho">
@@ -1250,20 +1434,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_6_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_6_btndanho" onclick="rolldanho('0','6')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_6_btndanho" onclick="rolldanho('0','6')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','6');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang6" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier6" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn6" onclick="rolldanho('1','6')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','6');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang6" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier6" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn6" onclick="rolldanho('1','6')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon6" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion6" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon6" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr7" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">8</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_7_name" style="width: 100px;"></td>
                                         <td><select id="skill_7_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1275,7 +1481,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_7_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_7_btnatk" onclick="rollatk('0','7')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_7_btnatk" onclick="rollatk('0','7')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_7_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_7_cardanho">
@@ -1288,20 +1494,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_7_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_7_btndanho" onclick="rolldanho('0','7')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_7_btndanho" onclick="rolldanho('0','7')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','7');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang7" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier7" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn7" onclick="rolldanho('1','7')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','7');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang7" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier7" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn7" onclick="rolldanho('1','7')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon7" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion7" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon7" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr8" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">9</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_8_name" style="width: 100px;"></td>
                                         <td><select id="skill_8_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1313,7 +1541,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_8_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_8_btnatk" onclick="rollatk('0','8')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_8_btnatk" onclick="rollatk('0','8')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_8_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_8_cardanho">
@@ -1326,20 +1554,42 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_8_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_8_btndanho" onclick="rolldanho('0','8')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_8_btndanho" onclick="rolldanho('0','8')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','8');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang8" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier8" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn8" onclick="rolldanho('1','8')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','8');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang8" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier8" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn8" onclick="rolldanho('1','8')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon8" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion8" type="number" class="number-input"></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon8" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
                                 </tr>
                         </table><br>
-                        <table>
+
+                        <table style="padding: 4px;">
+                                <tr>
+                                        <td></td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">ATTACK</td>
+                                        <td colspan="4" style="text-align: center; text-decoration: underline;">DAMAGE</td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Nombre Arma</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;">Mod</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">Dados</td>
+                                        <td style="text-align: center;">Car</td>
+                                        <td style="text-align: center;" col>Mod</td>
+                                </tr>
                                 <tr id="tr9" style="font-size: 10px; text-align: center;">
-                                        <td rowspan="3"><span style="font-size: 20px;">10</span></td>
+                                        <td rowspan="3"><span style="font-size: 20px;">1</span></td>
                                         <td><input id="skill_9_name" style="width: 100px;"></td>
                                         <td><select id="skill_9_caratk" style="width: 60px;">
                                                         <option value="0">NONE</option>
@@ -1351,7 +1601,7 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_9_modtatk" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_9_btnatk" onclick="rollatk('0','9')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_9_btnatk" onclick="rollatk('0','9')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
 
                                         <td><input id="skill_9_dicedanho" maxlength="4" style="width: 40px;"></td>
                                         <td><select id="skill_9_cardanho">
@@ -1364,17 +1614,23 @@
                                                         <option value="CHA">CHA</option>
                                                 </select></td>
                                         <td style="width: 30px;"><input id="skill_9_modtdanho" class="number-input" type="number" maxlength="3" style="width: 30px;"></td>
-                                        <td><button id="skill_9_btndanho" onclick="rolldanho('0','9')" style="width: 35px; height: 20px;">Roll</button></td>
+                                        <td><button id="skill_9_btndanho" onclick="rolldanho('0','9')">Roll <br><i class="fa fa-dice-d20"></i></button></td>
                                 </tr>
                                 <tr>
-
-                                        <td colspan="10"><button style="margin-left: 14px;" onclick="rollatk('1','9');">Full Attack</button><span style="margin-left: 18px;">Rango critico </span><input id="crt-rang9" type="number" class="number-input"><span> - 20 x
-                                                </span><input id="crt-multiplier9" type="number" class="number-input" style="margin-right: 15px;"><button id="critbtn9" onclick="rolldanho('1','9')">Roll Critico</button></td>
+                                        <td colspan="2" style="text-align: center;"><button onclick="rollatk('1','9');"><i class="fa fa-dice-d20"></i><br>Full <br> Attack</button></td>
+                                        <td colspan="2"><span>Rango critico </span></td>
+                                        <td><input id="crt-rang9" type="number" class="number-input"></td>
+                                        <td colspan="2"><span> - 20 x </span><input id="crt-multiplier9" type="number" class="number-input" style="margin-right: 15px;"></td>
+                                        <td><button id="critbtn9" onclick="rolldanho('1','9')"><i class="fa fa-dice-d20"></i><br>Roll <br> Critico</button></td>
                                 </tr>
                                 <tr>
-                                        <td colspan="9"><textarea spellcheck="false"  class="weapons-txtarea" id="weapon9" style="width:440px;">1d20 + Caracteristica + BAB + Tamanho + ExtraMod</textarea></td>
+                                        <td colspan="4" style="text-align: right;">Municion</td>
+                                        <td><input id="municion9" type="number" class="number-input"></td>
                                 </tr>
-                        </table>
+                                <tr>
+                                        <td colspan="10"><textarea spellcheck="false" class="weapons-txtarea" id="weapon9" style="width:500px;">1d20 + Caracteristica + BAB + Tamaño + ExtraMod</textarea></td>
+                                </tr>
+                        </table><br>
                 </div>
 
         </div>
@@ -1387,7 +1643,7 @@
 
                 <button type="button" class="collapsible">INFO MACROS</button>
                 <div class="content" style="font-family:Roboto">
-                        
+
                         <div id="infomacros">
                                 <h1>Estructura de los macros:</h1>
                                 <p>
@@ -1418,7 +1674,7 @@
 
                                         <span class="infomacroscomment">-- Se pueden agregar comentarios con @:Comentario despues de una coma, NO USAR COMAS EN LOS COMENTARIOS -- </span><br><br>
                                         Curar Heridas leves : 1d8_[DCL|5], @:1d8 + nivel de lanzador Maximo 5<br><br>
-                                        
+
 
                                         <span class="infomacroscomment">-- Los siguientes valores predefinidos son validos --</span><br>
                                 <table border="1px solid white" style="text-align:center;">
@@ -1464,18 +1720,18 @@
                                 </table>
                                 <br>
                                 <table border="1px solid white" style="text-align:center;">
-                                <tr>
-                                        <th>Base Attack Bonus<br>change n for 1,2,3,4</th>
-                                        <th>FORTITUDE SAVE MOD</th>
-                                        <th>REFLEX SAVE MOD</th>
-                                        <th>WILL SAVE MOD</th>
-                                </tr>
-                                <tr>
-                                        <td>BABn</td>
-                                        <td>FORM</td>
-                                        <td>REFM</td>
-                                        <td>WILM</td>
-                                </tr>
+                                        <tr>
+                                                <th>Base Attack Bonus<br>change n for 1,2,3,4</th>
+                                                <th>FORTITUDE SAVE MOD</th>
+                                                <th>REFLEX SAVE MOD</th>
+                                                <th>WILL SAVE MOD</th>
+                                        </tr>
+                                        <tr>
+                                                <td>BABn</td>
+                                                <td>FORM</td>
+                                                <td>REFM</td>
+                                                <td>WILM</td>
+                                        </tr>
                                 </table><br><br>
                                 <div id="restricciones infomacros" style="padding:1em; border: 1px solid red;">
                                         <span style="color:red">RESTRICCIONES</span><br><br>
@@ -1901,28 +2157,28 @@
 
         <div id="Tab5" class="tabcontent">
                 <div style="display: flex; justify-content: center; text-align: center;">
-                        <textarea spellcheck="false"  id="inventario-textarea" style="flex-grow:1;">Cosas</textarea>
+                        <textarea spellcheck="false" id="inventario-textarea" style="flex-grow:1;">Cosas</textarea>
                 </div>
-                
+
                 <br>
                 <div style="text-align: center;">
-                <span>PC  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pc">
-                <span>PP  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pp">
-                <span>PO  </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="po">
-                <span>PPT </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="ppt">
+                        <span>PC </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pc">
+                        <span>PP </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="pp">
+                        <span>PO </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="po">
+                        <span>PPT </span><input onchange="updateCoin();" type="number" class="number-input" style="width: 90px;" id="ppt">
                 </div>
                 <br><br>
 
 
                 <div id="capacidadcarga">
                         <span>Carga ligera </span><span id="carga-l" style="margin: 0.5em;border-bottom: 1px solid white">33</span><br>
-                        <span>Carga  media </span><span id="carga-m" style="margin: 0.5em;border-bottom: 1px solid white">34-66</span><br>
+                        <span>Carga media </span><span id="carga-m" style="margin: 0.5em;border-bottom: 1px solid white">34-66</span><br>
                         <span>Carga pesada </span><span id="carga-p" style="margin: 0.5em;border-bottom: 1px solid white">67-100</span><br>
                 </div>
 
                 <br><button id="additem_btn" onclick="addInventoryItem()">Agregar Item</button><br><br>
 
-                
+
 
                 <table id="inventory-table">
 
@@ -1953,7 +2209,7 @@
 
                         <br><br>
                         <button type="button" class="collapsible">INFO MACROS</button>
-                        <div id="infomacrosintab" class="content" style="font-family:Roboto">                                
+                        <div id="infomacrosintab" class="content" style="font-family:Roboto">
                         </div>
                         <br><br><button onclick="addnewMacro();">Agregar macro</button><br><br>
 
@@ -1977,7 +2233,7 @@
                                         </div>
                                 </template>
                                 <div class="content-row" style="display: flex; justify-content: center; text-align: center;">
-                                        <textarea spellcheck="false"  id="abilities-text" style="flex-grow:1;" aria-labelledby="abilities-section"></textarea>
+                                        <textarea spellcheck="false" id="abilities-text" style="flex-grow:1;" aria-labelledby="abilities-section"></textarea>
                                 </div>
                         </div>
                 </div>
